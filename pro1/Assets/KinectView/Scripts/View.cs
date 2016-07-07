@@ -202,14 +202,14 @@ public class View : MonoBehaviour
                 a.transform.position = new Vector3(leftX, leftY, leftZ);
             }
         }
-        else if (rightDist < 1 && leftDist>1)//右手在操作范围内
+        if (rightDist < 1 && leftDist>1)//右手在操作范围内
         {
             if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
             {
                 a.transform.position = new Vector3(rightX, rightY, rightZ);
             }
         }
-        else if (rightDist < 1 && leftDist < 1)//双手均在操作范围内
+        if (rightDist < 1 && leftDist < 1)//双手均在操作范围内
         {
             if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
             { }
