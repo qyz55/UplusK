@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using Kinect = Windows.Kinect;
 
-public class HandStats : MonoBehaviour {
+public class Operation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

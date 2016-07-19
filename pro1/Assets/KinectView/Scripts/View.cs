@@ -179,7 +179,7 @@ public class View : MonoBehaviour
         if (body.HandRightState == Kinect.HandState.Open)
             print("leftOpen");
         if (body.HandRightState == Kinect.HandState.Lasso)
-            print("leftLesso");*/
+            print("leftLasso");*/
         float leftX = body.Joints[Kinect.JointType.HandLeft].Position.X * 10;
         float leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y * 10;
         float leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z * 10;
@@ -195,24 +195,13 @@ public class View : MonoBehaviour
             + System.Math.Pow(rightY - a.transform.position.y, 2)
             + System.Math.Pow(rightZ - a.transform.position.z, 2));
 
-        if (leftDist < 1 && rightDist > 1)//左手在操作范围内
-        {
-            if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
-            {
-                a.transform.position = new Vector3(leftX, leftY, leftZ);
-            }
-        }
-        if (rightDist < 1 && leftDist>1)//右手在操作范围内
-        {
-            if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
-            {
-                a.transform.position = new Vector3(rightX, rightY, rightZ);
-            }
-        }
+        
+        
         if (rightDist < 1 && leftDist < 1)//双手均在操作范围内
         {
             if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
-            { }
+            {
+            }
             else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
             {
                 a.transform.position = new Vector3(leftX, leftY, leftZ);
@@ -222,11 +211,28 @@ public class View : MonoBehaviour
                 a.transform.position = new Vector3(rightX, rightY, rightZ);
             }
         }
+        else if (leftDist < 1 && rightDist > 1)//左手在操作范围内
+        {
+            if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
+            {
+                a.transform.position = new Vector3(leftX, leftY, leftZ);
+            }
+        }
+        else if (rightDist < 1 && leftDist > 1)//右手在操作范围内
+        {
+            if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
+            {
+                a.transform.position = new Vector3(rightX, rightY, rightZ);
+            }
+        }
 
         //a.transform.position = new Vector3(body.Joints[Kinect.JointType.HandLeft].Position.X,body.Joints[Kinect.JointType.HandLeft].Position.Y,body.Joints[Kinect.JointType.HandLeft].Position.Z);
         //a.transform.position *= 10;
     }
-    
+
+    private static void Rotate()
+    { }
+
     private static Color GetColorForState(Kinect.TrackingState state)
     {
         switch (state)
