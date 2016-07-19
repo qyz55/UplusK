@@ -167,67 +167,6 @@ public class View : MonoBehaviour
         }
         print(body.Joints[Kinect.JointType.HandLeft].Position.X + "  " + body.Joints[Kinect.JointType.HandLeft].Position.Y + "  " + body.Joints[Kinect.JointType.HandLeft].Position.Z);
 
-/* 各种自带手势
- * if (body.HandRightState == Kinect.HandState.Closed)
-            print("rightClose");
-        if (body.HandRightState == Kinect.HandState.Open)
-            print("rightOpen");
-        if (body.HandRightState == Kinect.HandState.Lasso)
-            print("rightLesso");
-        if (body.HandLeftState == Kinect.HandState.Closed)
-            print("leftClose");
-        if (body.HandRightState == Kinect.HandState.Open)
-            print("leftOpen");
-        if (body.HandRightState == Kinect.HandState.Lasso)
-            print("leftLasso");*/
-        float leftX = body.Joints[Kinect.JointType.HandLeft].Position.X * 10;
-        float leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y * 10;
-        float leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z * 10;
-        float rightX = body.Joints[Kinect.JointType.HandRight].Position.X * 10;
-        float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y * 10;
-        float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z * 10;
-
-        float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - a.transform.position.x, 2)
-            + System.Math.Pow(leftY - a.transform.position.y, 2)
-            + System.Math.Pow(leftZ - a.transform.position.z, 2));
-
-        float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - a.transform.position.x, 2)
-            + System.Math.Pow(rightY - a.transform.position.y, 2)
-            + System.Math.Pow(rightZ - a.transform.position.z, 2));
-
-        
-        
-        if (rightDist < 1 && leftDist < 1)//双手均在操作范围内
-        {
-            if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
-            {
-            }
-            else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
-            {
-                a.transform.position = new Vector3(leftX, leftY, leftZ);
-            }
-            else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
-            {
-                a.transform.position = new Vector3(rightX, rightY, rightZ);
-            }
-        }
-        else if (leftDist < 1 && rightDist > 1)//左手在操作范围内
-        {
-            if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
-            {
-                a.transform.position = new Vector3(leftX, leftY, leftZ);
-            }
-        }
-        else if (rightDist < 1 && leftDist > 1)//右手在操作范围内
-        {
-            if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
-            {
-                a.transform.position = new Vector3(rightX, rightY, rightZ);
-            }
-        }
-
-        //a.transform.position = new Vector3(body.Joints[Kinect.JointType.HandLeft].Position.X,body.Joints[Kinect.JointType.HandLeft].Position.Y,body.Joints[Kinect.JointType.HandLeft].Position.Z);
-        //a.transform.position *= 10;
     }
 
     private static void Rotate()
