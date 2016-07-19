@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine;
 using Kinect = Windows.Kinect;
 
 public class HandStats : MonoBehaviour {
