@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-enum StateOfBlock
+public enum StateOfBlock
 {
     free,   //自由
     caught, //被抓取
