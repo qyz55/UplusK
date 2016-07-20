@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using System;
 using Kinect = Windows.Kinect;
 
-public class Operation : MonoBehaviour
-{
+public class Operation : MonoBehaviour {
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
 
     public GameObject BodySourceManager;
     private BodySourceManager _BodyManager;
@@ -23,17 +21,16 @@ public class Operation : MonoBehaviour
     private float standardRightX;
     private float standardRightY;
     private float standardRightZ;
-    /*    private float deltaX = 1;
-        private float deltaY = 1;
-        private float deltaZ = 1;*/
+/*    private float deltaX = 1;
+    private float deltaY = 1;
+    private float deltaZ = 1;*/
     private float threshold = 0.5F;
     private float deltaX = 1;
     private float deltaY = 1;
     private float deltaZ = 1;
     //标准化双手位置，因人而异，可在最初设计流程校准
 
-    void Update()
-    {
+	void Update () {
 
         //获取模型位置
         List<Vector3> modelPos = ModelManager.GetAllPosition();
@@ -59,6 +56,8 @@ public class Operation : MonoBehaviour
             float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y;
             float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z;
 
+
+
             //双手均Lasso，进行视野变换
             if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)
             {
@@ -78,23 +77,9 @@ public class Operation : MonoBehaviour
                  * */
 
 
+                
                 if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)//双手均Lasso
                 {
-                    /*************
-                     * 都在上，视野向上移动
-                     * 都在下，视野向下
-                     * 都在左，视野向左
-                     * 都在右，视野向右
-                     * 左偏左右偏右，摄像机前进
-                     * 左偏右右偏左，摄像机后退
-                     * 左下右上，视野逆时针转动
-                     * 左上右下，视野顺时针转动
-                     * 左前右后，视野俯视顺时针转动
-                     * 左后右前，视野俯视顺时针转动
-                     * 
-                     * 移动或转动速度与双手相关方向距离有关
-                     * */
-
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
                     float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
                         + System.Math.Pow(leftY - standardLeftY, 2)
@@ -200,10 +185,9 @@ public class Operation : MonoBehaviour
                     else if (leftX - standardLeftX > deltaX && rightX - standardRightX < -deltaX)//左右右左 摄像机后退
                     {
                     }*/
-                    break;
                 }
                 else foreach (Vector3 pos in modelPos)
-                {
+                    {
                     /* 各种自带手势
                            * if (body.HandRightState == Kinect.HandState.Closed)
                                print("rightClose");
@@ -223,8 +207,6 @@ public class Operation : MonoBehaviour
                     float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - pos.x, 2)
                         + System.Math.Pow(rightY - pos.y, 2)
                         + System.Math.Pow(rightZ - pos.z, 2));
-
-
                     if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内
                     {
                         if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
@@ -261,8 +243,7 @@ public class Operation : MonoBehaviour
                     }
                 }
             }
-
-
         }
-    }
+        
+	}
 }
