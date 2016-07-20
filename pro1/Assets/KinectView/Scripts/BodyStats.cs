@@ -110,10 +110,10 @@ public class BodyStats : MonoBehaviour {
             {
                 if (!_Bodies.ContainsKey(body.TrackingId))
                 {
-                    _Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
+                    //_Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
                 }
 
-                RefreshBodyObject(body, _Bodies[body.TrackingId]);
+                //RefreshBodyObject(body, _Bodies[body.TrackingId]);
             }
         }
 	}
