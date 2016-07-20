@@ -21,9 +21,16 @@ public class Operation : MonoBehaviour {
     private float standardRightX;
     private float standardRightY;
     private float standardRightZ;
+<<<<<<< HEAD
+/*    private float deltaX = 1;
+    private float deltaY = 1;
+    private float deltaZ = 1;*/
+    private float threshold = 0.5F;
+=======
     private float deltaX = 1;
     private float deltaY = 1;
     private float deltaZ = 1;
+>>>>>>> refs/remotes/origin/Guy
     //标准化双手位置，因人而异，可在最初设计流程校准
 
 	void Update () {
@@ -52,6 +59,134 @@ public class Operation : MonoBehaviour {
             float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y;
             float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z;
 
+<<<<<<< HEAD
+
+
+            //双手均Lasso，进行视野变换
+            if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)
+            {
+                /*************
+                 * 都在上，摄像机和手同步向上移动
+                 * 都在下，视野向下
+                 * 都在左，视野向左
+                 * 都在右，视野向右
+                 * 左偏左右偏右，摄像机和手前进
+                 * 左偏右右偏左，摄像机和手后退
+                 * 左下右上，？摄像机和手？逆时针转动
+                 * 左上右下，？摄像机和手？顺时针转动
+                 * 左前右后，？各物体？俯视顺时针转动
+                 * 左后右前，？各物体？俯视顺时针转动
+                 * 
+                 * 移动或转动速度与双手相关方向距离有关
+                 * */
+
+
+                //计算在XY平面内手与标准位置的距离和连线与空间角，
+                float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                    + System.Math.Pow(leftY - standardLeftY, 2)
+                    /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
+
+                float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                    + System.Math.Pow(rightY - standardRightY, 2)
+                    /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
+                //若左右手距离标准位置的距离均大于XY平面内操作阈值
+                if (leftDist > threshold && rightDist > threshold)
+                {
+                    //计算空间角
+                    float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
+                    float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
+                    float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                                                                                                        + System.Math.Pow(leftY - standardLeftY, 2)));
+                    float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                                                                                                        + System.Math.Pow(rightY - standardRightY, 2)));
+                    if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
+                    {//左手在左
+                        if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
+                        {//右手在左
+                            //视野向左
+                        }
+                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                        {//右手在右
+                            //摄像机前进
+                        }
+                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                        {//右手在上
+                        }
+                        else
+                        {//右手在下
+                        }
+                    }
+                    else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
+                    {//左手在右
+                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                        {//右手在左
+                            //摄像机后退
+                        }
+                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                        {//右手在右
+                            //视野向右
+                        }
+                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                        {//右手在上
+                        }
+                        else
+                        {//右手在下
+                        }
+                    }
+                    else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
+                    {//左手在上
+                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                        {//右手在左
+                        }
+                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                        {//右手在右
+                        }
+                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                        {//右手在上
+                            //视野向上
+                        }
+                        else
+                        {//右手在下
+                            //视野右旋
+                        }
+                    }
+                    else
+                    {//左手在下
+                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                        {//右手在左
+                        }
+                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                        {//右手在右
+                        }
+                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                        {//右手在上
+                            //视野左旋
+                        }
+                        else
+                        {//右手在下
+                            //视野向下
+                        }
+                    }
+                }
+                /*else if(判断纵深)
+                {}*/
+
+                /*另一种写法，靠直角坐标系，感觉性能低于极坐标
+                //第一层进行左右判断
+                if(leftX - standardLeftX < -deltaX && rightX - standardRightX < -deltaX)//都左
+                {
+
+                }
+                else if (leftX - standardLeftX > deltaX && rightX - standardRightX > deltaX)//都右
+                {
+                }
+                else if (leftX - standardLeftX < -deltaX && rightX - standardRightX > deltaX)//左左右右 （摄像机前进）
+                {
+                }
+                else if (leftX - standardLeftX > deltaX && rightX - standardRightX < -deltaX)//左右右左 摄像机后退
+                {
+                }*/
+=======
             if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)//双手均Lasso
             {
                 /*************
@@ -75,6 +210,7 @@ public class Operation : MonoBehaviour {
                 else if (leftX - standardLeftX < -deltaX && rightX - standardRightX > deltaX)
                 {
                 }
+>>>>>>> refs/remotes/origin/Guy
                 break;
             }
             else foreach (Vector3 pos in modelPos)
