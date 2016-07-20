@@ -4,7 +4,11 @@ using System.Collections.Generic;
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
 {
+<<<<<<< HEAD
     private static List<Model> _Data = new List<Model>();
+=======
+    static List<Model> _Data = new List<Model>();
+>>>>>>> refs/remotes/origin/Guy
     //以下是写了一个大概的
     public static List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
     {

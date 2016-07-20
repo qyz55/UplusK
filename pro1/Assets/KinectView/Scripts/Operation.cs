@@ -21,10 +21,16 @@ public class Operation : MonoBehaviour {
     private float standardRightX;
     private float standardRightY;
     private float standardRightZ;
+<<<<<<< HEAD
 /*    private float deltaX = 1;
     private float deltaY = 1;
     private float deltaZ = 1;*/
     private float threshold = 0.5F;
+=======
+    private float deltaX = 1;
+    private float deltaY = 1;
+    private float deltaZ = 1;
+>>>>>>> refs/remotes/origin/Guy
     //标准化双手位置，因人而异，可在最初设计流程校准
 
 	void Update () {
@@ -53,6 +59,7 @@ public class Operation : MonoBehaviour {
             float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y;
             float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z;
 
+<<<<<<< HEAD
 
 
             //双手均Lasso，进行视野变换
@@ -179,6 +186,31 @@ public class Operation : MonoBehaviour {
                 else if (leftX - standardLeftX > deltaX && rightX - standardRightX < -deltaX)//左右右左 摄像机后退
                 {
                 }*/
+=======
+            if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)//双手均Lasso
+            {
+                /*************
+                 * 都在上，视野向上移动
+                 * 都在下，视野向下
+                 * 都在左，视野向左
+                 * 都在右，视野向右
+                 * 左偏左右偏右，摄像机前进
+                 * 左偏右右偏左，摄像机后退
+                 * 左下右上，视野逆时针转动
+                 * 左上右下，视野顺时针转动
+                 * 左前右后，视野俯视顺时针转动
+                 * 左后右前，视野俯视顺时针转动
+                 * 
+                 * 移动或转动速度与双手相关方向距离有关
+                 * */
+                if(leftX - standardLeftX < -deltaX && rightX - standardRightX < -deltaX)
+                {
+
+                }
+                else if (leftX - standardLeftX < -deltaX && rightX - standardRightX > deltaX)
+                {
+                }
+>>>>>>> refs/remotes/origin/Guy
                 break;
             }
             else foreach (Vector3 pos in modelPos)
