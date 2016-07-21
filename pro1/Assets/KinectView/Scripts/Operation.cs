@@ -33,7 +33,7 @@ public class Operation : MonoBehaviour {
 	void Update () {
 
         //获取模型位置
-        List<Vector3> modelPos = ModelManager.GetAllPosition();
+        //List<Vector3> modelPos = ModelManager.GetAllPosition();
 
         //获取身体数据
         _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
@@ -203,11 +203,14 @@ public class Operation : MonoBehaviour {
                 float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - pos.x, 2)
                     + System.Math.Pow(rightY - pos.y, 2)
                     + System.Math.Pow(rightZ - pos.z, 2));
-                if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内
+                if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内 且 物体free
                 {
                     if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
                     {
-                        //模型旋转Rotate();
+                        /*旋转
+                         *旋转
+                         *旋转
+                         */
                         break;
                     }
                     else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
