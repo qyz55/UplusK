@@ -40,7 +40,7 @@ public class Operation : MonoBehaviour {
 	void Update () {
 
         //获取模型位置
-        //List<Vector3> modelPos = ModelManager.GetPosition();
+        List<Vector3> modelPos = ModelManager.GetAllPosition();
 
         //获取身体数据
         _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
@@ -294,7 +294,8 @@ public class Operation : MonoBehaviour {
                 }*/
             }
             //非旋转、非视野，则可进行移动或开始旋转的判断
-            else for (int i = 0; i < modelPos.Count; ++i )
+            else 
+                for (int i = 0; i < modelPos.Count; ++i )
                 {
                     /* 各种自带手势
                            * if (body.HandRightState == Kinect.HandState.Closed)
