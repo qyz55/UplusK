@@ -32,15 +32,23 @@ public class ModelManager : MonoBehaviour
     }
     public Vector3 GetPosition(int num)  //获得输入下标物体的位置
     {
-        return new Vector3(0, 0, 0);
+        return _Data[num].model.transform.position;
+    }
+    public Vector3 GetLocalPosition(int num)  //获得输入下标物体相对于父物体的位置
+    {
+        return _Data[num].model.transform.localPosition;
     }
     public Quaternion GetRotation(int num) //获得输入下标物体的旋转角度，用一个四元数表示
     {
-        return Quaternion.identity;
+        return _Data[num].model.transform.rotation;
     }
+    public Quaternion GetLocalRotation(int num) //获得输入下标物体相对于父物体的旋转角度，用一个四元数表示
+    {
+        return _Data[num].model.transform.localRotation;
+    } 
     public void Rotate(int num,Vector3 i) //对下标为num的物体进行Vector3的旋转，旋转顺序为ZXY
     {
-
+        _Data[num].model.transform.Rotate(i);
     }
     public StateOfBlock GetState(int num) // 获得某个物体的状态
     {

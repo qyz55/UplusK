@@ -9,8 +9,25 @@ public class Operation : MonoBehaviour {
     ModelManager ModelManager;
     List<Vector3> modelPos;
 	// Use this for initialization
+    public GameObject e;
+    public GameObject[] a = new GameObject[2];
+    private GameObject[] b = new GameObject[2];
+
 	void Start () {
-        ModelManager = new ModelManager();
+        //ModelManager = new ModelManager();
+        e = GameObject.Find("Sphere");
+        for (int i = 0; i < 2; ++i)
+        {
+            b[i] = GameObject.Instantiate(a[i]);
+            b[i].transform.parent = e.transform;
+            b[i].transform.rotation = Quaternion.identity;
+            b[i].transform.localPosition = new Vector3(0, 0, 0);
+            b[i].AddComponent<Rigidbody>();
+            b[i].GetComponent<Rigidbody>().useGravity = false;
+            b[i].GetComponent<Rigidbody>().drag = 2000;
+        }
+        b[0].transform.position += new Vector3(-20, 0, 0);
+        b[1].transform.position += new Vector3(30, 20, 0);
 	}
 	
 	// Update is called once per frame

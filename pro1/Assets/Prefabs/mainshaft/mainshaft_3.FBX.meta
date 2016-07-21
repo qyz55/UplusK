@@ -1,0 +1,564 @@
+fileFormatVersion: 2
+guid: ec9cf5d5f2e8635439caada28387cc68
+timeCreated: 1468922128
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: prt3.SLDPRT 1
+    100004: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1
+    100006: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart0
+    100008: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart1
+    100010: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart2
+    100012: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1
+    100014: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart0
+    100016: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart1
+    100018: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart2
+    100020: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-1-solid1
+    100022: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-2-solid1
+    100024: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N71 ISS-1-solid1
+    100026: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N72 ISS-1-solid1
+    100028: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N73 ISS-1-solid1
+    100030: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-1-solid1
+    100032: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-2-solid1
+    100034: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N71 ISS-1-solid1
+    100036: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N72 ISS-1-solid1
+    100038: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N73 ISS-1-solid1
+    100040: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1
+    100042: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart0
+    100044: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart1
+    100046: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1
+    100048: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart0
+    100050: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart1
+    100052: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N68 ISS-1-solid1
+    100054: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N69 ISS-1-solid1
+    100056: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/pieza
+      A81 ISS-1-solid1
+    100058: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/Subensamble
+      N21 ISS-1/Subensamble N20 ISS-1/pieza N113 ISS-1-solid1
+    400000: //RootNode
+    400002: prt3.SLDPRT 1
+    400004: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1
+    400006: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart0
+    400008: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart1
+    400010: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart2
+    400012: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1
+    400014: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart0
+    400016: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart1
+    400018: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart2
+    400020: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-1-solid1
+    400022: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-2-solid1
+    400024: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N71 ISS-1-solid1
+    400026: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N72 ISS-1-solid1
+    400028: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N73 ISS-1-solid1
+    400030: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-1-solid1
+    400032: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-2-solid1
+    400034: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N71 ISS-1-solid1
+    400036: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N72 ISS-1-solid1
+    400038: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N73 ISS-1-solid1
+    400040: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1
+    400042: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart0
+    400044: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart1
+    400046: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1
+    400048: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart0
+    400050: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart1
+    400052: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N68 ISS-1-solid1
+    400054: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N69 ISS-1-solid1
+    400056: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/pieza
+      A81 ISS-1-solid1
+    400058: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/Subensamble
+      N21 ISS-1/Subensamble N20 ISS-1/pieza N113 ISS-1-solid1
+    2300000: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart0
+    2300002: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart1
+    2300004: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart2
+    2300006: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart0
+    2300008: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart1
+    2300010: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart2
+    2300012: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-1-solid1
+    2300014: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-2-solid1
+    2300016: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N71 ISS-1-solid1
+    2300018: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N72 ISS-1-solid1
+    2300020: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N73 ISS-1-solid1
+    2300022: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-1-solid1
+    2300024: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-2-solid1
+    2300026: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N71 ISS-1-solid1
+    2300028: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N72 ISS-1-solid1
+    2300030: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N73 ISS-1-solid1
+    2300032: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart0
+    2300034: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart1
+    2300036: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart0
+    2300038: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart1
+    2300040: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N68 ISS-1-solid1
+    2300042: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N69 ISS-1-solid1
+    2300044: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/pieza
+      A81 ISS-1-solid1
+    2300046: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/Subensamble
+      N21 ISS-1/Subensamble N20 ISS-1/pieza N113 ISS-1-solid1
+    3300000: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart0
+    3300002: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart1
+    3300004: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart2
+    3300006: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart0
+    3300008: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart1
+    3300010: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart2
+    3300012: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-1-solid1
+    3300014: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-2-solid1
+    3300016: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N71 ISS-1-solid1
+    3300018: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N72 ISS-1-solid1
+    3300020: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N73 ISS-1-solid1
+    3300022: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-1-solid1
+    3300024: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-2-solid1
+    3300026: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N71 ISS-1-solid1
+    3300028: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N72 ISS-1-solid1
+    3300030: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N73 ISS-1-solid1
+    3300032: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart0
+    3300034: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart1
+    3300036: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart0
+    3300038: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart1
+    3300040: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N68 ISS-1-solid1
+    3300042: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N69 ISS-1-solid1
+    3300044: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/pieza
+      A81 ISS-1-solid1
+    3300046: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/Subensamble
+      N21 ISS-1/Subensamble N20 ISS-1/pieza N113 ISS-1-solid1
+    4300000: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/Subensamble
+      N21 ISS-1/Subensamble N20 ISS-1/pieza N113 ISS-1-solid1
+    4300002: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/Subensamble N22 ISS-1/pieza
+      A81 ISS-1-solid1
+    4300004: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N68 ISS-1-solid1
+    4300006: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N69 ISS-1-solid1
+    4300008: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N73 ISS-1-solid1
+    4300010: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-1-solid1
+    4300012: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N70 ISS-2-solid1
+    4300014: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N71 ISS-1-solid1
+    4300016: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/pieza N72 ISS-1-solid1
+    4300018: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-1-solid1
+    4300020: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N70 ISS-2-solid1
+    4300022: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N71 ISS-1-solid1
+    4300024: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N72 ISS-1-solid1
+    4300026: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/pieza
+      N73 ISS-1-solid1
+    4300028: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart0
+    4300030: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart1
+    4300032: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-1-solid1_MeshPart2
+    4300034: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart0
+    4300036: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart1
+    4300038: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/pieza N74 ISS-2-solid1_MeshPart2
+    4300040: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart0
+    4300042: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N57 ISS-1-solid1_MeshPart1
+    4300044: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart0
+    4300046: Subensamble N52 ISS-1/Subensamble N51 ISS-1/Subensamble N48 ISS-1/Subensamble
+      N45 ISS-1/Subensamble N41 ISS-1/Subensamble N39 ISS-1/Subensamble N38 ISS-1/Subensamble
+      N30 ISS-1/Subensamble N29 ISS-1/Subensamble N28 ISS-1/Subensamble N27 ISS-1/Subensamble
+      N26 ISS-1/Subensamble N24 ISS-1/Subensamble N23 ISS-1/pieza N58 ISS-1-solid1_MeshPart1
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

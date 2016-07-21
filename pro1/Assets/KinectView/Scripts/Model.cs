@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-public enum StateOfBlock
+public enum StateOfBlock:int
 {
-    free,   //自由
-    caught, //被抓取
+    free       =0,//自由
+    caught     =1, //被抓取
     /*aroundaxis,*/
     //轴对上但角度不对，有待商榷
-    jointed//已被拼上，意味着不可动
+    jointed    =2,//已被拼上，意味着不可动
 };
-
 public class Model
 {
     public GameObject model{get;set;}

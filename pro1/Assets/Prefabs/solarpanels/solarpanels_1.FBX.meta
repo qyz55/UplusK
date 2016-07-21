@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: 9e3f1854cf1cb1e41bf894ecc268c78e
+timeCreated: 1468921978
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Subensamble N52 ISS-1/pieza N107 ISS-1-solid1
+    100004: Subensamble N52 ISS-1/Subensamble N50 ISS-1/pieza N106 ISS-1-solid1
+    100006: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N104 ISS-1-solid1
+    100008: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-1-solid1
+    100010: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-2-solid1
+    100012: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-5-solid1
+    100014: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-6-solid1
+    100016: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N104 ISS-1-solid1
+    100018: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-1-solid1
+    100020: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-2-solid1
+    100022: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-5-solid1
+    100024: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-6-solid1
+    100026: "\u592A\u9633\u80FD\u677F (1).SLDPRT 1"
+    400000: //RootNode
+    400002: Subensamble N52 ISS-1/pieza N107 ISS-1-solid1
+    400004: Subensamble N52 ISS-1/Subensamble N50 ISS-1/pieza N106 ISS-1-solid1
+    400006: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N104 ISS-1-solid1
+    400008: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-1-solid1
+    400010: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-2-solid1
+    400012: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-5-solid1
+    400014: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-6-solid1
+    400016: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N104 ISS-1-solid1
+    400018: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-1-solid1
+    400020: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-2-solid1
+    400022: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-5-solid1
+    400024: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-6-solid1
+    400026: "\u592A\u9633\u80FD\u677F (1).SLDPRT 1"
+    2300000: Subensamble N52 ISS-1/pieza N107 ISS-1-solid1
+    2300002: Subensamble N52 ISS-1/Subensamble N50 ISS-1/pieza N106 ISS-1-solid1
+    2300004: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N104 ISS-1-solid1
+    2300006: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-1-solid1
+    2300008: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-2-solid1
+    2300010: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-5-solid1
+    2300012: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-6-solid1
+    2300014: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N104 ISS-1-solid1
+    2300016: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-1-solid1
+    2300018: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-2-solid1
+    2300020: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-5-solid1
+    2300022: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-6-solid1
+    3300000: Subensamble N52 ISS-1/pieza N107 ISS-1-solid1
+    3300002: Subensamble N52 ISS-1/Subensamble N50 ISS-1/pieza N106 ISS-1-solid1
+    3300004: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N104 ISS-1-solid1
+    3300006: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-1-solid1
+    3300008: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-2-solid1
+    3300010: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-5-solid1
+    3300012: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-6-solid1
+    3300014: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N104 ISS-1-solid1
+    3300016: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-1-solid1
+    3300018: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-2-solid1
+    3300020: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-5-solid1
+    3300022: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-6-solid1
+    4300000: Subensamble N52 ISS-1/Subensamble N50 ISS-1/pieza N106 ISS-1-solid1
+    4300002: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N104 ISS-1-solid1
+    4300004: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-1-solid1
+    4300006: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-2-solid1
+    4300008: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-5-solid1
+    4300010: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-1/pieza
+      N105 ISS-6-solid1
+    4300012: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N104 ISS-1-solid1
+    4300014: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-1-solid1
+    4300016: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-2-solid1
+    4300018: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-5-solid1
+    4300020: Subensamble N52 ISS-1/Subensamble N50 ISS-1/Subensamble N47 ISS-2/pieza
+      N105 ISS-6-solid1
+    4300022: Subensamble N52 ISS-1/pieza N107 ISS-1-solid1
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
