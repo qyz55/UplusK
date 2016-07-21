@@ -7,6 +7,8 @@ using Kinect = Windows.Kinect;
 public class Operation : MonoBehaviour {
 
     public ModelManager ModelManager;
+    public GameObject leftHand;
+    public GameObject rightHand;
     List<Vector3> modelPos;
 	// Use this for initialization
 
@@ -18,11 +20,11 @@ public class Operation : MonoBehaviour {
 
     public GameObject BodySourceManager;
     private BodySourceManager _BodyManager;
-    private float standardLeftX;
-    private float standardLeftY;
+    private float standardLeftX = -0.5F;
+    private float standardLeftY = 0;
     private float standardLeftZ;
-    private float standardRightX;
-    private float standardRightY;
+    private float standardRightX = 0.5F;
+    private float standardRightY = 0;
     private float standardRightZ;
 /*    private float deltaX = 1;
     private float deltaY = 1;
@@ -56,14 +58,16 @@ public class Operation : MonoBehaviour {
         }
         foreach (Kinect.Body body in data)
         {
-            float leftX = body.Joints[Kinect.JointType.HandLeft].Position.X;
-            float leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y;
-            float leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z;
-            float rightX = body.Joints[Kinect.JointType.HandRight].Position.X;
-            float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y;
-            float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z;
+            float leftX = body.Joints[Kinect.JointType.HandLeft].Position.X*40;
+            float leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y*40;
+            float leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z*40;
+            float rightX = body.Joints[Kinect.JointType.HandRight].Position.X*40;
+            float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y*40;
+            float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z*40;
 
-
+            print(leftX + " " + leftY + " " + leftZ);
+            leftHand.transform.position = new Vector3(leftX, leftY, leftZ);
+            rightHand.transform.position = new Vector3(rightX, rightY, rightZ);
 
             //正在旋转物体
             if (rotating)
@@ -74,6 +78,7 @@ public class Operation : MonoBehaviour {
                     if (cntCancelRotate == 10/*阈值*/)
                     {
                         rotating = false;
+                        ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
                     }
                 }
                 else
@@ -88,7 +93,7 @@ public class Operation : MonoBehaviour {
                     //若左右手距离标准位置的距离均大于XY平面内操作阈值
                     if (leftDist > threshold && rightDist > threshold)
                     {
-                        //计算空间角
+                        //计算平面角
                         float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
                         float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
                         /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
@@ -100,10 +105,12 @@ public class Operation : MonoBehaviour {
                             if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
                             {//右手在左
                                 //绕Y，俯视顺时针
+                                ModelManager.Rotate(rotatingNum, 2);
                             }
                             else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //绕X，左视逆时针
+                                ModelManager.Rotate(rotatingNum, 0);
                             }
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
@@ -119,10 +126,12 @@ public class Operation : MonoBehaviour {
                             if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
                             {//右手在左
                                 //绕X，左视顺时针
+                                ModelManager.Rotate(rotatingNum, 1);
                             }
                             else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //绕Y，俯视逆时针
+                                ModelManager.Rotate(rotatingNum, 3);
                             }
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
@@ -148,23 +157,27 @@ public class Operation : MonoBehaviour {
                             else
                             {//右手在下
                                 //绕Z，正视顺时针
+                                ModelManager.Rotate(rotatingNum, 4);
                             }
                         }
                         else
                         {//左手在下
                             if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
                             {//右手在左
+                                //不转
                             }
                             else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
+                                //不转
                             }
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
-                                //视野左旋
+                                //绕Z，正视逆时针
+                                ModelManager.Rotate(rotatingNum, 5);
                             }
                             else
                             {//右手在下
-                                //视野向下
+                                //不转
                             }
                         }
                     }
@@ -202,10 +215,10 @@ public class Operation : MonoBehaviour {
                     //计算空间角
                     float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
                     float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
-                    float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                                                                                                        + System.Math.Pow(leftY - standardLeftY, 2)));
+                    /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                        + System.Math.Pow(leftY - standardLeftY, 2)));
                     float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                                                                                                        + System.Math.Pow(rightY - standardRightY, 2)));
+                        + System.Math.Pow(rightY - standardRightY, 2)));*/
                     if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
                     {//左手在左
                         if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
@@ -275,23 +288,6 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
-                /*else if(判断纵深)
-                {}*/
-
-                /*另一种写法，靠直角坐标系，感觉性能低于极坐标
-                //第一层进行左右判断
-                if(leftX - standardLeftX < -deltaX && rightX - standardRightX < -deltaX)//都左
-                {
-                }
-                else if (leftX - standardLeftX > deltaX && rightX - standardRightX > deltaX)//都右
-                {
-                }
-                else if (leftX - standardLeftX < -deltaX && rightX - standardRightX > deltaX)//左左右右 （摄像机前进）
-                {
-                }
-                else if (leftX - standardLeftX > deltaX && rightX - standardRightX < -deltaX)//左右右左 摄像机后退
-                {
-                }*/
             }
             //非旋转、非视野，则可进行移动或开始旋转的判断
             else 
@@ -316,24 +312,29 @@ public class Operation : MonoBehaviour {
                     float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[i].x, 2)
                         + System.Math.Pow(rightY - modelPos[i].y, 2)
                         + System.Math.Pow(rightZ - modelPos[i].z, 2));
-                    if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内 且 物体free
+                    if (rightDist < 1 && leftDist < 1 && ModelManager.GetState(i) == StateOfBlock.free)//双手均在物体操作范围内 且 该物体free
                     {
                         if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
                         {
                             //标记开始旋转
+                            ModelManager.ChangeState(i, StateOfBlock.caught);
                             rotating = true;
+                            rotatingNum = i;
                             cntCancelRotate = 0;
-                            break;
                         }
                         else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
                         {
                             //模型随动
-                            break;
+                            ModelManager.ChangeState(i, StateOfBlock.caught);
+                            ModelManager.MoveOne(i, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.ChangeState(i, StateOfBlock.free);
                         }
                         else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
                         {
                             //模型随动
-                            break;
+                            ModelManager.ChangeState(i, StateOfBlock.caught);
+                            ModelManager.MoveOne(i, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.ChangeState(i, StateOfBlock.free);
                         }
                     }
                     else if (leftDist < 1 && rightDist > 1)//左手在操作范围内
@@ -341,7 +342,9 @@ public class Operation : MonoBehaviour {
                         if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
                         {
                             //模型随动
-                            break;
+                            ModelManager.ChangeState(i, StateOfBlock.caught);
+                            ModelManager.MoveOne(i, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.ChangeState(i, StateOfBlock.free);
                         }
                     }
                     else if (rightDist < 1 && leftDist > 1)//右手在操作范围内
@@ -349,7 +352,9 @@ public class Operation : MonoBehaviour {
                         if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
                         {
                             //模型随动
-                            break;
+                            ModelManager.ChangeState(i, StateOfBlock.caught);
+                            ModelManager.MoveOne(i, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.ChangeState(i, StateOfBlock.free);
                         }
                     }
                 }
