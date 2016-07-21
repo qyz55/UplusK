@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 public enum StateOfBlock:int
 {
-    free       =0,//自由
-    caught     =1, //被抓取
+    unactive   = 0,
+    free       = 1,//自由
+    caught     = 2, //被抓取
     /*aroundaxis,*/
     //轴对上但角度不对，有待商榷
-    jointed    =2,//已被拼上，意味着不可动
+    jointed    = 3,//已被拼上，意味着不可动
 };
 public class Model
 {
@@ -15,5 +16,6 @@ public class Model
     public int num { get; set; }
     public StateOfBlock state { get; set; }
     public int father { get; set; }
-    Model() { model = null; num = 0; state = StateOfBlock.free; father = 0; }
+    public Vector3 center { get; set; }
+    public Model() { model = null; num = 0; state = StateOfBlock.free; father = 0; center = new Vector3(0,0,0);}
 }
