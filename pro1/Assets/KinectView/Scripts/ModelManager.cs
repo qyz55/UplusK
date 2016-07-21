@@ -6,12 +6,12 @@ public class ModelManager : MonoBehaviour
 {
     List<Model> _Data = new List<Model>();
     //以下是写了一个大概的
-    public List<Model> GetModel() // 获得所有物体的位置,返回一个内容为Vector3的list
+    public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
     {
-        List<Model> _position = new List<Model>();
+        List<Vector3> _position = new List<Vector3>();
         foreach (Model i in _Data)
         {
-            _position.Add(i);
+            _position.Add(CalcRealPosition(i.num,i.model.transform.position));
         }
         return _position;
     }
@@ -22,8 +22,7 @@ public class ModelManager : MonoBehaviour
     public void MoveOne(int num, Vector3 _v3) // 传入想要移动的物体的下标和想要其移动到的位置
     {
         if (_Data[num].state == StateOfBlock.caught)
-        _Data[num].model.transform.position = _v3 - _Data[num].center;
-        _Data[num].model.transform.
+            _Data[num].model.transform.position = CalcCenterPosition(num, _v3);
     }
     
     //以下是才定义出来没写的
@@ -49,8 +48,39 @@ public class ModelManager : MonoBehaviour
     } 
     public void Rotate(int num,int mode) //对下标为num的物体进行6种旋转，0-5分别为x(顺逆)y(顺逆)z(顺逆)
     {
-        _Data[num].model.transform.Rotate(i);
+        switch (mode)
+        {
+            case 0:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.right, 50 * Time.deltaTime);
+                break;
+            case 1:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.left, 50 * Time.deltaTime);
+                break;
+            case 2:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.up, 50 * Time.deltaTime);
+                break;
+            case 3:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.down, 50 * Time.deltaTime);
+                break;
+            case 4:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.forward, 50 * Time.deltaTime);
+                break;
+            case 5:
+                _Data[num].model.transform.RotateAround(CalcRealPosition(num, _Data[num].model.transform.position), Vector3.back, 50 * Time.deltaTime);
+                break;
+            
+        }
     }
+    private Vector3 CalcRealPosition(int num, Vector3 pos)
+    {
+        return _Data[num].model.transform.rotation * _Data[num].center + pos;
+    }
+
+    private Vector3 CalcCenterPosition(int num, Vector3 pos)
+    {
+        return pos - _Data[num].model.transform.rotation * _Data[num].center;
+    }
+
     public StateOfBlock GetState(int num) // 获得某个物体的状态
     {
         return _Data[num].state;
@@ -58,29 +88,31 @@ public class ModelManager : MonoBehaviour
 
 
 	// Use this for initialization
-    private Model[] a = new Model[2];
-    public GameObject[] b = new GameObject[2];
+    private Model[] a = new Model[3];
+    public GameObject[] b = new GameObject[3];
     public GameObject e;
     
 	void Start () {
-        e = GameObject.Find("Sphere");
-        for (int i = 0; i < 2; ++i)
+        a[0] = new Model();
+        a[0].model = GameObject.Find("Sphere");
+        _Data.Add(a[0]);
+        for (int i = 1; i <= 2; ++i)
         {
             a[i] = new Model();
             a[i].model = GameObject.Instantiate(b[i]);
             a[i].num = i;
             a[i].state = StateOfBlock.free;
-            a[i].model.transform.parent = e.transform;
-            a[i].model.transform.localPosition = new Vector3(0, 0, 0);
-            a[i].model.transform.localRotation = Quaternion.identity;
+            a[i].model.transform.localPosition = new Vector3(0, 0, 0) + a[0].model.transform.position;
+            a[i].initialQuaternion = a[i].model.transform.rotation;
             a[i].model.AddComponent<Rigidbody>();
             a[i].model.GetComponent<Rigidbody>().isKinematic = true;
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
             a[i].model.GetComponent<Rigidbody>().drag = 2000;
             _Data.Add(a[i]);
         }
-        a[0].model.transform.position += new Vector3(30, 0, 0);
-        a[1].model.transform.position += new Vector3(-20, 20, 0);
+        a[1].model.transform.parent = a[0].model.transform;
+        a[1].father = 0;
+        a[2].model.transform.position += new Vector3(20, 10, 0);
 	}
     
 	

@@ -17,5 +17,6 @@ public class Model
     public StateOfBlock state { get; set; }
     public int father { get; set; }
     public Vector3 center { get; set; }
+	public Quaternion initialQuaternion{get; set;}
     public Model() { model = null; num = 0; state = StateOfBlock.free; father = 0; center = new Vector3(0,0,0);}
 }
