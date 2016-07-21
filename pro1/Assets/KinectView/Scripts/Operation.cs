@@ -6,30 +6,14 @@ using Kinect = Windows.Kinect;
 
 public class Operation : MonoBehaviour {
 
-    ModelManager ModelManager;
+    public ModelManager ModelManager;
     List<Vector3> modelPos;
 	// Use this for initialization
-    public GameObject e;
-    public GameObject[] a = new GameObject[2];
-    private GameObject[] b = new GameObject[2];
 
 	void Start () {
         //ModelManager = new ModelManager();
-        e = GameObject.Find("Sphere");
-        for (int i = 0; i < 2; ++i)
-        {
-            b[i] = GameObject.Instantiate(a[i]);
-            b[i].transform.parent = e.transform;
-            b[i].transform.rotation = Quaternion.identity;
-            b[i].transform.localPosition = new Vector3(0, 0, 0);
-            b[i].AddComponent<Rigidbody>();
-            b[i].GetComponent<Rigidbody>().useGravity = false;
-            b[i].GetComponent<Rigidbody>().drag = 2000;
-        }
-        b[0].transform.position += new Vector3(-20, 0, 0);
-        b[1].transform.position += new Vector3(30, 20, 0);
 	}
-	
+
 	// Update is called once per frame
 
     public GameObject BodySourceManager;
@@ -49,10 +33,14 @@ public class Operation : MonoBehaviour {
     private float deltaZ = 1;
     //标准化双手位置，因人而异，可在最初设计流程校准
 
+    private bool rotating = false;
+    private int rotatingNum;
+    private int cntCancelRotate = 0;
+
 	void Update () {
 
         //获取模型位置
-        List<Vector3> modelPos = ModelManager.GetAllPosition();
+        //List<Vector3> modelPos = ModelManager.GetPosition();
 
         //获取身体数据
         _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
@@ -77,8 +65,113 @@ public class Operation : MonoBehaviour {
 
 
 
+            //正在旋转物体
+            if (rotating)
+            {
+                if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
+                {
+                    ++cntCancelRotate;
+                    if (cntCancelRotate == 10/*阈值*/)
+                    {
+                        rotating = false;
+                    }
+                }
+                else
+                {
+                    //计算在XY平面内手与标准位置的距离和连线与空间角，
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                        + System.Math.Pow(leftY - standardLeftY, 2)
+                        /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                        + System.Math.Pow(rightY - standardRightY, 2)
+                        /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
+                    //若左右手距离标准位置的距离均大于XY平面内操作阈值
+                    if (leftDist > threshold && rightDist > threshold)
+                    {
+                        //计算空间角
+                        float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
+                        float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
+                        /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                                                                                                            + System.Math.Pow(leftY - standardLeftY, 2)));
+                        float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                                                                                                            + System.Math.Pow(rightY - standardRightY, 2)));*/
+                        if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
+                        {//左手在左
+                            if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
+                            {//右手在左
+                                //绕Y，俯视顺时针
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                                //绕X，左视逆时针
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                                //不转
+                            }
+                            else
+                            {//右手在下
+                                //不转
+                            }
+                        }
+                        else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
+                        {//左手在右
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                                //绕X，左视顺时针
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                                //绕Y，俯视逆时针
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                            }
+                            else
+                            {//右手在下
+                            }
+                        }
+                        else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
+                        {//左手在上
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                                //不转
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                                //不转
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                                //不转
+                            }
+                            else
+                            {//右手在下
+                                //绕Z，正视顺时针
+                            }
+                        }
+                        else
+                        {//左手在下
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                                //视野左旋
+                            }
+                            else
+                            {//右手在下
+                                //视野向下
+                            }
+                        }
+                    }
+                }
+            }
             //双手均Lasso，进行视野变换
-            if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)
+            else if (body.HandLeftState == Kinect.HandState.Lasso && body.HandRightState == Kinect.HandState.Lasso)
             {
                 /*************
                  * 都在上，摄像机和手同步向上移动
@@ -114,7 +207,7 @@ public class Operation : MonoBehaviour {
                     float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
                                                                                                         + System.Math.Pow(rightY - standardRightY, 2)));
                     if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
-                   {//左手在左
+                    {//左手在左
                         if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
                         {//右手在左
                             //视野向左
@@ -200,66 +293,65 @@ public class Operation : MonoBehaviour {
                 {
                 }*/
             }
-
-            else foreach (Vector3 pos in modelPos)
-            {
-                /* 各种自带手势
-                       * if (body.HandRightState == Kinect.HandState.Closed)
-                           print("rightClose");
-                       if (body.HandRightState == Kinect.HandState.Open)
-                           print("rightOpen");
-                       if (body.HandRightState == Kinect.HandState.Lasso)
-                           print("rightLesso");
-                       if (body.HandLeftState == Kinect.HandState.Closed)
-                           print("leftClose");
-                       if (body.HandRightState == Kinect.HandState.Open)
-                           print("leftOpen");
-                       if (body.HandRightState == Kinect.HandState.Lasso)
-                           print("leftLasso");*/
-                float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - pos.x, 2)
-                    + System.Math.Pow(leftY - pos.y, 2)
-                    + System.Math.Pow(leftZ - pos.z, 2));
-                float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - pos.x, 2)
-                    + System.Math.Pow(rightY - pos.y, 2)
-                    + System.Math.Pow(rightZ - pos.z, 2));
-                if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内 且 物体free
+            //非旋转、非视野，则可进行移动或开始旋转的判断
+            else for (int i = 0; i < modelPos.Count; ++i )
                 {
-                    if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
+                    /* 各种自带手势
+                           * if (body.HandRightState == Kinect.HandState.Closed)
+                               print("rightClose");
+                           if (body.HandRightState == Kinect.HandState.Open)
+                               print("rightOpen");
+                           if (body.HandRightState == Kinect.HandState.Lasso)
+                               print("rightLesso");
+                           if (body.HandLeftState == Kinect.HandState.Closed)
+                               print("leftClose");
+                           if (body.HandRightState == Kinect.HandState.Open)
+                               print("leftOpen");
+                           if (body.HandRightState == Kinect.HandState.Lasso)
+                               print("leftLasso");*/
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[i].x, 2)
+                        + System.Math.Pow(leftY - modelPos[i].y, 2)
+                        + System.Math.Pow(leftZ - modelPos[i].z, 2));
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[i].x, 2)
+                        + System.Math.Pow(rightY - modelPos[i].y, 2)
+                        + System.Math.Pow(rightZ - modelPos[i].z, 2));
+                    if (rightDist < 1 && leftDist < 1)//双手均在物体操作范围内 且 物体free
                     {
-                        /*旋转
-                         *旋转
-                         *旋转
-                         */
-                        break;
+                        if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
+                        {
+                            //标记开始旋转
+                            rotating = true;
+                            cntCancelRotate = 0;
+                            break;
+                        }
+                        else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
+                        {
+                            //模型随动
+                            break;
+                        }
+                        else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
+                        {
+                            //模型随动
+                            break;
+                        }
                     }
-                    else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
+                    else if (leftDist < 1 && rightDist > 1)//左手在操作范围内
                     {
-                        //模型随动
-                        break;
+                        if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
+                        {
+                            //模型随动
+                            break;
+                        }
                     }
-                    else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
+                    else if (rightDist < 1 && leftDist > 1)//右手在操作范围内
                     {
-                        //模型随动
-                        break;
+                        if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
+                        {
+                            //模型随动
+                            break;
+                        }
                     }
                 }
-                else if (leftDist < 1 && rightDist > 1)//左手在操作范围内
-                {
-                    if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
-                    {
-                        //模型随动
-                        break;
-                    }
-                }
-                else if (rightDist < 1 && leftDist > 1)//右手在操作范围内
-                {
-                    if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
-                    {
-                        //模型随动
-                        break;
-                    }
-                }
-            }
         }
     }
 }
