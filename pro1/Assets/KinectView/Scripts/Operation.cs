@@ -6,9 +6,11 @@ using Kinect = Windows.Kinect;
 
 public class Operation : MonoBehaviour {
 
+    ModelManager ModelManager;
+    List<Vector3> modelPos;
 	// Use this for initialization
 	void Start () {
-	
+        ModelManager = new ModelManager();
 	}
 	
 	// Update is called once per frame
@@ -33,7 +35,7 @@ public class Operation : MonoBehaviour {
 	void Update () {
 
         //获取模型位置
-        //List<Vector3> modelPos = ModelManager.GetAllPosition();
+        List<Vector3> modelPos = ModelManager.GetAllPosition();
 
         //获取身体数据
         _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
