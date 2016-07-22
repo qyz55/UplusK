@@ -112,6 +112,8 @@ public class ModelManager : MonoBehaviour
         }
         a[1].model.transform.parent = a[0].model.transform;
         a[1].father = 0;
+        a[1].center = new Vector3(-20, 0, 0);
+        a[2].center = new Vector3(-15, 0, 0);
         a[2].model.transform.position += new Vector3(20, 10, 0);
 	}
     
