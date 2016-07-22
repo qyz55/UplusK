@@ -24,8 +24,15 @@ public class ModelManager : MonoBehaviour
         if (_Data[num].state == StateOfBlock.caught)
             _Data[num].model.transform.position = CalcCenterPosition(num, _v3);
     }
-    
-    //以下是才定义出来没写的
+    public void MoveOneByVector3(int num, Vector3 _v3)
+    {
+        _Data[num].model.transform.position += _v3;
+    }
+    public void MoveAllByVector3(Vector3 _V3)
+    {
+        foreach (Model i in _Data)
+            i.model.transform.position += _V3;
+    }
     public bool IsJointed(int num1, int num2) // 输入两个物体的下标，判断物体可否被拼接
     {
         return true;
