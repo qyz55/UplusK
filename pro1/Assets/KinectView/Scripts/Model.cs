@@ -29,6 +29,7 @@ public class Model
         center = Vector3.zero;
         NumOfLast = 0;
         LastPosition = Vector3.zero;
+		initialQuaternion = Quaternion.identity;
         LastQuaternion = Quaternion.identity;
     }
 }

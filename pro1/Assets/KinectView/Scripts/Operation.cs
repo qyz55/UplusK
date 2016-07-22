@@ -20,12 +20,27 @@ public class Operation : MonoBehaviour {
 
     public GameObject BodySourceManager;
     private BodySourceManager _BodyManager;
-    private float standardLeftX = -20F;
-    private float standardLeftY = 0;
-    private float standardLeftZ = 25;
-    private float standardRightX = 20F;
-    private float standardRightY = 0;
-    private float standardRightZ = 25;
+
+    private float leftX;
+    private float leftY;
+    private float leftZ;
+    private float rightX;
+    private float rightY;
+    private float rightZ;
+
+    private float offsetLeftX = 0;
+    private float offsetLeftY = 0;
+    private float offsetLeftZ = 0;
+    private float offsetRightX = 0;
+    private float offsetRightY = 0;
+    private float offsetRightZ = 0;
+
+    private float standardLeftX;
+    private float standardLeftY;
+    private float standardLeftZ;
+    private float standardRightX;
+    private float standardRightY;
+    private float standardRightZ;
 
     private float standardRotateLeftX;
     private float standardRotateLeftY;
@@ -41,7 +56,9 @@ public class Operation : MonoBehaviour {
     private float deltaY = 1;
     private float deltaZ = 1;
     //标准化双手位置，因人而异，可在最初设计流程校准
-    
+
+    private int startViewCountDown;
+
     private bool rotating = false;
     private int rotatingNum;
     private int startRotateCountDown;
@@ -77,12 +94,12 @@ public class Operation : MonoBehaviour {
             }
             if (body.IsTracked)
             {
-                float leftX = body.Joints[Kinect.JointType.HandLeft].Position.X * 40;
-                float leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y * 40;
-                float leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z * 30;
-                float rightX = body.Joints[Kinect.JointType.HandRight].Position.X * 40;
-                float rightY = body.Joints[Kinect.JointType.HandRight].Position.Y * 40;
-                float rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z * 30;
+                leftX = body.Joints[Kinect.JointType.HandLeft].Position.X * 40 + offsetLeftX;
+                leftY = body.Joints[Kinect.JointType.HandLeft].Position.Y * 40 + offsetLeftY;
+                leftZ = body.Joints[Kinect.JointType.HandLeft].Position.Z * 30 + offsetLeftZ;
+                rightX = body.Joints[Kinect.JointType.HandRight].Position.X * 40 + offsetRightX;
+                rightY = body.Joints[Kinect.JointType.HandRight].Position.Y * 40 + offsetRightY;
+                rightZ = body.Joints[Kinect.JointType.HandRight].Position.Z * 30 + offsetRightZ;
 
                 print("left: " + leftX + " " + leftY + " " + leftZ);
                 print("right: " + rightX + " " + rightY + " " + rightZ);
@@ -95,7 +112,7 @@ public class Operation : MonoBehaviour {
                     if (startRotateCountDown-- > 0)
                     {
                         print("把手保持在正常位置");
-                        if (startRotateCountDown == 200)
+                        if (startRotateCountDown == 50)
                         {
                             standardRotateLeftX = leftX;
                             standardRotateLeftY = leftY;
@@ -221,6 +238,18 @@ public class Operation : MonoBehaviour {
                 //双手均Lasso，进行视野变换
                 else if (lasso)
                 {
+                    if (startViewCountDown-- > 0)
+                    {
+                        print("把手保持在正常位置");
+                        if (startViewCountDown == 50)
+                        {
+                            standardLeftX = leftX;
+                            standardLeftY = leftY;
+                            standardRightX = rightX;
+                            standardRightY = rightY;
+                        }
+                        continue;
+                    }
                     print("two hands Lasso");
                     if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
                     {
@@ -268,11 +297,21 @@ public class Operation : MonoBehaviour {
                         {//左手在左
                             if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
                             {//右手在左
-                                //视野向左
+                                //视野向左 即物体x+
+                                ModelManager.MoveAllByVector3(new Vector3(0.1F,0,0));
+                                offsetLeftX += 0.1F;
+                                offsetRightX += 0.1F;
+                                standardLeftX += 0.1F;
+                                standardRightX += 0.1F;
                             }
                             else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
-                                //摄像机前进
+                                //摄像机前进 即物体z+
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0, 0.1F));
+                                offsetLeftZ += 0.1F;
+                                offsetRightZ += 0.1F;
+                                standardLeftZ += 0.1F;
+                                standardRightZ += 0.1F;
                             }
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
@@ -285,11 +324,21 @@ public class Operation : MonoBehaviour {
                         {//左手在右
                             if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
                             {//右手在左
-                                //摄像机后退
+                                //摄像机后退 即物体z-
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0, -0.1F));
+                                offsetLeftZ -= 0.1F;
+                                offsetRightZ -= 0.1F;
+                                standardLeftZ -= 0.1F;
+                                standardRightZ -= 0.1F;
                             }
                             else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //视野向右
+                                ModelManager.MoveAllByVector3(new Vector3(-0.1F, 0, 0));
+                                offsetLeftX -= 0.1F;
+                                offsetRightX -= 0.1F;
+                                standardLeftX -= 0.1F;
+                                standardRightX -= 0.1F;
                             }
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
@@ -309,6 +358,11 @@ public class Operation : MonoBehaviour {
                             else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
                                 //视野向上
+                                ModelManager.MoveAllByVector3(new Vector3(0, -0.1F, 0));
+                                offsetLeftY -= 0.1F;
+                                offsetRightY -= 0.1F;
+                                standardLeftY -= 0.1F;
+                                standardRightY -= 0.1F;
                             }
                             else
                             {//右手在下
@@ -330,6 +384,11 @@ public class Operation : MonoBehaviour {
                             else
                             {//右手在下
                                 //视野向下
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0.1F, 0));
+                                offsetLeftY += 0.1F;
+                                offsetRightY += 0.1F;
+                                standardLeftY += 0.1F;
+                                standardRightY += 0.1F;
                             }
                         }
                     }
@@ -338,6 +397,7 @@ public class Operation : MonoBehaviour {
                 {
                     lasso = true;
                     cntCancelLasso = 0;
+                    startViewCountDown = 200;
                 }
                 //非Rotating、非Lasso，则可进行移动或开始旋转的判断
                 else
@@ -374,7 +434,7 @@ public class Operation : MonoBehaviour {
                             if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
                             {
                                 //标记开始旋转
-                                startRotateCountDown = 500;
+                                startRotateCountDown = 200;
                                 ModelManager.ChangeState(i, StateOfBlock.caught);
                                 rotating = true;
                                 rotatingNum = i;
