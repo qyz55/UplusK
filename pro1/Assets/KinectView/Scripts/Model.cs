@@ -17,6 +17,18 @@ public class Model
     public StateOfBlock state { get; set; }
     public int father { get; set; }
     public Vector3 center { get; set; }
+    public int NumOfLast { get; set; }
+    public Vector3 LastPosition { get; set;}
+    public Quaternion LastQuaternion { get; set; }
 	public Quaternion initialQuaternion{get; set;}
-    public Model() { model = null; num = 0; state = StateOfBlock.free; father = 0; center = new Vector3(0,0,0);}
+    public Model() { 
+        model = null; 
+        num = 0; 
+        state = StateOfBlock.free;
+        father = 0; 
+        center = Vector3.zero;
+        NumOfLast = 0;
+        LastPosition = Vector3.zero;
+        LastQuaternion = Quaternion.identity;
+    }
 }
