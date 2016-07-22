@@ -56,7 +56,7 @@ public class ModelManager : MonoBehaviour
         else
         {
             ++_Data[num].NumOfLast;
-            if (_Data[num].NumOfLast >= 10)
+            if (_Data[num].NumOfLast >= 100)
             {
                 _Data[num].NumOfLast = 0;
                 _Data[num].LastPosition = _Data[num].model.transform.position;
@@ -131,20 +131,28 @@ public class ModelManager : MonoBehaviour
     public GameObject e;
     private bool CheckRotation()
     {
+        
         Quaternion q = _Data[ShouldCatch].model.transform.rotation * Quaternion.Inverse(_Data[0].model.transform.rotation);
         if (Math.Abs(q.eulerAngles.x) + Math.Abs(q.eulerAngles.y) + Math.Abs(q.eulerAngles.z) < 60)
+        {
+            Debug.Log("AngleCorrect");
             return true;
+            
+        }
+        Debug.Log("AngleFalse");
         return false;
     }
     private void TryJoint()
     {
-        if (Vector3.Distance(_Data[0].model.transform.position, _Data[ShouldCatch].model.transform.position) < 20)
+        if (Vector3.Distance(_Data[0].model.transform.position, _Data[ShouldCatch].model.transform.position) < 10)
             if(CheckRotation() == true)
             {
+                print("OK");
                 _Data[ShouldCatch].father = 0;
                 _Data[ShouldCatch].model.transform.parent = _Data[0].model.transform;
                 _Data[ShouldCatch].model.transform.localPosition = Vector3.zero;
                 _Data[ShouldCatch].model.transform.rotation = _Data[ShouldCatch].initialQuaternion;
+                _Data[ShouldCatch].state = StateOfBlock.jointed;
                 ShouldCatch++;
                 //a[ShouldCatch].init;
             }
@@ -163,7 +171,8 @@ public class ModelManager : MonoBehaviour
             a[i].state = StateOfBlock.free;
             a[i].father = i;
             a[i].model.transform.localPosition = new Vector3(0, 0, 0) + a[0].model.transform.position;
-            a[i].initialQuaternion = a[i].model.transform.rotation;
+            a[i].initialQuaternion = Quaternion.identity;
+            a[i].model.transform.rotation = Quaternion.identity;
             a[i].model.AddComponent<Rigidbody>();
             a[i].model.GetComponent<Rigidbody>().isKinematic = true;
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
