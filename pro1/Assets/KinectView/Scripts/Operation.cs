@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Kinect = Windows.Kinect;
+using UnityEngine.UI;
 
 public class Operation : MonoBehaviour {
 
@@ -57,11 +58,11 @@ public class Operation : MonoBehaviour {
     private int rotatingNum;
     private int startRotateCountDown;
     private int cntCancelRotate = 0;
-    private const int cancelRotateThreshold = 100;
+    private const int cancelRotateThreshold = 120;
     
     private bool lasso = false;
     private int cntCancelLasso = 0;
-    private const int cancelLassoThreshold = 100;
+    private const int cancelLassoThreshold = 120;
 
 	void FixedUpdate () {
 
@@ -112,7 +113,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startRotateCountDown > 0)
                 {
-                    print("把手保持在正常位置");
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到在正常位置并保持一会儿";
                     if (startRotateCountDown == 20)
                     {
                         standardRotateLeftX = leftX;
@@ -123,9 +124,11 @@ public class Operation : MonoBehaviour {
                     startRotateCountDown--;
                     return;
                 }
-                print("Rotating");
+
+                GameObject.Find("HandsHints").GetComponent<Text>().text = "旋转中";
                 if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
                 {
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "退出旋转中";
                     ++cntCancelRotate;
                     if (cntCancelRotate == cancelRotateThreshold)
                     {
@@ -135,6 +138,7 @@ public class Operation : MonoBehaviour {
                 }
                 else
                 {
+                    cntCancelRotate = 0;
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
                     float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardRotateLeftX, 2)
                         + System.Math.Pow(leftY - standardRotateLeftY, 2)
@@ -242,6 +246,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startViewCountDown > 0)
                 {
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持一会儿";
                     print("把手保持在正常位置");
                     if (startViewCountDown == 20)
                     {
@@ -253,9 +258,11 @@ public class Operation : MonoBehaviour {
                     startViewCountDown--;
                     return;
                 }
+                GameObject.Find("HandsHints").GetComponent<Text>().text = "视野变换中";
                 print("two hands Lasso");
                 if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
                 {
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "退出视野变换中";
                     ++cntCancelLasso;
                     if (cntCancelLasso > cancelLassoThreshold)
                     {
@@ -263,135 +270,138 @@ public class Operation : MonoBehaviour {
                         lasso = false;
                     }
                 }
-                /*************
-                 * 都在上，摄像机和手同步向上移动
-                 * 都在下，视野向下
-                 * 都在左，视野向左
-                 * 都在右，视野向右
-                 * 左偏左右偏右，摄像机和手前进
-                 * 左偏右右偏左，摄像机和手后退
-                 * 左下右上，？摄像机和手？逆时针转动
-                 * 左上右下，？摄像机和手？顺时针转动
-                 * 左前右后，？各物体？俯视顺时针转动
-                 * 左后右前，？各物体？俯视顺时针转动
-                 * 
-                 * 移动或转动速度与双手相关方向距离有关
-                 * */
-
-                //计算在XY平面内手与标准位置的距离和连线与空间角，
-                float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                    + System.Math.Pow(leftY - standardLeftY, 2)
-                    /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
-                float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                    + System.Math.Pow(rightY - standardRightY, 2)
-                    /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
-
-                //若左右手距离标准位置的距离均大于XY平面内操作阈值
-                if (leftDist > rotateThreshold && rightDist > rotateThreshold)
+                else
                 {
-                    //计算空间角
-                    float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
-                    float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
-                    /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                        + System.Math.Pow(leftY - standardLeftY, 2)));
-                    float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                        + System.Math.Pow(rightY - standardRightY, 2)));*/
-                    if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
-                    {//左手在左
-                        if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
-                        {//右手在左
-                            //视野向左 即物体x+
-                            ModelManager.MoveAllByVector3(new Vector3(0.1F, 0, 0));
-                            offsetLeftX += 0.1F;
-                            offsetRightX += 0.1F;
-                            standardLeftX += 0.1F;
-                            standardRightX += 0.1F;
+                    /*************
+                     * 都在上，摄像机和手同步向上移动
+                     * 都在下，视野向下
+                     * 都在左，视野向左
+                     * 都在右，视野向右
+                     * 左偏左右偏右，摄像机和手前进
+                     * 左偏右右偏左，摄像机和手后退
+                     * 左下右上，？摄像机和手？逆时针转动
+                     * 左上右下，？摄像机和手？顺时针转动
+                     * 左前右后，？各物体？俯视顺时针转动
+                     * 左后右前，？各物体？俯视顺时针转动
+                     * 
+                     * 移动或转动速度与双手相关方向距离有关
+                     * */
+
+                    //计算在XY平面内手与标准位置的距离和连线与空间角，
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                        + System.Math.Pow(leftY - standardLeftY, 2)
+                        /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                        + System.Math.Pow(rightY - standardRightY, 2)
+                        /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
+
+                    //若左右手距离标准位置的距离均大于XY平面内操作阈值
+                    if (leftDist > rotateThreshold && rightDist > rotateThreshold)
+                    {
+                        //计算空间角
+                        float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
+                        float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
+                        /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
+                            + System.Math.Pow(leftY - standardLeftY, 2)));
+                        float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
+                            + System.Math.Pow(rightY - standardRightY, 2)));*/
+                        if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
+                        {//左手在左
+                            if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
+                            {//右手在左
+                                //视野向左 即物体x+
+                                ModelManager.MoveAllByVector3(new Vector3(0.1F, 0, 0));
+                                offsetLeftX += 0.1F;
+                                offsetRightX += 0.1F;
+                                standardLeftX += 0.1F;
+                                standardRightX += 0.1F;
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                                //摄像机前进 即物体z+
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0, 0.1F));
+                                offsetLeftZ += 0.1F;
+                                offsetRightZ += 0.1F;
+                                standardLeftZ += 0.1F;
+                                standardRightZ += 0.1F;
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                            }
+                            else
+                            {//右手在下
+                            }
                         }
-                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                        {//右手在右
-                            //摄像机前进 即物体z+
-                            ModelManager.MoveAllByVector3(new Vector3(0, 0, 0.1F));
-                            offsetLeftZ += 0.1F;
-                            offsetRightZ += 0.1F;
-                            standardLeftZ += 0.1F;
-                            standardRightZ += 0.1F;
+                        else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
+                        {//左手在右
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                                //摄像机后退 即物体z-
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0, -0.1F));
+                                offsetLeftZ -= 0.1F;
+                                offsetRightZ -= 0.1F;
+                                standardLeftZ -= 0.1F;
+                                standardRightZ -= 0.1F;
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                                //视野向右
+                                ModelManager.MoveAllByVector3(new Vector3(-0.1F, 0, 0));
+                                offsetLeftX -= 0.1F;
+                                offsetRightX -= 0.1F;
+                                standardLeftX -= 0.1F;
+                                standardRightX -= 0.1F;
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                            }
+                            else
+                            {//右手在下
+                            }
                         }
-                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                        {//右手在上
+                        else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
+                        {//左手在上
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                                //视野向上
+                                ModelManager.MoveAllByVector3(new Vector3(0, -0.1F, 0));
+                                offsetLeftY -= 0.1F;
+                                offsetRightY -= 0.1F;
+                                standardLeftY -= 0.1F;
+                                standardRightY -= 0.1F;
+                            }
+                            else
+                            {//右手在下
+                                //视野右旋
+                            }
                         }
                         else
-                        {//右手在下
-                        }
-                    }
-                    else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
-                    {//左手在右
-                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                        {//右手在左
-                            //摄像机后退 即物体z-
-                            ModelManager.MoveAllByVector3(new Vector3(0, 0, -0.1F));
-                            offsetLeftZ -= 0.1F;
-                            offsetRightZ -= 0.1F;
-                            standardLeftZ -= 0.1F;
-                            standardRightZ -= 0.1F;
-                        }
-                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                        {//右手在右
-                            //视野向右
-                            ModelManager.MoveAllByVector3(new Vector3(-0.1F, 0, 0));
-                            offsetLeftX -= 0.1F;
-                            offsetRightX -= 0.1F;
-                            standardLeftX -= 0.1F;
-                            standardRightX -= 0.1F;
-                        }
-                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                        {//右手在上
-                        }
-                        else
-                        {//右手在下
-                        }
-                    }
-                    else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
-                    {//左手在上
-                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                        {//右手在左
-                        }
-                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                        {//右手在右
-                        }
-                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                        {//右手在上
-                            //视野向上
-                            ModelManager.MoveAllByVector3(new Vector3(0, -0.1F, 0));
-                            offsetLeftY -= 0.1F;
-                            offsetRightY -= 0.1F;
-                            standardLeftY -= 0.1F;
-                            standardRightY -= 0.1F;
-                        }
-                        else
-                        {//右手在下
-                            //视野右旋
-                        }
-                    }
-                    else
-                    {//左手在下
-                        if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                        {//右手在左
-                        }
-                        else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                        {//右手在右
-                        }
-                        else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                        {//右手在上
-                            //视野左旋
-                        }
-                        else
-                        {//右手在下
-                            //视野向下
-                            ModelManager.MoveAllByVector3(new Vector3(0, 0.1F, 0));
-                            offsetLeftY += 0.1F;
-                            offsetRightY += 0.1F;
-                            standardLeftY += 0.1F;
-                            standardRightY += 0.1F;
+                        {//左手在下
+                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            {//右手在左
+                            }
+                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            {//右手在右
+                            }
+                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            {//右手在上
+                                //视野左旋
+                            }
+                            else
+                            {//右手在下
+                                //视野向下
+                                ModelManager.MoveAllByVector3(new Vector3(0, 0.1F, 0));
+                                offsetLeftY += 0.1F;
+                                offsetRightY += 0.1F;
+                                standardLeftY += 0.1F;
+                                standardRightY += 0.1F;
+                            }
                         }
                     }
                 }
@@ -405,6 +415,7 @@ public class Operation : MonoBehaviour {
             //非Rotating、非Lasso，则可进行移动或开始旋转的判断
             else
             {
+                GameObject.Find("HandsHints").GetComponent<Text>().text = "";
                 int operateLeftNum = -1;
                 int operateRightNum = -1;
                 float nearestLeftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[0].x, 2)
