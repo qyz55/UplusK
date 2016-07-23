@@ -119,7 +119,7 @@ public class Operation : MonoBehaviour {
                 if (startRotateCountDown-- > 0)
                 {
                     print("把手保持在正常位置");
-                    if (startRotateCountDown == 50)
+                    if (startRotateCountDown == 20)
                     {
                         standardRotateLeftX = leftX;
                         standardRotateLeftY = leftY;
@@ -248,7 +248,7 @@ public class Operation : MonoBehaviour {
                 if (startViewCountDown-- > 0)
                 {
                     print("把手保持在正常位置");
-                    if (startViewCountDown == 50)
+                    if (startViewCountDown == 20)
                     {
                         standardLeftX = leftX;
                         standardLeftY = leftY;
@@ -404,7 +404,7 @@ public class Operation : MonoBehaviour {
             {
                 lasso = true;
                 cntCancelLasso = 0;
-                startViewCountDown = 200;
+                startViewCountDown = 120;
             }
             //非Rotating、非Lasso，则可进行移动或开始旋转的判断
             else
@@ -468,7 +468,7 @@ public class Operation : MonoBehaviour {
                         if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
                         {
                             //标记开始旋转
-                            startRotateCountDown = 200;
+                            startRotateCountDown = 120;
                             rotatingNum = 0;
                             ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                             rotating = true;
