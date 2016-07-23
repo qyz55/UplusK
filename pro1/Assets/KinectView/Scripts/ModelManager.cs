@@ -178,6 +178,11 @@ public class ModelManager : MonoBehaviour
         _Data[i].model.transform.localPosition = Vector3.zero;
         _Data[i].model.transform.localRotation = _Data[ShouldCatch].initialQuaternion;
         _Data[i].state = StateOfBlock.jointed;
+        Vector3 t = Vector3.zero;
+        for (int j = 1; j <= i; ++j)
+            t += _Data[j].center;
+        t /= i;
+        _Data[0].center = t;
         ShouldCatch++;
     }
     void Congratulations()
