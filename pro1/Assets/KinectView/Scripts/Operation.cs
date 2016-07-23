@@ -413,12 +413,13 @@ public class Operation : MonoBehaviour {
                 int operateRightNum = -1;
                 float nearestLeftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[0].x, 2)
                         + System.Math.Pow(leftY - modelPos[0].y, 2)
-                        + System.Math.Pow(leftZ - modelPos[0].z, 2)); ;
+                        + System.Math.Pow(leftZ - modelPos[0].z, 2));
                 float nearestRightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[0].x, 2)
                         + System.Math.Pow(rightY - modelPos[0].y, 2)
                         + System.Math.Pow(rightZ - modelPos[0].z, 2));
                 for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
                 {
+                    print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
                     float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[i].x, 2)
                         + System.Math.Pow(leftY - modelPos[i].y, 2)
                         + System.Math.Pow(leftZ - modelPos[i].z, 2));
@@ -442,6 +443,10 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
+                if(operateLeftNum != -1)
+                    print("LeftHandOperating " + operateLeftNum + " X:" + modelPos[operateLeftNum].x + " Y:" + modelPos[operateLeftNum].y + " Z:" + modelPos[operateLeftNum].z);
+                if(operateRightNum != -1)
+                print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
                 /* 各种自带手势
                        * if (body.HandRightState == Kinect.HandState.Closed)
                            print("rightClose");
