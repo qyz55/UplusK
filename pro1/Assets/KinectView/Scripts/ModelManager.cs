@@ -199,9 +199,13 @@ public class ModelManager : MonoBehaviour
         _Data[0].center = t;
         ShouldCatch++;
     }
-    public void FlashGreyForOneFrame(int num)
+    public void FlashOnGreyForOneFrame(int num)
     {
-        _Data[num].model.GetComponent<Highlighter>().OnParams(Color.grey);
+        _Data[num].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
+    }
+    public void FlashOffForOneFrame(int num)
+    {
+        _Data[num].model.GetComponent<Highlighter>().ConstantOff();
     }
     void Congratulations()
     {

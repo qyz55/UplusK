@@ -48,7 +48,7 @@ public class Operation : MonoBehaviour {
     private float standardRotateRightX;
     private float standardRotateRightY;
 
-    private float catchThreshold = 10F;
+    private float catchThreshold = 6F;
     private float rotateThreshold = 3F;
     //标准化双手位置，因人而异，可在最初设计流程校准
 
@@ -478,11 +478,11 @@ public class Operation : MonoBehaviour {
                 {
                     if (operateLeftNum == ModelManager.ShouldCatch)
                     {
-                        ModelManager.FlashGreyForOneFrame(operateLeftNum);
+                        ModelManager.FlashOnGreyForOneFrame(operateLeftNum);
                     }
                     else
                     {
-                        ModelManager.FlashGreyForOneFrame(0);
+                        ModelManager.FlashOnGreyForOneFrame(0);
                     }
                     print("LeftHandOperating " + operateLeftNum + " X:" + modelPos[operateLeftNum].x + " Y:" + modelPos[operateLeftNum].y + " Z:" + modelPos[operateLeftNum].z);
                 }
@@ -490,11 +490,11 @@ public class Operation : MonoBehaviour {
                 {
                     if (operateRightNum == ModelManager.ShouldCatch)
                     {
-                        ModelManager.FlashGreyForOneFrame(operateRightNum);
+                        ModelManager.FlashOnGreyForOneFrame(operateRightNum);
                     }
                     else
                     {
-                        ModelManager.FlashGreyForOneFrame(0);
+                        ModelManager.FlashOnGreyForOneFrame(0);
                     }
                     print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
                 }
