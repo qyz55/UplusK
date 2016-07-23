@@ -26,11 +26,19 @@ public class ModelManager : MonoBehaviour
     }
     public void MoveOne(int num, Vector3 _v3) // 传入想要移动的物体的下标和想要其移动到的位置
     {
-        if (_Data[num].state == StateOfBlock.caught && (num == ShouldCatch || num == 0))
+        if (_Data[num].state == StateOfBlock.caught && num == ShouldCatch)
             _Data[num].model.transform.position = CalcCenterPosition(num, _v3);
         else 
             return;
         SavePos(num);
+        TryJoint();
+    }
+    public void Move0(int num, Vector3 _v3)
+    {
+        if (_Data[0].state != StateOfBlock.caught)
+            return;
+        _Data[0].model.transform.position = _v3 - _Data[0].model.transform.rotation * _Data[num].center;
+        SavePos(0);
         TryJoint();
     }
     /*public void MoveOneByVector3(int num, Vector3 _v3)
@@ -181,6 +189,7 @@ public class ModelManager : MonoBehaviour
         }
         a[1].model.transform.parent = a[0].model.transform;
         a[1].father = 0;
+        a[1].state = StateOfBlock.jointed;
         a[1].center = new Vector3(-20, 0, 0);
         a[2].center = new Vector3(-15, 0, 0);
         a[2].model.transform.position += new Vector3(20, 10, 0);
