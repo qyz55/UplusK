@@ -167,6 +167,7 @@ public class ModelManager : MonoBehaviour
     }
 
 	void Start () {
+        this.gameObject.SetActive(false);
         //a[1].init();
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
@@ -193,6 +194,9 @@ public class ModelManager : MonoBehaviour
         a[1].center = new Vector3(-20, 0, 0);
         a[2].center = new Vector3(-15, 0, 0);
         a[2].model.transform.position += new Vector3(20, 10, 0);
+        a[0].model.SetActive(false);
+        a[1].model.SetActive(false);
+        a[2].model.SetActive(false);
 	}
     
 	
