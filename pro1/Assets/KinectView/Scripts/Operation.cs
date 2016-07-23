@@ -47,14 +47,8 @@ public class Operation : MonoBehaviour {
     private float standardRotateRightX;
     private float standardRotateRightY;
 
-/*    private float deltaX = 1;
-    private float deltaY = 1;
-    private float deltaZ = 1;*/
     private float catchThreshold = 5F;
     private float rotateThreshold = 1F;
-    private float deltaX = 1;
-    private float deltaY = 1;
-    private float deltaZ = 1;
     //标准化双手位置，因人而异，可在最初设计流程校准
 
     private int startViewCountDown;
