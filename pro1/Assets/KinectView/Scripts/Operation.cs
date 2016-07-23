@@ -113,7 +113,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startRotateCountDown > 0)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到在正常位置并保持一会儿";
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到在正常位置并保持一会儿\n开始旋转";
                     if (startRotateCountDown == 20)
                     {
                         standardRotateLeftX = leftX;
@@ -121,7 +121,20 @@ public class Operation : MonoBehaviour {
                         standardRotateRightX = rightX;
                         standardRotateRightY = rightY;
                     }
+                    if (startRotateCountDown < 20)
+                    {
+                        standardRotateLeftX = (standardRotateLeftX + leftX) / 2;
+                        standardRotateLeftY = (standardRotateLeftY + leftY) / 2;
+
+                        standardRotateRightX = (standardRotateRightX + rightX) / 2;
+                        standardRotateRightY = (standardRotateRightY + rightY) / 2;
+                    }
                     startRotateCountDown--;
+                    if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
+                    {
+                        rotating = false;
+                        ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
+                    }
                     return;
                 }
 
@@ -249,7 +262,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startViewCountDown > 0)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持一会儿";
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视野";
                     print("把手保持在正常位置");
                     if (startViewCountDown == 20)
                     {
@@ -258,7 +271,20 @@ public class Operation : MonoBehaviour {
                         standardRightX = rightX;
                         standardRightY = rightY;
                     }
+                    if (startViewCountDown < 20)
+                    {
+                        standardLeftX = (standardLeftX + leftX) / 2;
+                        standardLeftY = (standardLeftY + leftY) / 2;
+
+                        standardRightX = (standardRightX + rightX) / 2;
+                        standardRightY = (standardRightY + rightY) / 2;
+                    }
                     startViewCountDown--;
+                    if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
+                    {
+                        lasso = false;
+                        cntCancelLasso = 0;
+                    }
                     return;
                 }
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "视野变换中";
@@ -272,8 +298,8 @@ public class Operation : MonoBehaviour {
                     }
                     if (cntCancelLasso > cancelLassoThreshold)
                     {
-                        cntCancelLasso = 0;
                         lasso = false;
+                        cntCancelLasso = 0;
                     }
                 }
                 else
@@ -286,12 +312,6 @@ public class Operation : MonoBehaviour {
                      * 都在右，视野向右
                      * 左偏左右偏右，摄像机和手前进
                      * 左偏右右偏左，摄像机和手后退
-                     * 左下右上，？摄像机和手？逆时针转动
-                     * 左上右下，？摄像机和手？顺时针转动
-                     * 左前右后，？各物体？俯视顺时针转动
-                     * 左后右前，？各物体？俯视顺时针转动
-                     * 
-                     * 移动或转动速度与双手相关方向距离有关
                      * */
 
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
