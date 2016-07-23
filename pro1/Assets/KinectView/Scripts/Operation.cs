@@ -128,9 +128,12 @@ public class Operation : MonoBehaviour {
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "旋转中";
                 if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "退出旋转中";
                     ++cntCancelRotate;
-                    if (cntCancelRotate == cancelRotateThreshold)
+                    if (cntCancelRotate > cancelRotateThreshold >> 1)
+                    {
+                        GameObject.Find("HandsHints").GetComponent<Text>().text = "退出旋转中";
+                    }
+                    if (cntCancelRotate > cancelRotateThreshold)
                     {
                         rotating = false;
                         ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
@@ -262,8 +265,11 @@ public class Operation : MonoBehaviour {
                 print("two hands Lasso");
                 if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "退出视野变换中";
                     ++cntCancelLasso;
+                    if (cntCancelRotate > cancelLassoThreshold >> 1)
+                    {
+                        GameObject.Find("HandsHints").GetComponent<Text>().text = "退出视野变换中";
+                    }
                     if (cntCancelLasso > cancelLassoThreshold)
                     {
                         cntCancelLasso = 0;
@@ -272,6 +278,7 @@ public class Operation : MonoBehaviour {
                 }
                 else
                 {
+                    cntCancelLasso = 0;
                     /*************
                      * 都在上，摄像机和手同步向上移动
                      * 都在下，视野向下

@@ -141,14 +141,17 @@ public class ModelManager : MonoBehaviour
         return _Data[num].state;
     }
 	// Use this for initialization
-    
+    private float min(float x, float y)
+    {
+        return x < y ? x : y;
+    }
     private bool CheckRotation()
     {
         
         Quaternion q = _Data[ShouldCatch].model.transform.rotation * Quaternion.Inverse(_Data[0].model.transform.rotation);
-        if (Math.Abs(q.eulerAngles.x) + Math.Abs(q.eulerAngles.y) + Math.Abs(q.eulerAngles.z) < RangeOfAngles)
+        if (min(q.eulerAngles.x, 360 - q.eulerAngles.x) + min(q.eulerAngles.y, 360 - q.eulerAngles.y) + min(q.eulerAngles.z, 360 - q.eulerAngles.z) < RangeOfAngles)
         {
-            Debug.Log("AngleCorrect");
+            Debug.Log("CheckRotation" + q.eulerAngles.x + " " + q.eulerAngles.y + " " + q.eulerAngles.z);
             return true;
             
         }
@@ -157,13 +160,16 @@ public class ModelManager : MonoBehaviour
     }
     private void TryJoint()
     {
-        if (Vector3.Distance(_Data[0].model.transform.position, _Data[ShouldCatch].model.transform.position) < RangeOfDis)
-            if(CheckRotation() == true)
+        
+        if (Vector3.Distance(CalcRealPosition(0, _Data[0].model.transform.position) - _Data[0].center, CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center) < RangeOfDis)
+        {
+            if (CheckRotation() == true)
             {
                 print("OK");
                 GetJointed(ShouldCatch);
                 Creat(ShouldCatch);
             }
+        }
     }
     void GetJointed(int i)
     {
