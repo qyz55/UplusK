@@ -6,9 +6,16 @@ using System;
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
 {
+    static public int NumOfPiece = 3;
     private List<Model> _Data = new List<Model>();
-    public int ShouldCatch = 2;
-    public int NumOfPiece = 2;
+    private Model[] a = new Model[NumOfPiece + 1];
+    public GameObject[] b = new GameObject[NumOfPiece + 1];
+    public GameObject e;
+    public int ShouldCatch = 1;
+    public Vector3  BirthPosition = new Vector3(40,20,30);
+    public float RangeOfAngles = 80.0f;
+    public float RangeOfDis = 5;
+    public Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
     public bool inCollision = false;
     //以下是写了一个大概的
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
@@ -134,14 +141,12 @@ public class ModelManager : MonoBehaviour
         return _Data[num].state;
     }
 	// Use this for initialization
-    private Model[] a = new Model[3];
-    public GameObject[] b = new GameObject[3];
-    public GameObject e;
+    
     private bool CheckRotation()
     {
         
         Quaternion q = _Data[ShouldCatch].model.transform.rotation * Quaternion.Inverse(_Data[0].model.transform.rotation);
-        if (Math.Abs(q.eulerAngles.x) + Math.Abs(q.eulerAngles.y) + Math.Abs(q.eulerAngles.z) < 60)
+        if (Math.Abs(q.eulerAngles.x) + Math.Abs(q.eulerAngles.y) + Math.Abs(q.eulerAngles.z) < RangeOfAngles)
         {
             Debug.Log("AngleCorrect");
             return true;
@@ -152,51 +157,57 @@ public class ModelManager : MonoBehaviour
     }
     private void TryJoint()
     {
-        if (Vector3.Distance(_Data[0].model.transform.position, _Data[ShouldCatch].model.transform.position) < 10)
+        if (Vector3.Distance(_Data[0].model.transform.position, _Data[ShouldCatch].model.transform.position) < RangeOfDis)
             if(CheckRotation() == true)
             {
                 print("OK");
-                _Data[ShouldCatch].father = 0;
-                _Data[ShouldCatch].model.transform.parent = _Data[0].model.transform;
-                _Data[ShouldCatch].model.transform.localPosition = Vector3.zero;
-                _Data[ShouldCatch].model.transform.rotation = _Data[ShouldCatch].initialQuaternion;
-                _Data[ShouldCatch].state = StateOfBlock.jointed;
-                ShouldCatch++;
-                //a[ShouldCatch].init;
+                GetJointed(ShouldCatch);
+                Creat(ShouldCatch);
             }
     }
-
+    void GetJointed(int i)
+    {
+        _Data[i].father = 0;
+        _Data[i].model.transform.parent = _Data[0].model.transform;
+        _Data[i].model.transform.localPosition = Vector3.zero;
+        _Data[i].model.transform.localRotation = _Data[ShouldCatch].initialQuaternion;
+        _Data[i].state = StateOfBlock.jointed;
+        ShouldCatch++;
+    }
+    void Congratulations()
+    {
+        return;
+    }
+    void Creat(int i)
+    {
+        if (i > NumOfPiece) { Congratulations(); return; };
+        a[i] = new Model();
+        a[i].model = GameObject.Instantiate(b[i]);
+        a[i].num = i;
+        a[i].state = StateOfBlock.free;
+        a[i].father = i;
+        a[i].model.transform.position = BirthPosition;
+        a[i].initialQuaternion = Quaternion.identity;
+        if (!a[i].model.GetComponent<Rigidbody>())
+            a[i].model.AddComponent<Rigidbody>();
+        a[i].model.GetComponent<Rigidbody>().useGravity = false;
+        a[i].model.GetComponent<Rigidbody>().drag = 2000;
+        a[i].center = AllCenter[i];
+        _Data.Add(a[i]);
+    }
+    public void init()
+    {
+        GameObject.Find("Root").transform.Find("Sphere").gameObject.SetActive(true);
+        Creat(ShouldCatch);
+        GetJointed(ShouldCatch);
+        Creat(ShouldCatch);
+    }
 	void Start () {
-        this.gameObject.SetActive(false);
-        //a[1].init();
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
         _Data.Add(a[0]);
-        for (int i = 1; i <= 2; ++i)
-        {
-            a[i] = new Model();
-            a[i].model = GameObject.Instantiate(b[i]);
-            a[i].num = i;
-            a[i].state = StateOfBlock.free;
-            a[i].father = i;
-            a[i].model.transform.localPosition = new Vector3(0, 0, 0) + a[0].model.transform.position;
-            a[i].initialQuaternion = Quaternion.identity;
-            a[i].model.transform.rotation = Quaternion.identity;
-            a[i].model.AddComponent<Rigidbody>();
-            a[i].model.GetComponent<Rigidbody>().isKinematic = true;
-            a[i].model.GetComponent<Rigidbody>().useGravity = false;
-            a[i].model.GetComponent<Rigidbody>().drag = 2000;
-            _Data.Add(a[i]);
-        }
-        a[1].model.transform.parent = a[0].model.transform;
-        a[1].father = 0;
-        a[1].state = StateOfBlock.jointed;
-        a[1].center = new Vector3(-20, 0, 0);
-        a[2].center = new Vector3(-15, 0, 0);
-        a[2].model.transform.position += new Vector3(20, 10, 0);
         a[0].model.SetActive(false);
-        a[1].model.SetActive(false);
-        a[2].model.SetActive(false);
+        ShouldCatch = 1;
 	}
     
 	

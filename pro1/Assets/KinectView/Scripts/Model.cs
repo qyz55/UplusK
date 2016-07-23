@@ -24,7 +24,7 @@ public class Model
     public Model() { 
         model = null; 
         num = 0; 
-        state = StateOfBlock.free;
+        state = StateOfBlock.unactive;
         father = 0; 
         center = Vector3.zero;
         NumOfLast = 0;

@@ -41,6 +41,6 @@ public class ClickStartGame : MonoBehaviour {
     }
     void GameStart()
     {
-        GameObject.Find("Root").transform.Find("Sphere").gameObject.SetActive(true);
+        GameObject.Find("ModelManager").GetComponent<ModelManager>().init();
     }
 }
