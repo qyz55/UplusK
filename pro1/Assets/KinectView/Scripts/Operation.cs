@@ -69,7 +69,7 @@ public class Operation : MonoBehaviour {
     private int cntCancelLasso = 0;
     private const int cancelLassoThreshold = 100;
 
-	void Update () {
+	void FixedUpdate () {
 
         //获取模型位置
         List<Vector3> modelPos = ModelManager.GetAllPosition();
