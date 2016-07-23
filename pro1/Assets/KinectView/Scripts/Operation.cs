@@ -110,7 +110,7 @@ public class Operation : MonoBehaviour {
             //正在旋转物体
             if (rotating)
             {
-                if (startRotateCountDown-- > 0)
+                if (startRotateCountDown > 0)
                 {
                     print("把手保持在正常位置");
                     if (startRotateCountDown == 20)
@@ -120,6 +120,7 @@ public class Operation : MonoBehaviour {
                         standardRotateRightX = rightX;
                         standardRotateRightY = rightY;
                     }
+                    startRotateCountDown--;
                     return;
                 }
                 print("Rotating");
@@ -239,7 +240,7 @@ public class Operation : MonoBehaviour {
             //双手均Lasso，进行视野变换
             else if (lasso)
             {
-                if (startViewCountDown-- > 0)
+                if (startViewCountDown > 0)
                 {
                     print("把手保持在正常位置");
                     if (startViewCountDown == 20)
@@ -249,6 +250,7 @@ public class Operation : MonoBehaviour {
                         standardRightX = rightX;
                         standardRightY = rightY;
                     }
+                    startViewCountDown--;
                     return;
                 }
                 print("two hands Lasso");
@@ -440,7 +442,7 @@ public class Operation : MonoBehaviour {
                 if(operateLeftNum != -1)
                     print("LeftHandOperating " + operateLeftNum + " X:" + modelPos[operateLeftNum].x + " Y:" + modelPos[operateLeftNum].y + " Z:" + modelPos[operateLeftNum].z);
                 if(operateRightNum != -1)
-                print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
+                    print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
                 /* 各种自带手势
                        * if (body.HandRightState == Kinect.HandState.Closed)
                            print("rightClose");

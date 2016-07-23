@@ -12,10 +12,10 @@ public class ModelManager : MonoBehaviour
     public GameObject[] b = new GameObject[NumOfPiece + 1];
     public GameObject e;
     public int ShouldCatch = 1;
-    public Vector3  BirthPosition = new Vector3(40,20,30);
+    public Vector3  BirthPosition = new Vector3(20,20,30);
     public float RangeOfAngles = 80.0f;
     public float RangeOfDis = 5;
-    public Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
+    private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
     public bool inCollision = false;
     //以下是写了一个大概的
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
