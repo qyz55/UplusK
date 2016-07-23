@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using HighlightingSystem;
 
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
@@ -160,19 +161,32 @@ public class ModelManager : MonoBehaviour
     }
     private void TryJoint()
     {
-        
-        if (Vector3.Distance(CalcRealPosition(0, _Data[0].model.transform.position) - _Data[0].center, CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center) < RangeOfDis)
+        float d = Vector3.Distance(CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center, CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center);
+        if (d > RangeOfDis * 2)
+        {
+            _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
+            _Data[0].model.GetComponent<Highlighter>().ConstantOff();
+
+        }
+        else if (d >= RangeOfDis && CheckRotation() == true)
+        {
+            _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.green);
+        }
+        else if (d < RangeOfDis)
         {
             if (CheckRotation() == true)
             {
-                print("OK");
                 GetJointed(ShouldCatch);
                 Creat(ShouldCatch);
             }
+            else
+                _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.yellow);
         }
     }
     void GetJointed(int i)
     {
+        _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
+        _Data[0].model.GetComponent<Highlighter>().ConstantOff();
         _Data[i].father = 0;
         _Data[i].model.transform.parent = _Data[0].model.transform;
         _Data[i].model.transform.localPosition = Vector3.zero;
@@ -184,6 +198,10 @@ public class ModelManager : MonoBehaviour
         t /= i;
         _Data[0].center = t;
         ShouldCatch++;
+    }
+    void FlashGreyForOneFrame(int num)
+    {
+        _Data[num].model.GetComponent<Highlighter>().OnParams(Color.grey);
     }
     void Congratulations()
     {
@@ -205,6 +223,8 @@ public class ModelManager : MonoBehaviour
         a[i].model.GetComponent<Rigidbody>().drag = 2000;
         a[i].center = AllCenter[i];
         _Data.Add(a[i]);
+        a[i].model.GetComponent<Highlighter>().ReinitMaterials();
+        _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
     }
     public void init()
     {

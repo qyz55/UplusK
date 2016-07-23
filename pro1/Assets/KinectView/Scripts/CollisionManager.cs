@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using HighlightingSystem;
 
 public class CollisionManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class CollisionManager : MonoBehaviour
     void OnTriggerEnter(Collider col)
     {
         GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
+        gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
         if (mo.inCollision == false)
             mo.inCollision = true;
@@ -35,6 +37,7 @@ public class CollisionManager : MonoBehaviour
     void OnTriggerExit(Collider col)
     {
         GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
+        gameObject.GetComponent<Highlighter>().ConstantOff();
         ModelManager mo = empty.GetComponent<ModelManager>();
         if (mo.inCollision == true)
             mo.inCollision = false;
