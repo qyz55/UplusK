@@ -49,7 +49,7 @@ public class Operation : MonoBehaviour {
     private float standardRotateRightY;
 
     private float catchThreshold = 10F;
-    private float rotateThreshold = 5F;
+    private float rotateThreshold = 3F;
     //标准化双手位置，因人而异，可在最初设计流程校准
 
     private int startViewCountDown;
@@ -445,12 +445,8 @@ public class Operation : MonoBehaviour {
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "";
                 int operateLeftNum = -1;
                 int operateRightNum = -1;
-                float nearestLeftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[0].x, 2)
-                        + System.Math.Pow(leftY - modelPos[0].y, 2)
-                        + System.Math.Pow(leftZ - modelPos[0].z, 2));
-                float nearestRightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[0].x, 2)
-                        + System.Math.Pow(rightY - modelPos[0].y, 2)
-                        + System.Math.Pow(rightZ - modelPos[0].z, 2));
+                float nearestLeftDist = 100000000;
+                float nearestRightDist = 100000000;
                 print("Model " + 0 + " X:" + modelPos[0].x + " Y:" + modelPos[0].y + " Z:" + modelPos[0].z);
                 for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
                 {
