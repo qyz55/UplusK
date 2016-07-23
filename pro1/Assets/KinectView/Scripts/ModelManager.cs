@@ -201,11 +201,23 @@ public class ModelManager : MonoBehaviour
     }
     public void FlashOnGreyForOneFrame(int num)
     {
-        _Data[num].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
+        if (num == 0)
+        {
+            for(int i = 1; i < ShouldCatch; ++i)
+                _Data[i].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
+        }
+        else
+           _Data[num].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
     }
     public void FlashOffForOneFrame(int num)
     {
-        _Data[num].model.GetComponent<Highlighter>().ConstantOff();
+        if (num == 0)
+        {
+            for (int i = 1; i < ShouldCatch; ++i)
+                _Data[i].model.GetComponent<Highlighter>().ConstantOff();
+        }
+        else
+            _Data[num].model.GetComponent<Highlighter>().ConstantOff();
     }
     void Congratulations()
     {

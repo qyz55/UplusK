@@ -474,6 +474,30 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
+                bool zeroFlash = false;
+                for (int i = 1; i < ModelManager.ShouldCatch; ++i)
+                {
+                    if (i == operateLeftNum)
+                    {
+                        zeroFlash = true;
+                        break;
+                    }
+                    else if (i == operateRightNum)
+                    {
+                        zeroFlash = true;
+                    }
+                    else continue;
+                }
+                if (zeroFlash)
+                    ModelManager.FlashOnGreyForOneFrame(0);
+                else
+                    ModelManager.FlashOffForOneFrame(0);
+
+                if (operateLeftNum == ModelManager.ShouldCatch || operateRightNum == ModelManager.ShouldCatch)
+                    ModelManager.FlashOnGreyForOneFrame(ModelManager.ShouldCatch);
+                else
+                    ModelManager.FlashOffForOneFrame(ModelManager.ShouldCatch);
+                       
                 if (operateLeftNum != -1)
                 {
                     if (operateLeftNum == ModelManager.ShouldCatch)
