@@ -474,10 +474,30 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
-                if(operateLeftNum != -1)
+                if (operateLeftNum != -1)
+                {
+                    if (operateLeftNum == ModelManager.ShouldCatch)
+                    {
+                        ModelManager.FlashGreyForOneFrame(operateLeftNum);
+                    }
+                    else
+                    {
+                        ModelManager.FlashGreyForOneFrame(0);
+                    }
                     print("LeftHandOperating " + operateLeftNum + " X:" + modelPos[operateLeftNum].x + " Y:" + modelPos[operateLeftNum].y + " Z:" + modelPos[operateLeftNum].z);
-                if(operateRightNum != -1)
+                }
+                if (operateRightNum != -1)
+                {
+                    if (operateRightNum == ModelManager.ShouldCatch)
+                    {
+                        ModelManager.FlashGreyForOneFrame(operateRightNum);
+                    }
+                    else
+                    {
+                        ModelManager.FlashGreyForOneFrame(0);
+                    }
                     print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
+                }
                 /* 各种自带手势
                        * if (body.HandRightState == Kinect.HandState.Closed)
                            print("rightClose");
