@@ -451,6 +451,7 @@ public class Operation : MonoBehaviour {
                 float nearestRightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[0].x, 2)
                         + System.Math.Pow(rightY - modelPos[0].y, 2)
                         + System.Math.Pow(rightZ - modelPos[0].z, 2));
+                print("Model " + 0 + " X:" + modelPos[0].x + " Y:" + modelPos[0].y + " Z:" + modelPos[0].z);
                 for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
                 {
                     print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
@@ -697,7 +698,7 @@ public class Operation : MonoBehaviour {
                     }
                     else
                     {
-                        if (body.HandRightState == Kinect.HandState.Closed)//左手闭合
+                        if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
                         {
                             //模型随动
                             print("Moving");
