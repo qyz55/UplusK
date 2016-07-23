@@ -126,6 +126,7 @@ public class Operation : MonoBehaviour {
                         standardRotateRightX = rightX;
                         standardRotateRightY = rightY;
                     }
+                    return;
                 }
                 print("Rotating");
                 if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
@@ -254,6 +255,7 @@ public class Operation : MonoBehaviour {
                         standardRightX = rightX;
                         standardRightY = rightY;
                     }
+                    return;
                 }
                 print("two hands Lasso");
                 if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
@@ -457,22 +459,49 @@ public class Operation : MonoBehaviour {
                 {
                     if (operateLeftNum < ModelManager.ShouldCatch && operateRightNum < ModelManager.ShouldCatch)
                     {
-
-                    }
-                    if (operateLeftNum == operateRightNum)
-                    {
-                        print("two hands in");
+                        print("two hands in zero");
                         if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
                         {
                             //标记开始旋转
                             startRotateCountDown = 200;
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
+                            rotatingNum = 0;
+                            ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                             rotating = true;
-                            rotatingNum = operateLeftNum;
                             cntCancelRotate = 0;
                         }
                         else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
                         {
+                            print("Moving zero");
+                            //模型随动
+                            ModelManager.ChangeState(0, StateOfBlock.caught);
+                            ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.ChangeState(0, StateOfBlock.free);
+                        }
+                        else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
+                        {
+                            print("Moving zero");
+                            //模型随动
+                            ModelManager.ChangeState(0, StateOfBlock.caught);
+                            ModelManager.Move0(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.ChangeState(0, StateOfBlock.free);
+                        }
+                    }
+                    else if (operateLeftNum == operateRightNum)
+                    {
+                        print("two hands in");
+                        if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Closed)//双手闭合
+                        {
+                            print("two hands in && two hands closed");
+                            //标记开始旋转
+                            startRotateCountDown = 200;
+                            rotatingNum = operateLeftNum;
+                            ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
+                            rotating = true;
+                            cntCancelRotate = 0;
+                        }
+                        else if (body.HandLeftState == Kinect.HandState.Closed && body.HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
+                        {
+                            print("two hands in && left hand closed");
                             print("Moving");
                             //模型随动
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
@@ -481,6 +510,7 @@ public class Operation : MonoBehaviour {
                         }
                         else if (body.HandLeftState == Kinect.HandState.Open && body.HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
                         {
+                            print("two hands in && right hand closed");
                             print("Moving");
                             //模型随动
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
@@ -495,10 +525,69 @@ public class Operation : MonoBehaviour {
                         {
                             //模型随动
                             print("Moving");
+                            if (operateLeftNum == ModelManager.ShouldCatch)
+                            {
+                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
+                                ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
+                            }
+                            else
+                            {
+                                ModelManager.ChangeState(0, StateOfBlock.caught);
+                                ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.ChangeState(0, StateOfBlock.free);
+                            }
+                        }
+                        if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
+                        {
+                            //模型随动
+                            print("Moving");
+                            if (operateRightNum == ModelManager.ShouldCatch)
+                            {
+                                ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
+                                ModelManager.MoveOne(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
+                            }
+                            else
+                            {
+                                ModelManager.ChangeState(0, StateOfBlock.caught);
+                                ModelManager.Move0(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.ChangeState(0, StateOfBlock.free);
+                            }
+                        }
+                    }
+                }
+                else if (operateLeftNum != -1)
+                {
+                    print("left hand in");
+                    if (operateLeftNum == ModelManager.ShouldCatch)
+                    {
+                        if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
+                        {
+                            //模型随动
+                            print("Moving");
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
                             ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
+                    }
+                    else
+                    {
+                        if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
+                        {
+                            //模型随动
+                            print("Moving");
+                            ModelManager.ChangeState(0, StateOfBlock.caught);
+                            ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.ChangeState(0, StateOfBlock.free);
+                        }
+                    }
+                }
+                else if (operateRightNum != -1)
+                {
+                    print("right hand in");
+                    if (operateRightNum == ModelManager.ShouldCatch)
+                    {
                         if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
                         {
                             //模型随动
@@ -508,29 +597,16 @@ public class Operation : MonoBehaviour {
                             ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
                         }
                     }
-                }
-                else if (operateLeftNum != -1)
-                {
-                    print("left hand in");
-                    if (body.HandLeftState == Kinect.HandState.Closed)//左手闭合
+                    else
                     {
-                        //模型随动
-                        print("Moving");
-                        ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                        ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
-                        ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                    }
-                }
-                else if (operateRightNum != -1)
-                {
-                    print("right hand in");
-                    if (body.HandRightState == Kinect.HandState.Closed)//右手闭合
-                    {
-                        //模型随动
-                        print("Moving");
-                        ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
-                        ModelManager.MoveOne(operateRightNum, new Vector3(rightX, rightY, rightZ));
-                        ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
+                        if (body.HandRightState == Kinect.HandState.Closed)//左手闭合
+                        {
+                            //模型随动
+                            print("Moving");
+                            ModelManager.ChangeState(0, StateOfBlock.caught);
+                            ModelManager.Move0(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.ChangeState(0, StateOfBlock.free);
+                        }
                     }
                 }
                 else
