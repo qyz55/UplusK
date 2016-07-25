@@ -2,23 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 using HighlightingSystem;
 
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 3;
+    static public int TNumOfPiece = 2;
     private List<Model> _Data = new List<Model>();
     private Model[] a = new Model[NumOfPiece + 1];
+    private Model[] Ta = new Model[TNumOfPiece + 1];
     public GameObject[] b = new GameObject[NumOfPiece + 1];
-    public GameObject e;
+    public GameObject[] Tb = new GameObject[TNumOfPiece + 1];
     public int ShouldCatch = 1;
+    private bool isInTeachMode = false;
     public Vector3  BirthPosition = new Vector3(20,20,30);
     public float RangeOfAngles = 80.0f;
     public float RangeOfDis = 5;
     private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
+    private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
     public bool inCollision = false;
-    //以下是写了一个大概的
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
     {
         List<Vector3> _position = new List<Vector3>();
@@ -80,26 +84,6 @@ public class ModelManager : MonoBehaviour
             }
         }
     }
-    public bool IsJointed(int num1, int num2) // 输入两个物体的下标，判断物体可否被拼接
-    {
-        return true;
-    }
-    public Vector3 GetPosition(int num)  //获得输入下标物体的位置
-    {
-        return _Data[num].model.transform.position;
-    }
-    public Vector3 GetLocalPosition(int num)  //获得输入下标物体相对于父物体的位置
-    {
-        return _Data[num].model.transform.localPosition;
-    }
-    public Quaternion GetRotation(int num) //获得输入下标物体的旋转角度，用一个四元数表示
-    {
-        return _Data[num].model.transform.rotation;
-    }
-    public Quaternion GetLocalRotation(int num) //获得输入下标物体相对于父物体的旋转角度，用一个四元数表示
-    {
-        return _Data[num].model.transform.localRotation;
-    } 
     public void Rotate(int num,int mode) //对下标为num的物体进行6种旋转，0-5分别为x(顺逆)y(顺逆)z(顺逆)
     {
         if (num != ShouldCatch && num != 0)
@@ -132,16 +116,15 @@ public class ModelManager : MonoBehaviour
     private Vector3 CalcRealPosition(int num, Vector3 pos)
     {
         return _Data[num].model.transform.rotation * _Data[num].center + pos;
-    }
+    }//根据物体存储的坐标来计算物体真正的坐标
     private Vector3 CalcCenterPosition(int num, Vector3 pos)
     {
         return pos - _Data[num].model.transform.rotation * _Data[num].center;
-    }
+    }//根据物体真正的坐标来计算物体用于拼接的存储坐标
     public StateOfBlock GetState(int num) // 获得某个物体的状态
     {
         return _Data[num].state;
     }
-	// Use this for initialization
     private float min(float x, float y)
     {
         return x < y ? x : y;
@@ -225,26 +208,73 @@ public class ModelManager : MonoBehaviour
     }
     void Creat(int i)
     {
-        if (i > NumOfPiece) { Congratulations(); return; };
-        a[i] = new Model();
-        a[i].model = GameObject.Instantiate(b[i]);
-        a[i].num = i;
-        a[i].state = StateOfBlock.free;
-        a[i].father = i;
-        a[i].model.transform.position = BirthPosition;
-        a[i].initialQuaternion = Quaternion.identity;
-        if (!a[i].model.GetComponent<Rigidbody>())
-            a[i].model.AddComponent<Rigidbody>();
-        a[i].model.GetComponent<Rigidbody>().useGravity = false;
-        a[i].model.GetComponent<Rigidbody>().drag = 2000;
-        a[i].center = AllCenter[i];
-        _Data.Add(a[i]);
-        a[i].model.GetComponent<Highlighter>().ReinitMaterials();
-        _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
+        if (isInTeachMode)
+        {
+            if (i > TNumOfPiece) 
+            {
+                GameObject.Find("HandsHints").GetComponent<Text>().text = "教学模式完成，现已启动主程序。";
+                Destroy(GameObject.Find("GameStart")); 
+                init(); 
+                return; 
+            }
+            Ta[i] = new Model();
+            Ta[i].model = GameObject.Instantiate(Tb[i]);
+            Ta[i].num = i;
+            Ta[i].state = StateOfBlock.free;
+            Ta[i].father = i;
+            Ta[i].model.transform.position = BirthPosition;
+            Ta[i].initialQuaternion = Quaternion.identity;
+            if (!Ta[i].model.GetComponent<Rigidbody>())
+                Ta[i].model.AddComponent<Rigidbody>();
+            Ta[i].model.GetComponent<Rigidbody>().useGravity = false;
+            Ta[i].model.GetComponent<Rigidbody>().drag = 2000;
+            Ta[i].center = TAllCenter[i];
+            _Data.Add(Ta[i]);
+            Ta[i].model.GetComponent<Highlighter>().ReinitMaterials();
+            _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
+        }
+        else
+        {
+            if (i > NumOfPiece) { Congratulations(); return; };
+            a[i] = new Model();
+            a[i].model = GameObject.Instantiate(b[i]);
+            a[i].num = i;
+            a[i].state = StateOfBlock.free;
+            a[i].father = i;
+            a[i].model.transform.position = BirthPosition;
+            a[i].initialQuaternion = Quaternion.identity;
+            if (!a[i].model.GetComponent<Rigidbody>())
+                a[i].model.AddComponent<Rigidbody>();
+            a[i].model.GetComponent<Rigidbody>().useGravity = false;
+            a[i].model.GetComponent<Rigidbody>().drag = 2000;
+            a[i].center = AllCenter[i];
+            _Data.Add(a[i]);
+            a[i].model.GetComponent<Highlighter>().ReinitMaterials();
+            _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
+        }
     }
+
     public void init()
     {
+        foreach (Model i in _Data)
+        {
+            Destroy(i.model);
+        }
+        _Data.Clear();
+        _Data.Add(a[0]);
+        isInTeachMode = false;
+        inCollision = false;
         GameObject.Find("Root").transform.Find("Sphere").gameObject.SetActive(true);
+        ShouldCatch = 1;
+        Creat(ShouldCatch);
+        GetJointed(ShouldCatch);
+        Creat(ShouldCatch);
+    }
+    public void TeachInit()
+    {
+        isInTeachMode = true;
+        GameObject.Find("Root").transform.Find("Cube").gameObject.SetActive(true);
+        ShouldCatch = 1;
         Creat(ShouldCatch);
         GetJointed(ShouldCatch);
         Creat(ShouldCatch);
@@ -252,8 +282,12 @@ public class ModelManager : MonoBehaviour
 	void Start () {
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
-        _Data.Add(a[0]);
         a[0].model.SetActive(false);
+
+        Ta[0] = new Model();
+        Ta[0].model = GameObject.Find("Cube");
+        _Data.Add(Ta[0]);
+        Ta[0].model.SetActive(false);
         ShouldCatch = 1;
 	}
     
