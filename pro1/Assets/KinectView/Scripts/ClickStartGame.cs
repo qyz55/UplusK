@@ -39,7 +39,8 @@ public class ClickStartGame : MonoBehaviour {
                 }
                 else if (state == 1)
                 {
-                    GameStart();
+                    //GameStart();
+                    GameObject.Find("ModelManager").GetComponent<ModelManager>().ChangeTeachState(2);
                     Destroy(GameObject.Find("GameStart"));
                 }
                 break;

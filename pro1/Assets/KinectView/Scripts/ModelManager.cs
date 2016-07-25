@@ -11,13 +11,14 @@ public class ModelManager : MonoBehaviour
     static public int NumOfPiece = 3;
     static public int TNumOfPiece = 2;
     private List<Model> _Data = new List<Model>();
-    private Model[] a = new Model[NumOfPiece + 1];
+    private Model[] a = new Model[NumOfPiece + 2];
     private Model[] Ta = new Model[TNumOfPiece + 1];
-    public GameObject[] b = new GameObject[NumOfPiece + 1];
+    public GameObject[] b = new GameObject[NumOfPiece + 2];
     public GameObject[] Tb = new GameObject[TNumOfPiece + 1];
     public int ShouldCatch = 1;
     private bool isInTeachMode = false;
-    public Vector3  BirthPosition = new Vector3(20,20,30);
+    private int TeachState = 0; 
+    public Vector3  BirthPosition = new Vector3(30,15,30);
     public float RangeOfAngles = 80.0f;
     public float RangeOfDis = 5;
     private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
@@ -144,6 +145,7 @@ public class ModelManager : MonoBehaviour
     }
     private void TryJoint()
     {
+        if (ShouldCatch == 1 || ShouldCatch == NumOfPiece + 1) return;
         float d = Vector3.Distance(CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center, CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center);
         if (d > RangeOfDis * 2)
         {
@@ -204,6 +206,7 @@ public class ModelManager : MonoBehaviour
     }
     void Congratulations()
     {
+        ShouldCatch--;
         return;
     }
     void Creat(int i)
@@ -224,6 +227,7 @@ public class ModelManager : MonoBehaviour
             Ta[i].father = i;
             Ta[i].model.transform.position = BirthPosition;
             Ta[i].initialQuaternion = Quaternion.identity;
+            Ta[i].LastPosition = BirthPosition;
             if (!Ta[i].model.GetComponent<Rigidbody>())
                 Ta[i].model.AddComponent<Rigidbody>();
             Ta[i].model.GetComponent<Rigidbody>().useGravity = false;
@@ -243,6 +247,7 @@ public class ModelManager : MonoBehaviour
             a[i].father = i;
             a[i].model.transform.position = BirthPosition;
             a[i].initialQuaternion = Quaternion.identity;
+            a[i].LastPosition = BirthPosition;
             if (!a[i].model.GetComponent<Rigidbody>())
                 a[i].model.AddComponent<Rigidbody>();
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
@@ -253,7 +258,6 @@ public class ModelManager : MonoBehaviour
             _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
         }
     }
-
     public void init()
     {
         foreach (Model i in _Data)
@@ -274,10 +278,27 @@ public class ModelManager : MonoBehaviour
     {
         isInTeachMode = true;
         GameObject.Find("Root").transform.Find("Cube").gameObject.SetActive(true);
-        ShouldCatch = 1;
-        Creat(ShouldCatch);
-        GetJointed(ShouldCatch);
-        Creat(ShouldCatch);
+        //ChangeTeachState(1);
+    }
+    public void ChangeTeachState(int num)
+    {
+        if (num == 1)
+        {
+            ShouldCatch = 1;
+            Creat(ShouldCatch);
+            GetJointed(ShouldCatch);
+            ShouldCatch--;
+        }
+        else if (num ==2)
+        {
+            _Data[1].model.transform.localPosition = Vector3.zero;
+            _Data[1].model.transform.localRotation = Quaternion.identity;
+            _Data[0].model.transform.position = new Vector3(0, 0, 30);
+            _Data[0].model.transform.rotation = Quaternion.identity;
+
+            ShouldCatch++;
+            Creat(ShouldCatch);
+        }
     }
 	void Start () {
         a[0] = new Model();
