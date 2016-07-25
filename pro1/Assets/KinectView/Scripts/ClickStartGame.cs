@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClickStartGame : MonoBehaviour {
 
 	// Use this for initialization
+    private int state = 0;
     void Start()
     {
         List<string> btnsName = new List<string>();
@@ -29,15 +31,29 @@ public class ClickStartGame : MonoBehaviour {
         switch (sender.name)
         {
             case "GameStart":
-                GameStart();
+                if (state == 0)
+                {
+                    GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
+                    TeachingModelStart();
+                    state = 1;
+                }
+                else if (state == 1)
+                {
+                    GameStart();
+                    Destroy(GameObject.Find("GameStart"));
+                }
                 break;
             case "GameEnd":
-                Application.Quit();
+                SceneManager.LoadScene("MainScene");
                 break;
             default:
                 Debug.Log("none");
                 break;
         }
+    }
+    void TeachingModelStart()
+    {
+        GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
     }
     void GameStart()
     {

@@ -30,6 +30,7 @@ public class CollisionManager : MonoBehaviour
     void OnTriggerStay(Collider col)
     {
         GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
+        gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
         if (mo.inCollision == false)
             mo.inCollision = true;
