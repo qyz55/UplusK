@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class Operation : MonoBehaviour {
 
     public ModelManager ModelManager;
-    public GameObject leftHand;
-    public GameObject rightHand;
+    public handModels leftHand;
+    public handModels rightHand;
     List<Vector3> modelPos;
 	// Use this for initialization
 
@@ -64,6 +64,10 @@ public class Operation : MonoBehaviour {
     private int cntCancelLasso = 0;
     private const int cancelLassoThreshold = 120;
 
+
+    Kinect.HandState preLeft = Kinect.HandState.Unknown;
+    Kinect.HandState preRight = Kinect.HandState.Unknown;
+
 	void FixedUpdate () {
 
         //获取模型位置
@@ -107,7 +111,16 @@ public class Operation : MonoBehaviour {
             print("right: " + rightX + " " + rightY + " " + rightZ);
             leftHand.transform.position = new Vector3(leftX, leftY, leftZ);
             rightHand.transform.position = new Vector3(rightX, rightY, rightZ);
-
+            if ((int)body.HandLeftState > 1 && body.HandLeftState != preLeft)
+            {
+                leftHand.setStatus(false, body.HandLeftState);
+                preLeft = body.HandLeftState;
+            }
+            if ((int)body.HandRightState > 1 && body.HandRightState != preRight)
+            {
+                rightHand.setStatus(true, body.HandRightState);
+                preRight = body.HandRightState;
+            }
             //正在旋转物体
             if (rotating)
             {
