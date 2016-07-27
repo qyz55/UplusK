@@ -125,28 +125,27 @@ public class Operation : MonoBehaviour {
                 preRight = body.HandRightState;
             }
 
-            //正在教学
+            //正在教手势 教视野变换、移动在后面流程中进行判断
             if (Teaching.teachingState == Teaching.State.tryHands)
             {
+                GameObject.Find("TeachingState").GetComponent<Text>().text = "试一下手势吧";
                 if(Teaching.checkHands(body.HandLeftState,body.HandRightState))
                 {
                     Teaching.teachingState = Teaching.State.tryLasso;
                     ModelManager.ChangeTeachState(1);
                 }
-                    /*case Teaching.State.tryRotate:
-                        break;
-                    case Teaching.State.tryLasso:
-                        break;
-                    case Teaching.State.tryMove:
-                        break;
-                    case Teaching.State.tryJoint:
-                        break;
-                    default:
-                        break;*/
+                return;
+            }
+            else if (Teaching.teachingState == Teaching.State.tryLasso)
+            {
+                GameObject.Find("TeachingState").GetComponent<Text>().text = "试一下变换视角吧";
+            }
+            else if (Teaching.teachingState == Teaching.State.tryMove)
+            {
             }
 
             //正在旋转物体
-            else if (rotating)
+            if (rotating)
             {
                 if (startRotateCountDown > 0)
                 {
@@ -276,7 +275,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startViewCountDown > 0)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视野";
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视角";
                     print("把手保持在正常位置");
                     if (startViewCountDown == 20)
                     {
