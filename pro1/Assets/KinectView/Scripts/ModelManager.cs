@@ -168,7 +168,7 @@ public class ModelManager : MonoBehaviour
         }
         else if (d < RangeOfDis)
         {
-            if (CheckRotation() == true && )
+            if (CheckRotation() == true)
             {
                 jointing = true;
                 _Data[ShouldCatch].state = StateOfBlock.jointing;

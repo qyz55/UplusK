@@ -273,6 +273,10 @@ public class Operation : MonoBehaviour {
             //双手均Lasso，进行视野变换
             else if (lasso)
             {
+                if (Teaching.isTeaching && Teaching.teachingState == Teaching.State.tryLasso)
+                {
+ 
+                }
                 if (startViewCountDown > 0)
                 {
                     GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视角";

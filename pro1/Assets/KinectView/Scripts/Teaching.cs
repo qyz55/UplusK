@@ -12,6 +12,8 @@ public class Teaching : MonoBehaviour {
         tryMove = 3,
         tryJoint = 4
     };
+    public bool isTeaching;
+
     public State teachingState = State.tryHands;
 
 
