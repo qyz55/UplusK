@@ -16,6 +16,7 @@ public class Model
     public StateOfBlock state { get; set; }
     public int father { get; set; }
     public Vector3 center { get; set; }
+    public Vector3 JointPosition { get; set; }
     public int NumOfLast { get; set; }
     public Vector3 LastPosition { get; set;}
     public Quaternion LastQuaternion { get; set; }
@@ -31,5 +32,7 @@ public class Model
         LastPosition = Vector3.zero;
 		initialQuaternion = Quaternion.identity;
         LastQuaternion = Quaternion.identity;
+        MoveVector = Vector3.zero;
+        JointPosition = Vector3.zero;
     }
 }
