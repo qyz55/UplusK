@@ -10,15 +10,6 @@ public class Operation : MonoBehaviour {
     public ModelManager ModelManager;
     public handModels leftHand;
     public handModels rightHand;
-    List<Vector3> modelPos;
-	// Use this for initialization
-
-	void Start () {
-        //ModelManager = new ModelManager();
-	}
-
-	// Update is called once per frame
-
     public GameObject BodySourceManager;
     private BodySourceManager _BodyManager;
 
@@ -48,9 +39,9 @@ public class Operation : MonoBehaviour {
     private float standardRotateRightX;
     private float standardRotateRightY;
 
-    private float catchThreshold = 6F;
-    private float rotateThreshold = 3F;
-    //标准化双手位置，因人而异，可在最初设计流程校准
+    private float catchThreshold = 5F;
+    private float rotateThreshold = 2F;
+    //标准化双手参数，因人而异，可在最初设计流程校准
 
     private int startViewCountDown;
 
@@ -59,14 +50,26 @@ public class Operation : MonoBehaviour {
     private int startRotateCountDown;
     private int cntCancelRotate = 0;
     private const int cancelRotateThreshold = 120;
-    
+
     private bool lasso = false;
     private int cntCancelLasso = 0;
     private const int cancelLassoThreshold = 120;
 
+    private bool teaching = false;
+    public Teaching Teaching;
 
     Kinect.HandState preLeft = Kinect.HandState.Unknown;
     Kinect.HandState preRight = Kinect.HandState.Unknown;
+
+    List<Vector3> modelPos;
+	// Use this for initialization
+
+	void Start () {
+        //ModelManager = new ModelManager();
+        //Teaching = new Teaching();
+	}
+
+	// Update is called once per frame
 
 	void FixedUpdate () {
 
@@ -121,8 +124,29 @@ public class Operation : MonoBehaviour {
                 rightHand.setStatus(true, body.HandRightState);
                 preRight = body.HandRightState;
             }
+
+            //正在教学
+            if (Teaching.teachingState == Teaching.State.tryHands)
+            {
+                if(Teaching.checkHands(body.HandLeftState,body.HandRightState))
+                {
+                    Teaching.teachingState = Teaching.State.tryLasso;
+                    ModelManager.ChangeTeachState(1);
+                }
+                    /*case Teaching.State.tryRotate:
+                        break;
+                    case Teaching.State.tryLasso:
+                        break;
+                    case Teaching.State.tryMove:
+                        break;
+                    case Teaching.State.tryJoint:
+                        break;
+                    default:
+                        break;*/
+            }
+
             //正在旋转物体
-            if (rotating)
+            else if (rotating)
             {
                 if (startRotateCountDown > 0)
                 {
@@ -143,11 +167,16 @@ public class Operation : MonoBehaviour {
                         standardRotateRightY = (standardRotateRightY + rightY) / 2;
                     }
                     startRotateCountDown--;
-                    /*if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
+                    if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
                     {
-                        rotating = false;
-                        ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
-                    }*/
+                        ++cntCancelLasso;
+                        if (cntCancelLasso > 40)
+                        {
+                            cntCancelLasso = 0;
+                            rotating = false;
+                            ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
+                        }
+                    }
                     return;
                 }
 
@@ -192,55 +221,35 @@ public class Operation : MonoBehaviour {
                                 //绕Y，俯视顺时针
                                 ModelManager.Rotate(rotatingNum, 2);
                             }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                           /* elseif (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //绕X，左视逆时针
                                 ModelManager.Rotate(rotatingNum, 0);
-                            }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                                //不转
-                            }
-                            else
-                            {//右手在下
-                                //不转
-                            }
+                            }*/
+                            
                         }
                         else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
                         {//左手在右
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
+                            /*if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
                             {//右手在左
                                 //绕X，左视顺时针
                                 ModelManager.Rotate(rotatingNum, 1);
                             }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
+                            else */
+                            if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //绕Y，俯视逆时针
                                 ModelManager.Rotate(rotatingNum, 3);
                             }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                            }
-                            else
-                            {//右手在下
-                            }
                         }
                         else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
                         {//左手在上
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                                //不转
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //不转
-                            }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
                                 //绕X，左视逆时针
                                 ModelManager.Rotate(rotatingNum, 0);
                             }
-                            else
+                            else if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
                             {//右手在下
                                 //绕Z，正视顺时针
                                 ModelManager.Rotate(rotatingNum, 5);
@@ -248,20 +257,12 @@ public class Operation : MonoBehaviour {
                         }
                         else
                         {//左手在下
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                                //不转
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //不转
-                            }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
                                 //绕Z，正视逆时针
                                 ModelManager.Rotate(rotatingNum, 4);
                             }
-                            else
+                            else if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
                             {//右手在下
                                 //绕X，左视顺时针
                                 ModelManager.Rotate(rotatingNum, 1);
@@ -365,12 +366,6 @@ public class Operation : MonoBehaviour {
                                 standardLeftZ += 0.1F;
                                 standardRightZ += 0.1F;
                             }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                            }
-                            else
-                            {//右手在下
-                            }
                         }
                         else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
                         {//左手在右
@@ -392,22 +387,10 @@ public class Operation : MonoBehaviour {
                                 standardLeftX -= 0.1F;
                                 standardRightX -= 0.1F;
                             }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                            }
-                            else
-                            {//右手在下
-                            }
                         }
                         else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
                         {//左手在上
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                            }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
+                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
                             {//右手在上
                                 //视野向上
                                 ModelManager.MoveAllByVector3(new Vector3(0, -0.1F, 0));
@@ -416,32 +399,17 @@ public class Operation : MonoBehaviour {
                                 standardLeftY -= 0.1F;
                                 standardRightY -= 0.1F;
                             }
-                            else
-                            {//右手在下
-                                //视野右旋
-                            }
                         }
                         else
                         {//左手在下
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                            }
-                            else if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                                //视野左旋
-                            }
-                            else
-                            {//右手在下
+                            if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
+                                //右手在下
                                 //视野向下
                                 ModelManager.MoveAllByVector3(new Vector3(0, 0.1F, 0));
-                                offsetLeftY += 0.1F;
-                                offsetRightY += 0.1F;
-                                standardLeftY += 0.1F;
-                                standardRightY += 0.1F;
-                            }
+                            offsetLeftY += 0.1F;
+                            offsetRightY += 0.1F;
+                            standardLeftY += 0.1F;
+                            standardRightY += 0.1F;
                         }
                     }
                 }
@@ -510,7 +478,7 @@ public class Operation : MonoBehaviour {
                     ModelManager.FlashOnGreyForOneFrame(ModelManager.ShouldCatch);
                 else
                     ModelManager.FlashOffForOneFrame(ModelManager.ShouldCatch);
-                       
+
                 if (operateLeftNum != -1)
                 {
                     if (operateLeftNum == ModelManager.ShouldCatch)

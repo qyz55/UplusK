@@ -10,7 +10,9 @@ public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 3;
     static public int TNumOfPiece = 2;
+    public bool jointing = false;
     private List<Model> _Data = new List<Model>();
+    public int MoveFrames = 30;
     private Model[] a = new Model[NumOfPiece + 2];
     private Model[] Ta = new Model[TNumOfPiece + 1];
     public GameObject[] b = new GameObject[NumOfPiece + 2];
@@ -23,6 +25,8 @@ public class ModelManager : MonoBehaviour
     public float RangeOfDis = 5;
     private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
     private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
+    private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(3,0,0) };
+    private Vector3[] TAllJpintPosition = { Vector3.zero, new Vector3(0, 0, 0), new Vector3(0, 2, 0) };
     public bool inCollision = false;
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
     {
@@ -35,10 +39,12 @@ public class ModelManager : MonoBehaviour
     }
     public void ChangeState(int num, StateOfBlock state) // 传入一个物体的下标,和想要其变成的状态(包括自由，和被抓取)
     {
+        if (jointing) return;
         _Data[num].state = state;
     }
     public void MoveOne(int num, Vector3 _v3) // 传入想要移动的物体的下标和想要其移动到的位置
     {
+        if (jointing) return;
         if (_Data[num].state == StateOfBlock.caught && num == ShouldCatch)
             _Data[num].model.transform.position = CalcCenterPosition(num, _v3);
         else 
@@ -48,6 +54,7 @@ public class ModelManager : MonoBehaviour
     }
     public void Move0(int num, Vector3 _v3)
     {
+        if (jointing) return;
         if (_Data[0].state != StateOfBlock.caught)
             return;
         _Data[0].model.transform.position = _v3 - _Data[0].model.transform.rotation * _Data[num].center;
@@ -60,6 +67,7 @@ public class ModelManager : MonoBehaviour
     }*/
     public void MoveAllByVector3(Vector3 _V3)
     {
+        if (jointing) return;
         _Data[0].model.transform.position += _V3;
         _Data[ShouldCatch].model.transform.position += _V3;
         SavePos(0);
@@ -87,6 +95,7 @@ public class ModelManager : MonoBehaviour
     }
     public void Rotate(int num,int mode) //对下标为num的物体进行6种旋转，0-5分别为x(顺逆)y(顺逆)z(顺逆)
     {
+        if (jointing) return;
         if (num != ShouldCatch && num != 0)
                 return;
         switch (mode)
@@ -159,10 +168,11 @@ public class ModelManager : MonoBehaviour
         }
         else if (d < RangeOfDis)
         {
-            if (CheckRotation() == true)
+            if (CheckRotation() == true && )
             {
-                GetJointed(ShouldCatch);
-                Creat(ShouldCatch);
+                jointing = true;
+                _Data[ShouldCatch].state = StateOfBlock.jointing;
+                _Data[ShouldCatch].MoveVector = _Data[0].model.transform.position + _Data[ShouldCatch].JointPosition - _Data[ShouldCatch].model.transform.position;
             }
             else
                 _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.yellow);
@@ -233,6 +243,7 @@ public class ModelManager : MonoBehaviour
             Ta[i].model.GetComponent<Rigidbody>().useGravity = false;
             Ta[i].model.GetComponent<Rigidbody>().drag = 2000;
             Ta[i].center = TAllCenter[i];
+            Ta[i].JointPosition = TAllJpintPosition[i];
             _Data.Add(Ta[i]);
             Ta[i].model.GetComponent<Highlighter>().ReinitMaterials();
             _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
@@ -253,6 +264,7 @@ public class ModelManager : MonoBehaviour
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
             a[i].model.GetComponent<Rigidbody>().drag = 2000;
             a[i].center = AllCenter[i];
+            a[i].JointPosition = AllJointPosition[i];
             _Data.Add(a[i]);
             a[i].model.GetComponent<Highlighter>().ReinitMaterials();
             _Data[0].model.GetComponent<Highlighter>().ReinitMaterials();
@@ -314,7 +326,33 @@ public class ModelManager : MonoBehaviour
     
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
+        if (jointing == true)
+        {
+            foreach (Model i in _Data)
+            {
+                if (i.state == StateOfBlock.jointing)
+                {
+                    i.model.transform.position += i.MoveVector / MoveFrames;
+                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.0001f &&
+                        Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.0001f &&
+                        Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.0001f)
+                    {
+                        jointing = false;
+                        i.state = StateOfBlock.caught;
+                        GetJointed(ShouldCatch);
+                        Creat(ShouldCatch);
+                    }
+                    else if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f)
+                    {
+                        i.MoveVector = -i.JointPosition;
+                    }
+                }
+            }
+        }
 	   
 	}
 
