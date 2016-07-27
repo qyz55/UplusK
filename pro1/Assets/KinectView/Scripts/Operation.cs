@@ -169,10 +169,10 @@ public class Operation : MonoBehaviour {
                     startRotateCountDown--;
                     if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
                     {
-                        ++cntCancelLasso;
-                        if (cntCancelLasso > 40)
+                        ++cntCancelRotate;
+                        if (cntCancelRotate > 40)
                         {
-                            cntCancelLasso = 0;
+                            cntCancelRotate = 0;
                             rotating = false;
                             ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
                         }
@@ -294,11 +294,15 @@ public class Operation : MonoBehaviour {
                         standardRightY = (standardRightY + rightY) / 2;
                     }
                     startViewCountDown--;
-                    /*if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
+                    if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
                     {
-                        lasso = false;
-                        cntCancelLasso = 0;
-                    }*/
+                        ++cntCancelLasso;
+                        if (cntCancelLasso > 40)
+                        {
+                            lasso = false;
+                            cntCancelLasso = 0;
+                        }
+                    }
                     return;
                 }
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "视野变换中";
