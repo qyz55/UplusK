@@ -303,6 +303,7 @@ public class ModelManager : MonoBehaviour
         }
         else if (num ==2)
         {
+            GameObject.Find("TeachingState").GetComponent<Text>().text = "";
             _Data[1].model.transform.localPosition = Vector3.zero;
             _Data[1].model.transform.localRotation = Quaternion.identity;
             _Data[0].model.transform.position = new Vector3(0, 0, 30);

@@ -146,6 +146,10 @@ public class Operation : MonoBehaviour {
                 {
                     GameObject.Find("TeachingState").GetComponent<Text>().text = "试着把他们拼起来吧";
                 }
+                else
+                {
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = "";
+                }
             }
 
             //正在旋转物体
