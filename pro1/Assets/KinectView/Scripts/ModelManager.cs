@@ -172,6 +172,8 @@ public class ModelManager : MonoBehaviour
             {
                 jointing = true;
                 _Data[ShouldCatch].state = StateOfBlock.jointing;
+                _Data[ShouldCatch].LeftStep1 = MoveFrames;
+                _Data[ShouldCatch].LeftStep2 = MoveFrames;
                 _Data[ShouldCatch].MoveVector = _Data[0].model.transform.position + _Data[ShouldCatch].JointPosition - _Data[ShouldCatch].model.transform.position;
             }
             else
@@ -291,6 +293,7 @@ public class ModelManager : MonoBehaviour
         isInTeachMode = true;
         GameObject.Find("Root").transform.Find("Cube").gameObject.SetActive(true);
         //ChangeTeachState(1);
+        //ChangeTeachState(2);
     }
     public void ChangeTeachState(int num)
     {
@@ -337,8 +340,29 @@ public class ModelManager : MonoBehaviour
             {
                 if (i.state == StateOfBlock.jointing)
                 {
-                    i.model.transform.position += i.MoveVector / MoveFrames;
-                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.001f &&
+                    //i.model.transform.position += i.MoveVector / MoveFrames;
+                    if (i.LeftStep1 > 0)
+                    {
+                        --i.LeftStep1;
+                        i.model.transform.position += i.MoveVector / 2 * (float)( Math.Cos(Math.PI * i.LeftStep1 / MoveFrames) -Math.Cos(Math.PI * (i.LeftStep1 + 1) / MoveFrames));
+                        if (i.LeftStep1 <= 0)
+                        {
+                            i.MoveVector = -i.JointPosition;
+                        }
+                    }
+                    else if (i.LeftStep2 > 0 && i.LeftStep1 == 0)
+                    {
+                        --i.LeftStep2;
+                        i.model.transform.position += i.MoveVector / 2 * (float)(Math.Cos(Math.PI * i.LeftStep2 / MoveFrames) - Math.Cos(Math.PI * (i.LeftStep2 + 1) / MoveFrames));
+                        if (i.LeftStep2 <= 0)
+                        {
+                            jointing = false;
+                            i.state = StateOfBlock.caught;
+                            GetJointed(ShouldCatch);
+                            Creat(ShouldCatch);
+                        }
+                    }
+                    /*if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.001f &&
                         Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.001f &&
                         Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.001f)
                     {
@@ -352,7 +376,7 @@ public class ModelManager : MonoBehaviour
                         Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f)
                     {
                         i.MoveVector = -i.JointPosition;
-                    }
+                    }*/
                 }
             }
         }

@@ -22,6 +22,8 @@ public class Model
     public Quaternion LastQuaternion { get; set; }
     public Quaternion initialQuaternion { get; set; }
     public Vector3 MoveVector { get; set; }
+    public int LeftStep1 { get; set; }
+    public int LeftStep2 { get; set; }
     public Model() { 
         model = null; 
         num = 0; 
