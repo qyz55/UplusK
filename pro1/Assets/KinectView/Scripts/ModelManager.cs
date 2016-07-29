@@ -12,7 +12,7 @@ public class ModelManager : MonoBehaviour
     static public int TNumOfPiece = 2;
     public bool jointing = false;
     private List<Model> _Data = new List<Model>();
-    public int MoveFrames = 30;
+    public int MoveFrames = 20;
     private Model[] a = new Model[NumOfPiece + 2];
     private Model[] Ta = new Model[TNumOfPiece + 1];
     public GameObject[] b = new GameObject[NumOfPiece + 2];
@@ -335,18 +335,18 @@ public class ModelManager : MonoBehaviour
                 if (i.state == StateOfBlock.jointing)
                 {
                     i.model.transform.position += i.MoveVector / MoveFrames;
-                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.0001f)
+                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.001f &&
+                        Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.001f)
                     {
                         jointing = false;
                         i.state = StateOfBlock.caught;
                         GetJointed(ShouldCatch);
                         Creat(ShouldCatch);
                     }
-                    else if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f)
+                    else if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f)
                     {
                         i.MoveVector = -i.JointPosition;
                     }
