@@ -18,7 +18,7 @@ public class ModelManager : MonoBehaviour
     public GameObject[] b = new GameObject[NumOfPiece + 2];
     public GameObject[] Tb = new GameObject[TNumOfPiece + 1];
     public int ShouldCatch = 1;
-    private bool isInTeachMode = false;
+    public bool isInTeachMode = false;
     private int TeachState = 0; 
     public Vector3  BirthPosition = new Vector3(30,15,30);
     public float RangeOfAngles = 80.0f;
