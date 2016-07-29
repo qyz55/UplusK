@@ -12,13 +12,13 @@ public class ModelManager : MonoBehaviour
     static public int TNumOfPiece = 2;
     public bool jointing = false;
     private List<Model> _Data = new List<Model>();
-    public int MoveFrames = 30;
+    public int MoveFrames = 20;
     private Model[] a = new Model[NumOfPiece + 2];
     private Model[] Ta = new Model[TNumOfPiece + 1];
     public GameObject[] b = new GameObject[NumOfPiece + 2];
     public GameObject[] Tb = new GameObject[TNumOfPiece + 1];
     public int ShouldCatch = 1;
-    private bool isInTeachMode = false;
+    public bool isInTeachMode = false;
     private int TeachState = 0; 
     public Vector3  BirthPosition = new Vector3(30,15,30);
     public float RangeOfAngles = 80.0f;
@@ -168,7 +168,7 @@ public class ModelManager : MonoBehaviour
         }
         else if (d < RangeOfDis)
         {
-            if (CheckRotation() == true && )
+            if (CheckRotation() == true)
             {
                 jointing = true;
                 _Data[ShouldCatch].state = StateOfBlock.jointing;
@@ -303,6 +303,7 @@ public class ModelManager : MonoBehaviour
         }
         else if (num ==2)
         {
+            GameObject.Find("TeachingState").GetComponent<Text>().text = "";
             _Data[1].model.transform.localPosition = Vector3.zero;
             _Data[1].model.transform.localRotation = Quaternion.identity;
             _Data[0].model.transform.position = new Vector3(0, 0, 30);
@@ -335,18 +336,18 @@ public class ModelManager : MonoBehaviour
                 if (i.state == StateOfBlock.jointing)
                 {
                     i.model.transform.position += i.MoveVector / MoveFrames;
-                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.0001f)
+                    if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.y - _Data[0].model.transform.position.y) < 0.001f &&
+                        Math.Abs(i.model.transform.position.z - _Data[0].model.transform.position.z) < 0.001f)
                     {
                         jointing = false;
                         i.state = StateOfBlock.caught;
                         GetJointed(ShouldCatch);
                         Creat(ShouldCatch);
                     }
-                    else if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f &&
-                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.0001f)
+                    else if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f &&
+                        Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x - i.JointPosition.x) < 0.001f)
                     {
                         i.MoveVector = -i.JointPosition;
                     }

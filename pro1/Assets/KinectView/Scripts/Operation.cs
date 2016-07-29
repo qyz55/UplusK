@@ -125,32 +125,39 @@ public class Operation : MonoBehaviour {
                 preRight = body.HandRightState;
             }
 
-            //正在教学
-            if (Teaching.teachingState == Teaching.State.tryHands)
+            if (ModelManager.isInTeachMode)
             {
-                if(Teaching.checkHands(body.HandLeftState,body.HandRightState))
+                //正在教手势 教视野变换、移动在后面流程中进行判断
+                if (Teaching.teachingState == Teaching.State.tryHands)
                 {
-                    Teaching.teachingState = Teaching.State.tryLasso;
-                    ModelManager.ChangeTeachState(1);
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = "试一下手势吧";
+                    if (Teaching.checkHands(body.HandLeftState, body.HandRightState))
+                    {
+                        Teaching.teachingState = Teaching.State.tryLasso;
+                        ModelManager.ChangeTeachState(1);
+                    }
+                    return;
                 }
-                    /*case Teaching.State.tryRotate:
-                        break;
-                    case Teaching.State.tryLasso:
-                        break;
-                    case Teaching.State.tryMove:
-                        break;
-                    case Teaching.State.tryJoint:
-                        break;
-                    default:
-                        break;*/
+                else if (Teaching.teachingState == Teaching.State.tryLasso)
+                {
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = "试一下变换视角吧,双手保持Lasso";
+                }
+                else if (Teaching.teachingState == Teaching.State.tryMove)
+                {
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = "试着把他们拼起来吧";
+                }
+                else
+                {
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = "";
+                }
             }
 
             //正在旋转物体
-            else if (rotating)
+            if (rotating)
             {
                 if (startRotateCountDown > 0)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到在正常位置并保持一会儿\n开始旋转";
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持一会儿\n开始旋转";
                     if (startRotateCountDown == 20)
                     {
                         standardRotateLeftX = leftX;
@@ -169,10 +176,10 @@ public class Operation : MonoBehaviour {
                     startRotateCountDown--;
                     if (body.HandLeftState != Kinect.HandState.Closed || body.HandRightState != Kinect.HandState.Closed)
                     {
-                        ++cntCancelLasso;
-                        if (cntCancelLasso > 40)
+                        ++cntCancelRotate;
+                        if (cntCancelRotate > 40)
                         {
-                            cntCancelLasso = 0;
+                            cntCancelRotate = 0;
                             rotating = false;
                             ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
                         }
@@ -276,7 +283,7 @@ public class Operation : MonoBehaviour {
             {
                 if (startViewCountDown > 0)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视野";
+                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视角";
                     print("把手保持在正常位置");
                     if (startViewCountDown == 20)
                     {
@@ -294,12 +301,64 @@ public class Operation : MonoBehaviour {
                         standardRightY = (standardRightY + rightY) / 2;
                     }
                     startViewCountDown--;
-                    /*if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
+                    if (body.HandLeftState != Kinect.HandState.Lasso || body.HandRightState != Kinect.HandState.Lasso)
                     {
-                        lasso = false;
-                        cntCancelLasso = 0;
-                    }*/
+                        ++cntCancelLasso;
+                        if (cntCancelLasso > 40)
+                        {
+                            lasso = false;
+                            cntCancelLasso = 0;
+                        }
+                    }
                     return;
+                }
+                if (Teaching.teachingState == Teaching.State.tryLasso)
+                {
+                    switch (Teaching.lassoProgress)
+                    {
+                        case 0:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向右移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向右移动试试";
+                            if (offsetLeftX < -2)
+                                ++Teaching.lassoProgress;
+                            break;
+                        case 1:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向下移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向下移动试试";
+                            if (offsetLeftY > 2)
+                                ++Teaching.lassoProgress;
+                            break;
+                        case 2:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向左移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向左移动试试";
+                            if (offsetLeftX > 0)
+                                ++Teaching.lassoProgress;
+                            break;
+                        case 3:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向上移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向上移动试试";
+                            if (offsetLeftY < 0)
+                                ++Teaching.lassoProgress;
+                            break;
+                        case 4:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向中间移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向中间移动试试";
+                            if (offsetLeftZ < -2)
+                                ++Teaching.lassoProgress;
+                            break;
+                        case 5:
+                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向外侧移动试试";
+                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向外侧移动试试";
+                            if (offsetLeftZ > 0)
+                            {
+                                Teaching.lassoProgress = 0;
+                                Teaching.teachingState = Teaching.State.tryMove;
+                                ModelManager.ChangeTeachState(2);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "视野变换中";
                 print("two hands Lasso");

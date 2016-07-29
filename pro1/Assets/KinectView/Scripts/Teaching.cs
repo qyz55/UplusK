@@ -10,9 +10,16 @@ public class Teaching : MonoBehaviour {
         tryRotate = 1,/*?????????????*/
         tryLasso = 2,
         tryMove = 3,
-        tryJoint = 4
+        tryJoint = 4,
+        over = 5
     };
+
     public State teachingState = State.tryHands;
+
+
+
+
+
 
     private bool gotLeft = false;
     private bool gotRight = false;
@@ -24,12 +31,19 @@ public class Teaching : MonoBehaviour {
     private int doneCnt = 0;
     private int handsProgress = 0;//0 try open 1 try closed 2 try lasso
 
+    public int lassoProgress = 0;
+    /*public int checkLasso()
+    {
+ 
+    }*/
+
     public bool checkHands(Kinect.HandState l_state, Kinect.HandState r_state)
     {
         if (handsProgress == 3)
         {
             gotLeft = false;
             gotRight = false;
+            handsProgress = 0;
             return true;
         }
 
