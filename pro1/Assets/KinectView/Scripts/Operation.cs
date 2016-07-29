@@ -136,7 +136,7 @@ public class Operation : MonoBehaviour {
             ++cntLeftHandHist[body.HandLeftState];
             rightHandHist.Enqueue(body.HandRightState);
             ++cntRightHandHist[body.HandRightState];
-            if (leftHandHist.Count > 5)
+            if (leftHandHist.Count > 20)
             {
                 --cntLeftHandHist[leftHandHist.Dequeue()];
                 --cntRightHandHist[rightHandHist.Dequeue()];
@@ -145,31 +145,31 @@ public class Operation : MonoBehaviour {
             HandRightState = Kinect.HandState.Open;
             if (cntLeftHandHist[Kinect.HandState.Closed] > cntLeftHandHist[HandLeftState])
                 HandLeftState = Kinect.HandState.Closed;
-            if (cntLeftHandHist[Kinect.HandState.Lasso] > cntLeftHandHist[HandLeftState])
+            if (cntLeftHandHist[Kinect.HandState.Lasso] >= cntLeftHandHist[HandLeftState])
                 HandLeftState = Kinect.HandState.Lasso;
             if (cntRightHandHist[Kinect.HandState.Closed] > cntRightHandHist[HandRightState])
                 HandRightState = Kinect.HandState.Closed;
-            if (cntRightHandHist[Kinect.HandState.Lasso] > cntRightHandHist[HandRightState])
+            if (cntRightHandHist[Kinect.HandState.Lasso] >= cntRightHandHist[HandRightState])
                 HandRightState = Kinect.HandState.Lasso;
 
 
-            leftX = (leftPosSum / leftHandPos.Count).x * 40 + offsetLeftX;
-            leftY = (leftPosSum / leftHandPos.Count).y * 40 + offsetLeftY;
+            leftX = (leftPosSum / leftHandPos.Count).x * 50 + offsetLeftX;
+            leftY = (leftPosSum / leftHandPos.Count).y * 45 + offsetLeftY;
             leftZ = (leftPosSum / leftHandPos.Count).z * 30 + offsetLeftZ;
-            rightX = (rightPosSum / rightHandPos.Count).x * 40 + offsetRightX;
-            rightY = (rightPosSum / rightHandPos.Count).y * 40 + offsetRightY;
+            rightX = (rightPosSum / rightHandPos.Count).x * 50 + offsetRightX;
+            rightY = (rightPosSum / rightHandPos.Count).y * 45 + offsetRightY;
             rightZ = (rightPosSum / rightHandPos.Count).z * 30 + offsetRightZ;
 
             //print("left: " + leftX + " " + leftY + " " + leftZ);
             //print("right: " + rightX + " " + rightY + " " + rightZ);
             leftHand.transform.position = new Vector3(leftX, leftY, leftZ);
             rightHand.transform.position = new Vector3(rightX, rightY, rightZ);
-            if ((int)HandLeftState > 1 && HandLeftState != preLeft)
+            if (HandLeftState != preLeft)
             {
                 leftHand.setStatus(false, HandLeftState);
                 preLeft = HandLeftState;
             }
-            if ((int)HandRightState > 1 && HandRightState != preRight)
+            if (HandRightState != preRight)
             {
                 rightHand.setStatus(true, HandRightState);
                 preRight = HandRightState;
