@@ -81,6 +81,9 @@ public class Operation : MonoBehaviour {
 	void Start () {
         //ModelManager = new ModelManager();
         //Teaching = new Teaching();
+        GameObject.Find("HandsHints").GetComponent<Text>().text = "";
+        GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "";
+        GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "";
 	}
 
 	// Update is called once per frame
@@ -152,13 +155,14 @@ public class Operation : MonoBehaviour {
             if (cntRightHandHist[Kinect.HandState.Lasso] >= cntRightHandHist[HandRightState])
                 HandRightState = Kinect.HandState.Lasso;
 
+            print((leftPosSum / leftHandPos.Count).z);
 
             leftX = (leftPosSum / leftHandPos.Count).x * 50 + offsetLeftX;
             leftY = (leftPosSum / leftHandPos.Count).y * 45 + offsetLeftY;
-            leftZ = (leftPosSum / leftHandPos.Count).z * 30 + offsetLeftZ;
+            leftZ = (2 - (leftPosSum / leftHandPos.Count).z) * 30 + offsetLeftZ;
             rightX = (rightPosSum / rightHandPos.Count).x * 50 + offsetRightX;
             rightY = (rightPosSum / rightHandPos.Count).y * 45 + offsetRightY;
-            rightZ = (rightPosSum / rightHandPos.Count).z * 30 + offsetRightZ;
+            rightZ = (2 - (rightPosSum / rightHandPos.Count).z) * 30 + offsetRightZ;
 
             //print("left: " + leftX + " " + leftY + " " + leftZ);
             //print("right: " + rightX + " " + rightY + " " + rightZ);
@@ -205,7 +209,7 @@ public class Operation : MonoBehaviour {
             }
 
             //正在旋转物体
-            if (rotating)
+            /*if (rotating)
             {
                 if (startRotateCountDown > 0)
                 {
@@ -258,21 +262,15 @@ public class Operation : MonoBehaviour {
                     cntCancelRotate = 0;
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
                     float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardRotateLeftX, 2)
-                        + System.Math.Pow(leftY - standardRotateLeftY, 2)
-                        /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
+                        + System.Math.Pow(leftY - standardRotateLeftY, 2));
                     float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRotateRightX, 2)
-                        + System.Math.Pow(rightY - standardRotateRightY, 2)
-                        /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
+                        + System.Math.Pow(rightY - standardRotateRightY, 2));
                     //若左右手距离标准位置的距离均大于XY平面内操作阈值
                     if (leftDist > rotateThreshold && rightDist > rotateThreshold)
                     {
                         //计算平面角
                         float leftXYangle = (float)System.Math.Atan2(leftY - standardRotateLeftY, leftX - standardRotateLeftX);
                         float rightXYangle = (float)System.Math.Atan2(rightY - standardRotateRightY, rightX - standardRotateRightX);
-                        /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                                                                                                            + System.Math.Pow(leftY - standardLeftY, 2)));
-                        float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                                                                                                            + System.Math.Pow(rightY - standardRightY, 2)));*/
                         if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
                         {//左手在左
                             if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
@@ -280,21 +278,10 @@ public class Operation : MonoBehaviour {
                                 //绕Y，俯视顺时针
                                 ModelManager.Rotate(rotatingNum, 2);
                             }
-                           /* elseif (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //绕X，左视逆时针
-                                ModelManager.Rotate(rotatingNum, 0);
-                            }*/
                             
                         }
                         else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
-                        {//左手在右
-                            /*if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                                //绕X，左视顺时针
-                                ModelManager.Rotate(rotatingNum, 1);
-                            }
-                            else */
+                        {
                             if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
                             {//右手在右
                                 //绕Y，俯视逆时针
@@ -329,9 +316,9 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
-            }
+            }*/
             //双手均Lasso，进行视野变换
-            else if (lasso)
+            /*else if (lasso)
             {
                 if (startViewCountDown > 0)
                 {
@@ -430,22 +417,12 @@ public class Operation : MonoBehaviour {
                 else
                 {
                     cntCancelLasso = 0;
-                    /*************
-                     * 都在上，摄像机和手同步向上移动
-                     * 都在下，视野向下
-                     * 都在左，视野向左
-                     * 都在右，视野向右
-                     * 左偏左右偏右，摄像机和手前进
-                     * 左偏右右偏左，摄像机和手后退
-                     * */
 
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
                     float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                        + System.Math.Pow(leftY - standardLeftY, 2)
-                        /*+ System.Math.Pow(leftZ - standardLeftZ, 2)*/);
+                        + System.Math.Pow(leftY - standardLeftY, 2));
                     float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                        + System.Math.Pow(rightY - standardRightY, 2)
-                        /*+ System.Math.Pow(rightZ - standardRightZ, 2)*/);
+                        + System.Math.Pow(rightY - standardRightY, 2));
 
                     //若左右手距离标准位置的距离均大于XY平面内操作阈值
                     if (leftDist > rotateThreshold && rightDist > rotateThreshold)
@@ -453,10 +430,7 @@ public class Operation : MonoBehaviour {
                         //计算空间角
                         float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
                         float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
-                        /*float leftZangle = (float)System.Math.Atan2(leftZ - standardLeftZ, System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                            + System.Math.Pow(leftY - standardLeftY, 2)));
-                        float rightZangle = (float)System.Math.Atan2(rightZ - standardRightZ, System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                            + System.Math.Pow(rightY - standardRightY, 2)));*/
+                        
                         if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
                         {//左手在左
                             if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
@@ -530,10 +504,10 @@ public class Operation : MonoBehaviour {
                 lasso = true;
                 cntCancelLasso = 0;
                 startViewCountDown = 120;
-            }
+            }*/
             //非Rotating、非Lasso，则可进行移动或开始旋转的判断
-            else
-            {
+            //else
+            //{
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "";
                 int operateLeftNum = -1;
                 int operateRightNum = -1;
@@ -840,9 +814,7 @@ public class Operation : MonoBehaviour {
                         }
                     }
                 }
-                else
-                { }
-            }
+            //}
         }
     }
 }
