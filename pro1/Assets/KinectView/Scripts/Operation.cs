@@ -185,6 +185,8 @@ public class Operation : MonoBehaviour {
                     {
                         Teaching.teachingState = Teaching.State.tryLasso;
                         ModelManager.ChangeTeachState(1);
+                        Teaching.teachingState = Teaching.State.tryMove;
+                        ModelManager.ChangeTeachState(2);
                     }
                     return;
                 }
