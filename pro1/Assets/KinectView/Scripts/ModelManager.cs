@@ -23,9 +23,11 @@ public class ModelManager : MonoBehaviour
     public Vector3  BirthPosition = new Vector3(30,15,30);
     public float RangeOfAngles = 80.0f;
     public float RangeOfDis = 5;
-    private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0) };
+    private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0), new Vector3(3,0,0),new Vector3(3,-4,0),new Vector3(3,-9,0),new Vector3(3,-13,0),
+                                  new Vector3(6,4,0),new Vector3(6,4,25),new Vector3(6,4,-25),new Vector3(6,-2,30),new Vector3(6,-2,20),new Vector3(6,-2,-20),new Vector3(6,-2,-30)};
     private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
-    private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(3,0,0) };
+    private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(3,0,0), new Vector3(3,0,0),new Vector3(0,-3,0),new Vector3(0,-3,0),new Vector3(0,-3,0),
+                                         new Vector3(0,3,0),new Vector3(0,0,5),new Vector3(0,0,-5),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),};
     private Vector3[] TAllJpintPosition = { Vector3.zero, new Vector3(0, 0, 0), new Vector3(0, 2, 0) };
     public bool inCollision = false;
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
