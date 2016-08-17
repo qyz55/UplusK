@@ -57,7 +57,25 @@ public class Operation : MonoBehaviour {
 
 	// Update is called once per frame
 
-	void FixedUpdate () {
+    public void LetGo()
+    {
+        leftOccupied = false;
+        leftCatching = -1;
+        rightOccupied = false;
+        rightCatching = -1;
+        HandLeftState = Kinect.HandState.Open;
+        HandRightState = Kinect.HandState.Open;
+        for (int i = 0; i < 5; ++i)
+        {
+            leftHandHist.Enqueue(HandLeftState);
+            leftHandHist.Dequeue();
+            rightHandHist.Enqueue(HandLeftState);
+            rightHandHist.Dequeue();
+        }
+    }
+
+    void FixedUpdate()
+    {
 
         //获取模型位置
         List<Vector3> modelPos = ModelManager.GetAllPosition();

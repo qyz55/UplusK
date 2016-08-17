@@ -24,7 +24,7 @@ public class MainCameraManager : MonoBehaviour {
         presentRotation = this.transform.rotation.eulerAngles;
         deltaPos = pos - presentPos;
         deltaRotation = rotation.eulerAngles - presentRotation;
-        //this.transform.
+        //dsthis.transform.rotation=Quaternion.Euler(
     }
 	// Update is called once per frame
 	void Update ()
