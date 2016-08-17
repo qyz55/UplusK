@@ -161,7 +161,9 @@ public class ModelManager : MonoBehaviour
     private void TryJoint()
     {
         if (ShouldCatch == 1 || ShouldCatch == NumOfPiece + 1) return;
-        float d = Vector3.Distance(CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center, CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center);
+        Vector3 d1 = CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center;
+        Vector3 d2 = CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center;
+        float d = (float)(Math.Sqrt((d1.x - d2.x) * (d1.x - d2.x) + (d1.y - d2.y) * (d1.y - d2.y) + (d1.z - d2.z) * (d1.z - d2.z) / 10));
         if (d > RangeOfDis * 2)
         {
             _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
@@ -265,7 +267,7 @@ public class ModelManager : MonoBehaviour
             a[i].state = StateOfBlock.free;
             a[i].father = i;
             a[i].model.transform.position = BirthPosition;
-            a[i].initialQuaternion = Quaternion.identity;
+            a[i].initialQuaternion = _Data[0].model.transform.rotation;
             a[i].model.transform.rotation = _Data[0].model.transform.rotation;
             a[i].LastPosition = BirthPosition;
             if (!a[i].model.GetComponent<Rigidbody>())
@@ -333,7 +335,7 @@ public class ModelManager : MonoBehaviour
                 rotating = true;
                 FinalRotation = 80;
                 nowRotation = 0;
-                rotationEuler = new Vector3(60,-30,-30);
+                rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
                 break;
             default:
                 break;
@@ -357,11 +359,12 @@ public class ModelManager : MonoBehaviour
     {
         if (rotating == true)
         {
-            ++nowRotation;
-            _Data[0].model.transform.Rotate(rotationEuler.x/FinalRotation, rotationEuler.y/FinalRotation, rotationEuler.z/FinalRotation);
+            ++nowRotation; 
+            _Data[0].model.transform.RotateAround(CalcRealPosition(0, _Data[0].model.transform.position), rotationEuler, Time.deltaTime);
             if (nowRotation >= FinalRotation)
             {
                 rotating = false;
+                SavePos(0);
                 Creat(ShouldCatch);
             }
         }
