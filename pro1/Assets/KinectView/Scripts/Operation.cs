@@ -17,43 +17,14 @@ public class Operation : MonoBehaviour {
     private Vector3 prevRightDisplayPos;
     private Vector3 nowLeftDisplayPos;
     private Vector3 nowRightDisplayPos;
-
-    private float offsetLeftX = 0;
-    private float offsetLeftY = 0;
-    private float offsetLeftZ = 0;
-    private float offsetRightX = 0;
-    private float offsetRightY = 0;
-    private float offsetRightZ = 0;
-
-    private float standardLeftX;
-    private float standardLeftY;
-    private float standardLeftZ;
-    private float standardRightX;
-    private float standardRightY;
-    private float standardRightZ;
-
-    private float standardRotateLeftX;
-    private float standardRotateLeftY;
-    private float standardRotateRightX;
-    private float standardRotateRightY;
-
     private float catchThreshold = 5F;
-//    private float rotateThreshold = 2F;
-    //标准化双手参数，因人而异，可在最初设计流程校准
+    private bool leftOccupied = false;
+    private int leftCatching = -1;
+    private bool rightOccupied = false;
+    private int rightCatching = -1;
 
     private int startViewCountDown;
 
-//    private bool rotating = false;
-//    private int rotatingNum;
-//    private int startRotateCountDown;
-//    private int cntCancelRotate = 0;
-//    private const int cancelRotateThreshold = 120;
-
-//    private bool lasso = false;
-//    private int cntCancelLasso = 0;
-//    private const int cancelLassoThreshold = 120;
-
-//    private bool teaching = false;
     public Teaching Teaching;
 
     Kinect.HandState preLeft = Kinect.HandState.Unknown;
@@ -133,33 +104,52 @@ public class Operation : MonoBehaviour {
             }
 
             //维护手状态队列
-            leftHandHist.Enqueue(body.HandLeftState);
-            ++cntLeftHandHist[body.HandLeftState];
-            rightHandHist.Enqueue(body.HandRightState);
-            ++cntRightHandHist[body.HandRightState];
-            if (leftHandHist.Count > 20)
+            if (body.HandLeftState == Kinect.HandState.Closed || body.HandLeftState == Kinect.HandState.Open)
+            {
+                leftHandHist.Enqueue(body.HandLeftState);
+                ++cntLeftHandHist[body.HandLeftState];
+            }
+            if (leftHandHist.Count > 5)
             {
                 --cntLeftHandHist[leftHandHist.Dequeue()];
+            }
+            if (body.HandRightState == Kinect.HandState.Closed || body.HandRightState == Kinect.HandState.Open)
+            {
+                rightHandHist.Enqueue(body.HandRightState);
+                ++cntRightHandHist[body.HandRightState];
+            }
+            if (rightHandHist.Count > 5)
+            {
                 --cntRightHandHist[rightHandHist.Dequeue()];
             }
             HandLeftState = Kinect.HandState.Open;
             HandRightState = Kinect.HandState.Open;
             if (cntLeftHandHist[Kinect.HandState.Closed] > cntLeftHandHist[HandLeftState])
                 HandLeftState = Kinect.HandState.Closed;
-            if (cntLeftHandHist[Kinect.HandState.Lasso] >= cntLeftHandHist[HandLeftState])
-                HandLeftState = Kinect.HandState.Lasso;
+            /*if (cntLeftHandHist[Kinect.HandState.Lasso] >= cntLeftHandHist[HandLeftState])
+                HandLeftState = Kinect.HandState.Lasso;*/
             if (cntRightHandHist[Kinect.HandState.Closed] > cntRightHandHist[HandRightState])
                 HandRightState = Kinect.HandState.Closed;
-            if (cntRightHandHist[Kinect.HandState.Lasso] >= cntRightHandHist[HandRightState])
-                HandRightState = Kinect.HandState.Lasso;
+            /*if (cntRightHandHist[Kinect.HandState.Lasso] >= cntRightHandHist[HandRightState])
+                HandRightState = Kinect.HandState.Lasso;*/
 
-            print((leftPosSum / leftHandPos.Count).z);
+            if (HandLeftState == Kinect.HandState.Open)
+            {
+                leftOccupied = false;
+                leftCatching = -1;
+            }
+            if (HandRightState == Kinect.HandState.Open)
+            {
+                rightOccupied = false;
+                rightCatching = -1;
+            }
+            //print((leftPosSum / leftHandPos.Count).z);
 
             prevLeftDisplayPos = nowLeftDisplayPos;
             prevRightDisplayPos = nowRightDisplayPos;
 
-            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 50 + offsetLeftX, (leftPosSum / leftHandPos.Count).y * 45 + offsetLeftY, (2 - (leftPosSum / leftHandPos.Count).z) * 30 + offsetLeftZ);
-            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 50 + offsetRightX, (rightPosSum / rightHandPos.Count).y * 45 + offsetRightY, (2 - (rightPosSum / rightHandPos.Count).z) * 30 + offsetRightZ);
+            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 50/* + offsetLeftX*/, (leftPosSum / leftHandPos.Count).y * 45/* + offsetLeftY*/, (2 - (leftPosSum / leftHandPos.Count).z) * 30/* + offsetLeftZ*/);
+            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 50/* + offsetRightX*/, (rightPosSum / rightHandPos.Count).y * 45/* + offsetRightY*/, (2 - (rightPosSum / rightHandPos.Count).z) * 30/* + offsetRightZ*/);
 
             //print("left: " + leftX + " " + nowLeftDisplayPos.y + " " + nowLeftDisplayPos.z);
             //print("right: " + nowRightDisplayPos.x + " " + nowRightDisplayPos.y + " " + nowRightDisplayPos.z);
@@ -205,617 +195,159 @@ public class Operation : MonoBehaviour {
                 }
             }
 
-            //正在旋转物体
-            /*if (rotating)
+            if (leftOccupied && rightOccupied)
             {
-                if (startRotateCountDown > 0)
+                print("leftOccupied && rightOccupied");
+                if (leftCatching < ModelManager.ShouldCatch && rightCatching < ModelManager.ShouldCatch)
                 {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持一会儿\n开始旋转";
-                    if (startRotateCountDown == 20)
-                    {
-                        standardRotateLeftX = nowLeftDisplayPos.x;
-                        standardRotateLeftY = nowLeftDisplayPos.y;
-                        standardRotateRightX = nowRightDisplayPos.x;
-                        standardRotateRightY = nowRightDisplayPos.y;
-                    }
-                    if (startRotateCountDown < 20)
-                    {
-                        standardRotateLeftX = (standardRotateLeftX + nowLeftDisplayPos.x) / 2;
-                        standardRotateLeftY = (standardRotateLeftY + nowLeftDisplayPos.y) / 2;
-
-                        standardRotateRightX = (standardRotateRightX + nowRightDisplayPos.x) / 2;
-                        standardRotateRightY = (standardRotateRightY + nowRightDisplayPos.y) / 2;
-                    }
-                    startRotateCountDown--;
-                    if (HandLeftState != Kinect.HandState.Closed || HandRightState != Kinect.HandState.Closed)
-                    {
-                        ++cntCancelRotate;
-                        if (cntCancelRotate > 40)
-                        {
-                            cntCancelRotate = 0;
-                            rotating = false;
-                            ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
-                        }
-                    }
-                    return;
+                    ModelManager.ChangeState(0, StateOfBlock.caught);
+                    ModelManager.Move0(leftCatching, (nowLeftDisplayPos - prevLeftDisplayPos + nowRightDisplayPos - prevRightDisplayPos) / 2);
+                    ModelManager.ChangeState(0, StateOfBlock.free);
                 }
-
-                GameObject.Find("HandsHints").GetComponent<Text>().text = "旋转中";
-                if (HandLeftState != Kinect.HandState.Closed || HandRightState != Kinect.HandState.Closed)
+                else if (leftCatching == ModelManager.ShouldCatch && rightCatching == ModelManager.ShouldCatch)
                 {
-                    ++cntCancelRotate;
-                    if (cntCancelRotate > cancelRotateThreshold >> 1)
-                    {
-                        GameObject.Find("HandsHints").GetComponent<Text>().text = "退出旋转中";
-                    }
-                    if (cntCancelRotate > cancelRotateThreshold)
-                    {
-                        rotating = false;
-                        ModelManager.ChangeState(rotatingNum, StateOfBlock.free);
-                    }
+                    ModelManager.ChangeState(leftCatching, StateOfBlock.caught);
+                    ModelManager.MoveOne(leftCatching, (nowLeftDisplayPos - prevLeftDisplayPos + nowRightDisplayPos - prevRightDisplayPos) / 2);
+                    ModelManager.ChangeState(leftCatching, StateOfBlock.free);
                 }
                 else
                 {
-                    cntCancelRotate = 0;
-                    //计算在XY平面内手与标准位置的距离和连线与空间角，
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - standardRotateLeftX, 2)
-                        + System.Math.Pow(nowLeftDisplayPos.y - standardRotateLeftY, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - standardRotateRightX, 2)
-                        + System.Math.Pow(nowRightDisplayPos.y - standardRotateRightY, 2));
-                    //若左右手距离标准位置的距离均大于XY平面内操作阈值
-                    if (leftDist > rotateThreshold && rightDist > rotateThreshold)
+                    if (leftCatching == ModelManager.ShouldCatch)
                     {
-                        //计算平面角
-                        float leftXYangle = (float)System.Math.Atan2(nowLeftDisplayPos.y - standardRotateLeftY, nowLeftDisplayPos.x - standardRotateLeftX);
-                        float rightXYangle = (float)System.Math.Atan2(nowRightDisplayPos.y - standardRotateRightY, nowRightDisplayPos.x - standardRotateRightX);
-                        if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
-                        {//左手在左
-                            if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
-                            {//右手在左
-                                //绕Y，俯视顺时针
-                                ModelManager.Rotate(rotatingNum, 2);
-                            }
-                            
-                        }
-                        else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
-                        {
-                            if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //绕Y，俯视逆时针
-                                ModelManager.Rotate(rotatingNum, 3);
-                            }
-                        }
-                        else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
-                        {//左手在上
-                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                                //绕X，左视逆时针
-                                ModelManager.Rotate(rotatingNum, 0);
-                            }
-                            else if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
-                            {//右手在下
-                                //绕Z，正视顺时针
-                                ModelManager.Rotate(rotatingNum, 5);
-                            }
-                        }
-                        else
-                        {//左手在下
-                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                                //绕Z，正视逆时针
-                                ModelManager.Rotate(rotatingNum, 4);
-                            }
-                            else if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
-                            {//右手在下
-                                //绕X，左视顺时针
-                                ModelManager.Rotate(rotatingNum, 1);
-                            }
-                        }
+                        ModelManager.ChangeState(leftCatching, StateOfBlock.caught);
+                        ModelManager.MoveOne(leftCatching, nowLeftDisplayPos - prevLeftDisplayPos);
+                        ModelManager.ChangeState(leftCatching, StateOfBlock.free);
                     }
-                }
-            }*/
-            //双手均Lasso，进行视野变换
-            /*else if (lasso)
-            {
-                if (startViewCountDown > 0)
-                {
-                    GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持\n开始变视角";
-                    //print("把手保持在正常位置");
-                    if (startViewCountDown == 20)
+                    else
                     {
-                        standardLeftX = nowLeftDisplayPos.x;
-                        standardLeftY = nowLeftDisplayPos.y;
-                        standardRightX = nowRightDisplayPos.x;
-                        standardRightY = nowRightDisplayPos.y;
+                        ModelManager.ChangeState(0, StateOfBlock.caught);
+                        ModelManager.Move0(leftCatching, nowLeftDisplayPos - prevLeftDisplayPos);
+                        ModelManager.ChangeState(0, StateOfBlock.free);
                     }
-                    if (startViewCountDown < 20)
-                    {
-                        standardLeftX = (standardLeftX + nowLeftDisplayPos.x) / 2;
-                        standardLeftY = (standardLeftY + nowLeftDisplayPos.y) / 2;
 
-                        standardRightX = (standardRightX + nowRightDisplayPos.x) / 2;
-                        standardRightY = (standardRightY + nowRightDisplayPos.y) / 2;
-                    }
-                    startViewCountDown--;
-                    if (HandLeftState != Kinect.HandState.Lasso || HandRightState != Kinect.HandState.Lasso)
+                    if (rightCatching == ModelManager.ShouldCatch)
                     {
-                        ++cntCancelLasso;
-                        if (cntCancelLasso > 40)
-                        {
-                            lasso = false;
-                            cntCancelLasso = 0;
-                        }
+                        ModelManager.ChangeState(rightCatching, StateOfBlock.caught);
+                        ModelManager.MoveOne(rightCatching, nowRightDisplayPos - prevRightDisplayPos);
+                        ModelManager.ChangeState(rightCatching, StateOfBlock.free);
                     }
-                    return;
-                }
-                if (Teaching.teachingState == Teaching.State.tryLasso)
-                {
-                    switch (Teaching.lassoProgress)
+                    else
                     {
-                        case 0:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向右移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向右移动试试";
-                            if (offsetLeftX < -2)
-                                ++Teaching.lassoProgress;
-                            break;
-                        case 1:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向下移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向下移动试试";
-                            if (offsetLeftY > 2)
-                                ++Teaching.lassoProgress;
-                            break;
-                        case 2:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向左移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向左移动试试";
-                            if (offsetLeftX > 0)
-                                ++Teaching.lassoProgress;
-                            break;
-                        case 3:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向上移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向上移动试试";
-                            if (offsetLeftY < 0)
-                                ++Teaching.lassoProgress;
-                            break;
-                        case 4:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向中间移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向中间移动试试";
-                            if (offsetLeftZ < -2)
-                                ++Teaching.lassoProgress;
-                            break;
-                        case 5:
-                            GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "向外侧移动试试";
-                            GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "向外侧移动试试";
-                            if (offsetLeftZ > 0)
-                            {
-                                Teaching.lassoProgress = 0;
-                                Teaching.teachingState = Teaching.State.tryMove;
-                                ModelManager.ChangeTeachState(2);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                GameObject.Find("HandsHints").GetComponent<Text>().text = "视野变换中";
-                //print("two hands Lasso");
-                if (HandLeftState != Kinect.HandState.Lasso || HandRightState != Kinect.HandState.Lasso)
-                {
-                    ++cntCancelLasso;
-                    if (cntCancelRotate > cancelLassoThreshold >> 1)
-                    {
-                        GameObject.Find("HandsHints").GetComponent<Text>().text = "退出视野变换中";
-                    }
-                    if (cntCancelLasso > cancelLassoThreshold)
-                    {
-                        lasso = false;
-                        cntCancelLasso = 0;
-                    }
-                }
-                else
-                {
-                    cntCancelLasso = 0;
-
-                    //计算在XY平面内手与标准位置的距离和连线与空间角，
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - standardLeftX, 2)
-                        + System.Math.Pow(nowLeftDisplayPos.y - standardLeftY, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - standardRightX, 2)
-                        + System.Math.Pow(nowRightDisplayPos.y - standardRightY, 2));
-
-                    //若左右手距离标准位置的距离均大于XY平面内操作阈值
-                    if (leftDist > rotateThreshold && rightDist > rotateThreshold)
-                    {
-                        //计算空间角
-                        float leftXYangle = (float)System.Math.Atan2(nowLeftDisplayPos.y - standardLeftY, nowLeftDisplayPos.x - standardLeftX);
-                        float rightXYangle = (float)System.Math.Atan2(nowRightDisplayPos.y - standardRightY, nowRightDisplayPos.x - standardRightX);
-                        
-                        if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
-                        {//左手在左
-                            if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
-                            {//右手在左
-                                //视野向左 即物体x+
-                                ModelManager.MoveAllByVector3(new Vector3(0.1F, 0, 0));
-                                offsetLeftX += 0.1F;
-                                offsetRightX += 0.1F;
-                                standardLeftX += 0.1F;
-                                standardRightX += 0.1F;
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //摄像机前进 即物体z+
-                                ModelManager.MoveAllByVector3(new Vector3(0, 0, 0.1F));
-                                offsetLeftZ += 0.1F;
-                                offsetRightZ += 0.1F;
-                                standardLeftZ += 0.1F;
-                                standardRightZ += 0.1F;
-                            }
-                        }
-                        else if (leftXYangle < System.Math.PI * 0.25 && leftXYangle > -System.Math.PI * 0.25)
-                        {//左手在右
-                            if (rightXYangle > System.Math.PI / 2 || rightXYangle < -System.Math.PI / 2)
-                            {//右手在左
-                                //摄像机后退 即物体z-
-                                ModelManager.MoveAllByVector3(new Vector3(0, 0, -0.1F));
-                                offsetLeftZ -= 0.1F;
-                                offsetRightZ -= 0.1F;
-                                standardLeftZ -= 0.1F;
-                                standardRightZ -= 0.1F;
-                            }
-                            else if (rightXYangle < System.Math.PI * 0.25 && rightXYangle > -System.Math.PI * 0.25)
-                            {//右手在右
-                                //视野向右
-                                ModelManager.MoveAllByVector3(new Vector3(-0.1F, 0, 0));
-                                offsetLeftX -= 0.1F;
-                                offsetRightX -= 0.1F;
-                                standardLeftX -= 0.1F;
-                                standardRightX -= 0.1F;
-                            }
-                        }
-                        else if (leftXYangle > System.Math.PI * 0.25 && leftXYangle < System.Math.PI * 0.75)
-                        {//左手在上
-                            if (rightXYangle > System.Math.PI * 0.25 && rightXYangle < System.Math.PI * 0.75)
-                            {//右手在上
-                                //视野向上
-                                ModelManager.MoveAllByVector3(new Vector3(0, -0.1F, 0));
-                                offsetLeftY -= 0.1F;
-                                offsetRightY -= 0.1F;
-                                standardLeftY -= 0.1F;
-                                standardRightY -= 0.1F;
-                            }
-                        }
-                        else
-                        {//左手在下
-                            if (rightXYangle > -System.Math.PI * 0.75 && rightXYangle < -System.Math.PI * 0.25)
-                                //右手在下
-                                //视野向下
-                                ModelManager.MoveAllByVector3(new Vector3(0, 0.1F, 0));
-                            offsetLeftY += 0.1F;
-                            offsetRightY += 0.1F;
-                            standardLeftY += 0.1F;
-                            standardRightY += 0.1F;
-                        }
+                        ModelManager.ChangeState(0, StateOfBlock.caught);
+                        ModelManager.Move0(rightCatching, nowRightDisplayPos - prevRightDisplayPos);
+                        ModelManager.ChangeState(0, StateOfBlock.free);
                     }
                 }
             }
-            else if (HandLeftState == Kinect.HandState.Lasso && HandRightState == Kinect.HandState.Lasso)
+            else
             {
-                lasso = true;
-                cntCancelLasso = 0;
-                startViewCountDown = 120;
-            }*/
-            //非Rotating、非Lasso，则可进行移动或开始旋转的判断
-            //else
-            //{
-                GameObject.Find("HandsHints").GetComponent<Text>().text = "";
-                int operateLeftNum = -1;
-                int operateRightNum = -1;
+                GameObject.Find("HandsHints").GetComponent<Text>().text = " ";
+                int operateLeftNum = 100000;
                 float nearestLeftDist = 100000000;
+                int operateRightNum = 100000;
                 float nearestRightDist = 100000000;
-                //print("Model " + 0 + " X:" + modelPos[0].x + " Y:" + modelPos[0].y + " Z:" + modelPos[0].z);
-                for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
+                if (leftOccupied)
                 {
-                    //print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - modelPos[i].x, 2)
-                        + System.Math.Pow(nowLeftDisplayPos.y - modelPos[i].y, 2)
-                        + System.Math.Pow(nowLeftDisplayPos.z - modelPos[i].z, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - modelPos[i].x, 2)
-                        + System.Math.Pow(nowRightDisplayPos.y - modelPos[i].y, 2)
-                        + System.Math.Pow(nowRightDisplayPos.z - modelPos[i].z, 2));
-                    if (leftDist < nearestLeftDist)
+                    print("leftOccupied");
+                    if (leftCatching == ModelManager.ShouldCatch)
                     {
-                        nearestLeftDist = leftDist;
-                        if (nearestLeftDist < catchThreshold)
-                        {
-                            operateLeftNum = i;
-                        }
+                        ModelManager.ChangeState(leftCatching, StateOfBlock.caught);
+                        ModelManager.MoveOne(leftCatching, nowLeftDisplayPos - prevLeftDisplayPos);
+                        ModelManager.ChangeState(leftCatching, StateOfBlock.free);
                     }
-                    if (rightDist < nearestRightDist)
+                    else
                     {
-                        nearestRightDist = rightDist;
-                        if (nearestRightDist < catchThreshold)
-                        {
-                            operateRightNum = i;
-                        }
+                        ModelManager.ChangeState(0, StateOfBlock.caught);
+                        ModelManager.Move0(leftCatching, nowLeftDisplayPos - prevLeftDisplayPos);
+                        ModelManager.ChangeState(0, StateOfBlock.free);
                     }
                 }
-                bool zeroFlash = false;
-                for (int i = 1; i < ModelManager.ShouldCatch; ++i)
-                {
-                    if (i == operateLeftNum)
-                    {
-                        zeroFlash = true;
-                        break;
-                    }
-                    else if (i == operateRightNum)
-                    {
-                        zeroFlash = true;
-                    }
-                    else continue;
-                }
-                if (zeroFlash)
-                    ModelManager.FlashOnGreyForOneFrame(0);
                 else
-                    ModelManager.FlashOffForOneFrame(0);
+                {
+                    for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
+                    {
+                        //print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
+                        float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - modelPos[i].x, 2)
+                            + System.Math.Pow(nowLeftDisplayPos.y - modelPos[i].y, 2)
+                            + System.Math.Pow(nowLeftDisplayPos.z - modelPos[i].z, 2));
+                        if (leftDist < nearestLeftDist)
+                        {
+                            nearestLeftDist = leftDist;
+                            if (nearestLeftDist < catchThreshold)
+                            {
+                                operateLeftNum = i;
+                            }
+                        }
+                    }
+                    if (operateLeftNum < ModelManager.ShouldCatch)
+                    {
+                        if (HandLeftState == Kinect.HandState.Closed)//抓
+                        {
+                            leftOccupied = true;
+                            leftCatching = operateLeftNum;
+                        }
+                    }
+                }
 
+
+                if (rightOccupied)
+                {
+                    print("rightOccupied");
+                    print(rightCatching);
+                    print(operateRightNum);
+                    if (rightCatching == ModelManager.ShouldCatch)
+                    {
+                        ModelManager.ChangeState(rightCatching, StateOfBlock.caught);
+                        ModelManager.MoveOne(rightCatching, nowRightDisplayPos - prevRightDisplayPos);
+                        ModelManager.ChangeState(rightCatching, StateOfBlock.free);
+                    }
+                    else
+                    {
+                        ModelManager.ChangeState(0, StateOfBlock.caught);
+                        ModelManager.Move0(rightCatching, nowRightDisplayPos - prevRightDisplayPos);
+                        ModelManager.ChangeState(0, StateOfBlock.free);
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
+                    {
+                        //print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
+                        float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - modelPos[i].x, 2)
+                            + System.Math.Pow(nowRightDisplayPos.y - modelPos[i].y, 2)
+                            + System.Math.Pow(nowRightDisplayPos.z - modelPos[i].z, 2));
+                        if (rightDist < nearestRightDist)
+                        {
+                            nearestRightDist = rightDist;
+                            if (nearestRightDist < catchThreshold)
+                            {
+                                operateRightNum = i;
+                            }
+                        }
+                    }
+                    if (operateRightNum <= ModelManager.ShouldCatch)
+                    {
+                        if (HandRightState == Kinect.HandState.Closed)//抓
+                        {
+                            rightOccupied = true;
+                            rightCatching = operateRightNum;
+                        }
+                    }
+                }
+
+                //shouldCatch灰
                 if (operateLeftNum == ModelManager.ShouldCatch || operateRightNum == ModelManager.ShouldCatch)
                     ModelManager.FlashOnGreyForOneFrame(ModelManager.ShouldCatch);
                 else
                     ModelManager.FlashOffForOneFrame(ModelManager.ShouldCatch);
 
-                if (operateLeftNum != -1)
-                {
-                    if (operateLeftNum == ModelManager.ShouldCatch)
-                    {
-                        ModelManager.FlashOnGreyForOneFrame(operateLeftNum);
-                    }
-                    else
-                    {
-                        ModelManager.FlashOnGreyForOneFrame(0);
-                    }
-                    //print("LeftHandOperating " + operateLeftNum + " X:" + modelPos[operateLeftNum].x + " Y:" + modelPos[operateLeftNum].y + " Z:" + modelPos[operateLeftNum].z);
-                }
-                if (operateRightNum != -1)
-                {
-                    if (operateRightNum == ModelManager.ShouldCatch)
-                    {
-                        ModelManager.FlashOnGreyForOneFrame(operateRightNum);
-                    }
-                    else
-                    {
-                        ModelManager.FlashOnGreyForOneFrame(0);
-                    }
-                    //print("RightHandOperating " + operateRightNum + " X:" + modelPos[operateRightNum].x + " Y:" + modelPos[operateRightNum].y + " Z:" + modelPos[operateRightNum].z);
-                }
-                /* 各种自带手势
-                       * if (HandRightState == Kinect.HandState.Closed)
-                           //print("rightClose");
-                       if (HandRightState == Kinect.HandState.Open)
-                           //print("rightOpen");
-                       if (HandRightState == Kinect.HandState.Lasso)
-                           //print("rightLesso");
-                       if (HandLeftState == Kinect.HandState.Closed)
-                           //print("leftClose");
-                       if (HandRightState == Kinect.HandState.Open)
-                           //print("leftOpen");
-                       if (HandRightState == Kinect.HandState.Lasso)
-                           //print("leftLasso");*/
-                if (operateLeftNum != -1 && operateRightNum != -1)
-                {
-                    if (operateLeftNum < ModelManager.ShouldCatch && operateRightNum < ModelManager.ShouldCatch)
-                    {
-                        //print("two hands in zero");
-                        if (HandLeftState == Kinect.HandState.Closed)
-                        {
-                            if (HandRightState == Kinect.HandState.Open)
-                            {
-                                //print("Moving zero");
-                                //模型随动
-                                ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                                ModelManager.ChangeState(0, StateOfBlock.free);
-                            }
-                            /*else
-                            {
-                                //标记开始旋转
-                                startRotateCountDown = 120;
-                                rotatingNum = 0;
-                                ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
-                                rotating = true;
-                                cntCancelRotate = 0;
-                            }*/
-                        }
-                        else if (HandRightState == Kinect.HandState.Closed)
-                        {
-                            if (HandLeftState == Kinect.HandState.Open)
-                            {
-                                //print("Moving zero");
-                                //模型随动
-                                ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
-                                ModelManager.ChangeState(0, StateOfBlock.free);
-                            }
-                            /*else
-                            {
-                                //标记开始旋转
-                                startRotateCountDown = 120;
-                                rotatingNum = 0;
-                                ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
-                                rotating = true;
-                                cntCancelRotate = 0;
-                            }*/
-                        }
-                    }
-                    else if (operateLeftNum == operateRightNum)
-                    {
-                        //print("two hands in");
-                        if (HandLeftState == Kinect.HandState.Closed)
-                        {
-                            if (HandRightState == Kinect.HandState.Open)
-                            {
-                                //print("two hands in && left hand closed");
-                                //print("Moving");
-                                //模型随动
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                            }
-                            /*else
-                            {
-                                //print("two hands in && two hands closed");
-                                //标记开始旋转
-                                startRotateCountDown = 200;
-                                rotatingNum = operateLeftNum;
-                                ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
-                                rotating = true;
-                                cntCancelRotate = 0;
-                            }*/
-                        }
-                        else if (HandRightState == Kinect.HandState.Closed)
-                        {
-                            if (HandLeftState == Kinect.HandState.Open)
-                            {
-                                //print("two hands in && right hand closed");
-                                //print("Moving");
-                                //模型随动
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                            }
-                            /*else
-                            {
-                                //print("two hands in && two hands closed");
-                                //标记开始旋转
-                                startRotateCountDown = 200;
-                                rotatingNum = operateLeftNum;
-                                ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
-                                rotating = true;
-                                cntCancelRotate = 0;
-                            }*/
-                        }
-                        if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Closed)//双手闭合
-                        {
-                            /*//print("two hands in && two hands closed");
-                            //标记开始旋转
-                            startRotateCountDown = 200;
-                            rotatingNum = operateLeftNum;
-                            ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
-                            rotating = true;
-                            cntCancelRotate = 0;*/
-                            //模型随动
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                        }
-                        else if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
-                        {
-                            //print("two hands in && left hand closed");
-                            //print("Moving");
-                            //模型随动
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                        }
-                        else if (HandLeftState == Kinect.HandState.Open && HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
-                        {
-                            //print("two hands in && right hand closed");
-                            //print("Moving");
-                            //模型随动
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                        }
-                    }
-                    else
-                    {
-                        //print("left hand in & right hand in");
-                        if (HandLeftState == Kinect.HandState.Closed)//左手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            if (operateLeftNum == ModelManager.ShouldCatch)
-                            {
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                                ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                            }
-                            else
-                            {
-                                ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                                ModelManager.ChangeState(0, StateOfBlock.free);
-                            }
-                        }
-                        if (HandRightState == Kinect.HandState.Closed)//右手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            if (operateRightNum == ModelManager.ShouldCatch)
-                            {
-                                ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
-                                ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
-                            }
-                            else
-                            {
-                                ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
-                                ModelManager.ChangeState(0, StateOfBlock.free);
-                            }
-                        }
-                    }
-                }
-                else if (operateLeftNum != -1)
-                {
-                    //print("left hand in");
-                    if (operateLeftNum == ModelManager.ShouldCatch)
-                    {
-                        if (HandLeftState == Kinect.HandState.Closed)//左手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                        }
-                    }
-                    else
-                    {
-                        if (HandLeftState == Kinect.HandState.Closed)//左手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            ModelManager.ChangeState(0, StateOfBlock.caught);
-                            ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
-                            ModelManager.ChangeState(0, StateOfBlock.free);
-                        }
-                    }
-                }
-                else if (operateRightNum != -1)
-                {
-                    //print("right hand in");
-                    if (operateRightNum == ModelManager.ShouldCatch)
-                    {
-                        if (HandRightState == Kinect.HandState.Closed)//右手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
-                            ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
-                        }
-                    }
-                    else
-                    {
-                        if (HandRightState == Kinect.HandState.Closed)//右手闭合
-                        {
-                            //模型随动
-                            //print("Moving");
-                            ModelManager.ChangeState(0, StateOfBlock.caught);
-                            ModelManager.Move0(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
-                            ModelManager.ChangeState(0, StateOfBlock.free);
-                        }
-                    }
-                }
-            //}
+                //0灰
+                if (operateLeftNum < ModelManager.ShouldCatch || operateRightNum < ModelManager.ShouldCatch)
+                    ModelManager.FlashOnGreyForOneFrame(0);
+                else
+                    ModelManager.FlashOffForOneFrame(0);
+            }
+            //print("Model " + 0 + " X:" + modelPos[0].x + " Y:" + modelPos[0].y + " Z:" + modelPos[0].z);
         }
     }
 }

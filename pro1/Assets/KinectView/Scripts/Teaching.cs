@@ -39,7 +39,7 @@ public class Teaching : MonoBehaviour {
 
     public bool checkHands(Kinect.HandState l_state, Kinect.HandState r_state)
     {
-        if (handsProgress == 3)
+        if (handsProgress == 2)
         {
             gotLeft = false;
             gotRight = false;
@@ -52,7 +52,7 @@ public class Teaching : MonoBehaviour {
             case 0:
                 if (l_done && r_done)
                 {
-                    print("好了好了好了好了好了");
+                    //print("好了好了好了好了好了");
                     //tip  done congratulations
                     ++doneCnt;
                     if (doneCnt > 60)
@@ -69,7 +69,7 @@ public class Teaching : MonoBehaviour {
                     if (!gotLeft)
                     {
                         GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "请将左手张开";
-                        print("左左左左左左张开张开张开张开");
+                        //print("左左左左左左张开张开张开张开");
                         //tip  left hand lost
                         if (l_state == Kinect.HandState.Open)
                         {
@@ -100,14 +100,14 @@ public class Teaching : MonoBehaviour {
                 }
                 else
                 {
-                    GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "左手完毕，准备Lasso";
+                    GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "左手完毕，准备握拳";
                 }
                 if (!r_done)
                 {
                     if (!gotRight)
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "请将右手张开";
-                        print("右右右右右右张开张开张开张开");
+                        //print("右右右右右右张开张开张开张开");
                         //tip  right hand lost
                         if (r_state == Kinect.HandState.Open)
                         {
@@ -118,7 +118,7 @@ public class Teaching : MonoBehaviour {
                     else
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手请保持";
-                        print("右右右右右右保持保持保持");
+                        //print("右右右右右右保持保持保持");
                         //tip  got right hand   please hold
                         if (r_state == Kinect.HandState.Open)
                         {
@@ -139,12 +139,13 @@ public class Teaching : MonoBehaviour {
                 }
                 else
                 {
-                    GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手完毕，准备Lasso";
+                    GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手完毕，准备握拳";
                 }
                 break;
-            case 1: if (l_done && r_done)
+            case 1:
+                /*if (l_done && r_done)
                 {
-                    print("好了好了好了好了好了");
+                    //print("好了好了好了好了好了");
                     //tip  lasso done congratulations
                     ++doneCnt;
                     if (doneCnt > 60)
@@ -161,7 +162,7 @@ public class Teaching : MonoBehaviour {
                     if (!gotLeft)
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "请将左手Lasso";
-                        print("左左左左左左LassoLassoLasso");
+                        //print("左左左左左左LassoLassoLasso");
                         //tip  left hand lost
                         if (l_state == Kinect.HandState.Lasso)
                         {
@@ -199,7 +200,7 @@ public class Teaching : MonoBehaviour {
                     if (!gotRight)
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "请将右手Lasso";
-                        print("右右右右右右LassoLassoLasso");
+                        //print("右右右右右右LassoLassoLasso");
                         //tip  right hand lost
                         if (r_state == Kinect.HandState.Lasso)
                         {
@@ -210,7 +211,7 @@ public class Teaching : MonoBehaviour {
                     else
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手请保持";
-                        print("右右右右右右保持保持保持");
+                        //print("右右右右右右保持保持保持");
                         //tip  got right hand   please hold
                         if (r_state == Kinect.HandState.Lasso)
                         {
@@ -233,11 +234,10 @@ public class Teaching : MonoBehaviour {
                 {
                     GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手完毕，准备握拳";
                 }
-                break;
-            case 2:
+                break;*/
                 if (l_done && r_done)
                 {
-                    print("好了好了好了好了好了");
+                    //print("好了好了好了好了好了");
                     //tip  done congratulations
                     ++doneCnt;
                     if (doneCnt > 60)
@@ -254,7 +254,7 @@ public class Teaching : MonoBehaviour {
                     if (!gotLeft)
                     {
                         GameObject.Find("LeftTeachingHints").GetComponent<Text>().text = "请将左手握拳";
-                        print("左左左左左左关上关上关上");
+                        //print("左左左左左左关上关上关上");
                         //tip  left hand lost
                         if (l_state == Kinect.HandState.Closed)
                         {
@@ -292,7 +292,7 @@ public class Teaching : MonoBehaviour {
                     if (!gotRight)
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "请将右手握拳";
-                        print("右右右右右右关上关上关上");
+                        //print("右右右右右右关上关上关上");
                         //tip  right hand lost
                         if (r_state == Kinect.HandState.Closed)
                         {
@@ -303,7 +303,7 @@ public class Teaching : MonoBehaviour {
                     else
                     {
                         GameObject.Find("RightTeachingHints").GetComponent<Text>().text = "右手请保持";
-                        print("右右右右右右保持保持保持");
+                        //print("右右右右右右保持保持保持");
                         //tip  got right hand   please hold
                         if (r_state == Kinect.HandState.Closed)
                         {
