@@ -8,7 +8,7 @@ using HighlightingSystem;
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
 {
-    static public int NumOfPiece = 3;
+    static public int NumOfPiece = 15;
     static public int TNumOfPiece = 2;
     public bool jointing = false;
     private List<Model> _Data = new List<Model>();
