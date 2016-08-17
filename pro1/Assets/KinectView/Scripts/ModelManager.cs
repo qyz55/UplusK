@@ -11,6 +11,10 @@ public class ModelManager : MonoBehaviour
     static public int NumOfPiece = 15;
     static public int TNumOfPiece = 2;
     public bool jointing = false;
+    private int nowRotation = 0;
+    private Vector3 rotationEuler;
+    private int FinalRotation = 0;
+    public bool rotating = false;
     private List<Model> _Data = new List<Model>();
     public int MoveFrames = 20;
     private Model[] a = new Model[NumOfPiece + 2];
@@ -41,25 +45,25 @@ public class ModelManager : MonoBehaviour
     }
     public void ChangeState(int num, StateOfBlock state) // 传入一个物体的下标,和想要其变成的状态(包括自由，和被抓取)
     {
-        if (jointing) return;
+        if (jointing || rotating) return;
         _Data[num].state = state;
     }
     public void MoveOne(int num, Vector3 _v3) // 传入想要移动的物体的下标和想要其移动到的位置
     {
-        if (jointing) return;
+        if (jointing || rotating) return;
         if (_Data[num].state == StateOfBlock.caught && num == ShouldCatch)
-            _Data[num].model.transform.position = CalcCenterPosition(num, _v3);
-        else 
+            _Data[num].model.transform.position += _v3;//CalcCenterPosition(num, _v3);
+        else
             return;
         SavePos(num);
         TryJoint();
     }
     public void Move0(int num, Vector3 _v3)
     {
-        if (jointing) return;
+        if (jointing || rotating) return;
         if (_Data[0].state != StateOfBlock.caught)
             return;
-        _Data[0].model.transform.position = _v3 - _Data[0].model.transform.rotation * _Data[num].center;
+        _Data[0].model.transform.position += _v3;// -_Data[0].model.transform.rotation * _Data[num].center;
         SavePos(0);
         TryJoint();
     }
@@ -69,7 +73,7 @@ public class ModelManager : MonoBehaviour
     }*/
     public void MoveAllByVector3(Vector3 _V3)
     {
-        if (jointing) return;
+        if (jointing || rotating) return;
         _Data[0].model.transform.position += _V3;
         _Data[ShouldCatch].model.transform.position += _V3;
         SavePos(0);
@@ -97,7 +101,7 @@ public class ModelManager : MonoBehaviour
     }
     public void Rotate(int num,int mode) //对下标为num的物体进行6种旋转，0-5分别为x(顺逆)y(顺逆)z(顺逆)
     {
-        if (jointing) return;
+        if (jointing || rotating) return;
         if (num != ShouldCatch && num != 0)
                 return;
         switch (mode)
@@ -262,6 +266,7 @@ public class ModelManager : MonoBehaviour
             a[i].father = i;
             a[i].model.transform.position = BirthPosition;
             a[i].initialQuaternion = Quaternion.identity;
+            a[i].model.transform.rotation = _Data[0].model.transform.rotation;
             a[i].LastPosition = BirthPosition;
             if (!a[i].model.GetComponent<Rigidbody>())
                 a[i].model.AddComponent<Rigidbody>();
@@ -320,6 +325,20 @@ public class ModelManager : MonoBehaviour
             Creat(ShouldCatch);
         }
     }
+    private void TryRotation()
+    {
+        switch (ShouldCatch)
+        {
+            case 8:
+                rotating = true;
+                FinalRotation = 80;
+                nowRotation = 0;
+                rotationEuler = new Vector3(60,-30,-30);
+                break;
+            default:
+                break;
+        }
+    }
 	void Start () {
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
@@ -336,7 +355,17 @@ public class ModelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (jointing == true)
+        if (rotating == true)
+        {
+            ++nowRotation;
+            _Data[0].model.transform.Rotate(rotationEuler.x/FinalRotation, rotationEuler.y/FinalRotation, rotationEuler.z/FinalRotation);
+            if (nowRotation >= FinalRotation)
+            {
+                rotating = false;
+                Creat(ShouldCatch);
+            }
+        }
+        else if (jointing == true)
         {
             foreach (Model i in _Data)
             {
@@ -361,7 +390,9 @@ public class ModelManager : MonoBehaviour
                             jointing = false;
                             i.state = StateOfBlock.caught;
                             GetJointed(ShouldCatch);
-                            Creat(ShouldCatch);
+                            TryRotation();
+                            if (rotating == false)
+                                Creat(ShouldCatch);
                         }
                     }
                     /*if (Math.Abs(i.model.transform.position.x - _Data[0].model.transform.position.x) < 0.001f &&
