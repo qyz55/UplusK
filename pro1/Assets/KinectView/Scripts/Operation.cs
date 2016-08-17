@@ -13,12 +13,10 @@ public class Operation : MonoBehaviour {
     public GameObject BodySourceManager;
     private BodySourceManager _BodyManager;
 
-    private float leftX;
-    private float leftY;
-    private float leftZ;
-    private float rightX;
-    private float rightY;
-    private float rightZ;
+    private Vector3 prevLeftDisplayPos;
+    private Vector3 prevRightDisplayPos;
+    private Vector3 nowLeftDisplayPos;
+    private Vector3 nowRightDisplayPos;
 
     private float offsetLeftX = 0;
     private float offsetLeftY = 0;
@@ -157,17 +155,16 @@ public class Operation : MonoBehaviour {
 
             print((leftPosSum / leftHandPos.Count).z);
 
-            leftX = (leftPosSum / leftHandPos.Count).x * 50 + offsetLeftX;
-            leftY = (leftPosSum / leftHandPos.Count).y * 45 + offsetLeftY;
-            leftZ = (2 - (leftPosSum / leftHandPos.Count).z) * 30 + offsetLeftZ;
-            rightX = (rightPosSum / rightHandPos.Count).x * 50 + offsetRightX;
-            rightY = (rightPosSum / rightHandPos.Count).y * 45 + offsetRightY;
-            rightZ = (2 - (rightPosSum / rightHandPos.Count).z) * 30 + offsetRightZ;
+            prevLeftDisplayPos = nowLeftDisplayPos;
+            prevRightDisplayPos = nowRightDisplayPos;
 
-            //print("left: " + leftX + " " + leftY + " " + leftZ);
-            //print("right: " + rightX + " " + rightY + " " + rightZ);
-            leftHand.transform.position = new Vector3(leftX, leftY, leftZ);
-            rightHand.transform.position = new Vector3(rightX, rightY, rightZ);
+            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 50 + offsetLeftX, (leftPosSum / leftHandPos.Count).y * 45 + offsetLeftY, (2 - (leftPosSum / leftHandPos.Count).z) * 30 + offsetLeftZ);
+            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 50 + offsetRightX, (rightPosSum / rightHandPos.Count).y * 45 + offsetRightY, (2 - (rightPosSum / rightHandPos.Count).z) * 30 + offsetRightZ);
+
+            //print("left: " + leftX + " " + nowLeftDisplayPos.y + " " + nowLeftDisplayPos.z);
+            //print("right: " + nowRightDisplayPos.x + " " + nowRightDisplayPos.y + " " + nowRightDisplayPos.z);
+            leftHand.transform.position = nowLeftDisplayPos;
+            rightHand.transform.position = nowRightDisplayPos;
             if (HandLeftState != preLeft)
             {
                 leftHand.setStatus(false, HandLeftState);
@@ -216,18 +213,18 @@ public class Operation : MonoBehaviour {
                     GameObject.Find("HandsHints").GetComponent<Text>().text = "把手放到正常位置并保持一会儿\n开始旋转";
                     if (startRotateCountDown == 20)
                     {
-                        standardRotateLeftX = leftX;
-                        standardRotateLeftY = leftY;
-                        standardRotateRightX = rightX;
-                        standardRotateRightY = rightY;
+                        standardRotateLeftX = nowLeftDisplayPos.x;
+                        standardRotateLeftY = nowLeftDisplayPos.y;
+                        standardRotateRightX = nowRightDisplayPos.x;
+                        standardRotateRightY = nowRightDisplayPos.y;
                     }
                     if (startRotateCountDown < 20)
                     {
-                        standardRotateLeftX = (standardRotateLeftX + leftX) / 2;
-                        standardRotateLeftY = (standardRotateLeftY + leftY) / 2;
+                        standardRotateLeftX = (standardRotateLeftX + nowLeftDisplayPos.x) / 2;
+                        standardRotateLeftY = (standardRotateLeftY + nowLeftDisplayPos.y) / 2;
 
-                        standardRotateRightX = (standardRotateRightX + rightX) / 2;
-                        standardRotateRightY = (standardRotateRightY + rightY) / 2;
+                        standardRotateRightX = (standardRotateRightX + nowRightDisplayPos.x) / 2;
+                        standardRotateRightY = (standardRotateRightY + nowRightDisplayPos.y) / 2;
                     }
                     startRotateCountDown--;
                     if (HandLeftState != Kinect.HandState.Closed || HandRightState != Kinect.HandState.Closed)
@@ -261,16 +258,16 @@ public class Operation : MonoBehaviour {
                 {
                     cntCancelRotate = 0;
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardRotateLeftX, 2)
-                        + System.Math.Pow(leftY - standardRotateLeftY, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRotateRightX, 2)
-                        + System.Math.Pow(rightY - standardRotateRightY, 2));
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - standardRotateLeftX, 2)
+                        + System.Math.Pow(nowLeftDisplayPos.y - standardRotateLeftY, 2));
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - standardRotateRightX, 2)
+                        + System.Math.Pow(nowRightDisplayPos.y - standardRotateRightY, 2));
                     //若左右手距离标准位置的距离均大于XY平面内操作阈值
                     if (leftDist > rotateThreshold && rightDist > rotateThreshold)
                     {
                         //计算平面角
-                        float leftXYangle = (float)System.Math.Atan2(leftY - standardRotateLeftY, leftX - standardRotateLeftX);
-                        float rightXYangle = (float)System.Math.Atan2(rightY - standardRotateRightY, rightX - standardRotateRightX);
+                        float leftXYangle = (float)System.Math.Atan2(nowLeftDisplayPos.y - standardRotateLeftY, nowLeftDisplayPos.x - standardRotateLeftX);
+                        float rightXYangle = (float)System.Math.Atan2(nowRightDisplayPos.y - standardRotateRightY, nowRightDisplayPos.x - standardRotateRightX);
                         if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
                         {//左手在左
                             if (rightXYangle > System.Math.PI * 0.75 || rightXYangle < -System.Math.PI * 0.75)
@@ -326,18 +323,18 @@ public class Operation : MonoBehaviour {
                     //print("把手保持在正常位置");
                     if (startViewCountDown == 20)
                     {
-                        standardLeftX = leftX;
-                        standardLeftY = leftY;
-                        standardRightX = rightX;
-                        standardRightY = rightY;
+                        standardLeftX = nowLeftDisplayPos.x;
+                        standardLeftY = nowLeftDisplayPos.y;
+                        standardRightX = nowRightDisplayPos.x;
+                        standardRightY = nowRightDisplayPos.y;
                     }
                     if (startViewCountDown < 20)
                     {
-                        standardLeftX = (standardLeftX + leftX) / 2;
-                        standardLeftY = (standardLeftY + leftY) / 2;
+                        standardLeftX = (standardLeftX + nowLeftDisplayPos.x) / 2;
+                        standardLeftY = (standardLeftY + nowLeftDisplayPos.y) / 2;
 
-                        standardRightX = (standardRightX + rightX) / 2;
-                        standardRightY = (standardRightY + rightY) / 2;
+                        standardRightX = (standardRightX + nowRightDisplayPos.x) / 2;
+                        standardRightY = (standardRightY + nowRightDisplayPos.y) / 2;
                     }
                     startViewCountDown--;
                     if (HandLeftState != Kinect.HandState.Lasso || HandRightState != Kinect.HandState.Lasso)
@@ -419,17 +416,17 @@ public class Operation : MonoBehaviour {
                     cntCancelLasso = 0;
 
                     //计算在XY平面内手与标准位置的距离和连线与空间角，
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - standardLeftX, 2)
-                        + System.Math.Pow(leftY - standardLeftY, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - standardRightX, 2)
-                        + System.Math.Pow(rightY - standardRightY, 2));
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - standardLeftX, 2)
+                        + System.Math.Pow(nowLeftDisplayPos.y - standardLeftY, 2));
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - standardRightX, 2)
+                        + System.Math.Pow(nowRightDisplayPos.y - standardRightY, 2));
 
                     //若左右手距离标准位置的距离均大于XY平面内操作阈值
                     if (leftDist > rotateThreshold && rightDist > rotateThreshold)
                     {
                         //计算空间角
-                        float leftXYangle = (float)System.Math.Atan2(leftY - standardLeftY, leftX - standardLeftX);
-                        float rightXYangle = (float)System.Math.Atan2(rightY - standardRightY, rightX - standardRightX);
+                        float leftXYangle = (float)System.Math.Atan2(nowLeftDisplayPos.y - standardLeftY, nowLeftDisplayPos.x - standardLeftX);
+                        float rightXYangle = (float)System.Math.Atan2(nowRightDisplayPos.y - standardRightY, nowRightDisplayPos.x - standardRightX);
                         
                         if (leftXYangle > System.Math.PI * 0.75 || leftXYangle < -System.Math.PI * 0.75)
                         {//左手在左
@@ -517,12 +514,12 @@ public class Operation : MonoBehaviour {
                 for (int i = 1; i <= ModelManager.ShouldCatch; ++i)
                 {
                     //print("Model " + i + " X:" + modelPos[i].x + " Y:" + modelPos[i].y + " Z:" + modelPos[i].z);
-                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(leftX - modelPos[i].x, 2)
-                        + System.Math.Pow(leftY - modelPos[i].y, 2)
-                        + System.Math.Pow(leftZ - modelPos[i].z, 2));
-                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(rightX - modelPos[i].x, 2)
-                        + System.Math.Pow(rightY - modelPos[i].y, 2)
-                        + System.Math.Pow(rightZ - modelPos[i].z, 2));
+                    float leftDist = (float)System.Math.Sqrt(System.Math.Pow(nowLeftDisplayPos.x - modelPos[i].x, 2)
+                        + System.Math.Pow(nowLeftDisplayPos.y - modelPos[i].y, 2)
+                        + System.Math.Pow(nowLeftDisplayPos.z - modelPos[i].z, 2));
+                    float rightDist = (float)System.Math.Sqrt(System.Math.Pow(nowRightDisplayPos.x - modelPos[i].x, 2)
+                        + System.Math.Pow(nowRightDisplayPos.y - modelPos[i].y, 2)
+                        + System.Math.Pow(nowRightDisplayPos.z - modelPos[i].z, 2));
                     if (leftDist < nearestLeftDist)
                     {
                         nearestLeftDist = leftDist;
@@ -613,7 +610,7 @@ public class Operation : MonoBehaviour {
                                 //print("Moving zero");
                                 //模型随动
                                 ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
                             /*else
@@ -633,7 +630,7 @@ public class Operation : MonoBehaviour {
                                 //print("Moving zero");
                                 //模型随动
                                 ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.Move0(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
                             /*else
@@ -658,7 +655,7 @@ public class Operation : MonoBehaviour {
                                 //print("Moving");
                                 //模型随动
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                             }
                             /*else
@@ -680,7 +677,7 @@ public class Operation : MonoBehaviour {
                                 //print("Moving");
                                 //模型随动
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                             }
                             /*else
@@ -705,7 +702,7 @@ public class Operation : MonoBehaviour {
                             cntCancelRotate = 0;*/
                             //模型随动
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
                         else if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
@@ -714,7 +711,7 @@ public class Operation : MonoBehaviour {
                             //print("Moving");
                             //模型随动
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
                         else if (HandLeftState == Kinect.HandState.Open && HandRightState == Kinect.HandState.Closed)//右手闭合，左手张开
@@ -723,7 +720,7 @@ public class Operation : MonoBehaviour {
                             //print("Moving");
                             //模型随动
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.MoveOne(operateLeftNum, nowRightDisplayPos - prevRightDisplayPos);
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
                     }
@@ -737,13 +734,13 @@ public class Operation : MonoBehaviour {
                             if (operateLeftNum == ModelManager.ShouldCatch)
                             {
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                             }
                             else
                             {
                                 ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                                ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
                         }
@@ -754,13 +751,13 @@ public class Operation : MonoBehaviour {
                             if (operateRightNum == ModelManager.ShouldCatch)
                             {
                                 ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
-                                ModelManager.MoveOne(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.MoveOne(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
                                 ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
                             }
                             else
                             {
                                 ModelManager.ChangeState(0, StateOfBlock.caught);
-                                ModelManager.Move0(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                                ModelManager.Move0(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
                         }
@@ -776,7 +773,7 @@ public class Operation : MonoBehaviour {
                             //模型随动
                             //print("Moving");
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.MoveOne(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
                     }
@@ -787,7 +784,7 @@ public class Operation : MonoBehaviour {
                             //模型随动
                             //print("Moving");
                             ModelManager.ChangeState(0, StateOfBlock.caught);
-                            ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
+                            ModelManager.Move0(operateLeftNum, nowLeftDisplayPos - prevLeftDisplayPos);
                             ModelManager.ChangeState(0, StateOfBlock.free);
                         }
                     }
@@ -802,7 +799,7 @@ public class Operation : MonoBehaviour {
                             //模型随动
                             //print("Moving");
                             ModelManager.ChangeState(operateRightNum, StateOfBlock.caught);
-                            ModelManager.MoveOne(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.MoveOne(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
                             ModelManager.ChangeState(operateRightNum, StateOfBlock.free);
                         }
                     }
@@ -813,7 +810,7 @@ public class Operation : MonoBehaviour {
                             //模型随动
                             //print("Moving");
                             ModelManager.ChangeState(0, StateOfBlock.caught);
-                            ModelManager.Move0(operateRightNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.Move0(operateRightNum, nowRightDisplayPos - prevRightDisplayPos);
                             ModelManager.ChangeState(0, StateOfBlock.free);
                         }
                     }
