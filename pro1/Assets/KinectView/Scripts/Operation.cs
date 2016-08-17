@@ -197,7 +197,6 @@ public class Operation : MonoBehaviour {
 
             if (leftOccupied && rightOccupied)
             {
-                print("leftOccupied && rightOccupied");
                 if (leftCatching < ModelManager.ShouldCatch && rightCatching < ModelManager.ShouldCatch)
                 {
                     ModelManager.ChangeState(0, StateOfBlock.caught);
@@ -248,7 +247,6 @@ public class Operation : MonoBehaviour {
                 float nearestRightDist = 100000000;
                 if (leftOccupied)
                 {
-                    print("leftOccupied");
                     if (leftCatching == ModelManager.ShouldCatch)
                     {
                         ModelManager.ChangeState(leftCatching, StateOfBlock.caught);
@@ -292,7 +290,6 @@ public class Operation : MonoBehaviour {
 
                 if (rightOccupied)
                 {
-                    print("rightOccupied");
                     print(rightCatching);
                     print(operateRightNum);
                     if (rightCatching == ModelManager.ShouldCatch)
