@@ -161,8 +161,8 @@ public class ModelManager : MonoBehaviour
     private void TryJoint()
     {
         if (ShouldCatch == 1 || ShouldCatch == NumOfPiece + 1) return;
-        Vector3 d1 = CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center;
-        Vector3 d2 = CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center;
+        Vector3 d1 = _Data[0].model.transform.position;//CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center;
+        Vector3 d2 = _Data[ShouldCatch].model.transform.position;//CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center;
         float d = (float)(Math.Sqrt((d1.x - d2.x) * (d1.x - d2.x) + (d1.y - d2.y) * (d1.y - d2.y) + (d1.z - d2.z) * (d1.z - d2.z) / 10));
         if (d > RangeOfDis * 2)
         {
@@ -195,7 +195,7 @@ public class ModelManager : MonoBehaviour
         _Data[i].father = 0;
         _Data[i].model.transform.parent = _Data[0].model.transform;
         _Data[i].model.transform.localPosition = Vector3.zero;
-        _Data[i].model.transform.localRotation = _Data[ShouldCatch].initialQuaternion;
+        _Data[i].model.transform.localRotation = Quaternion.identity;
         _Data[i].state = StateOfBlock.jointed;
         Vector3 t = Vector3.zero;
         for (int j = 1; j <= i; ++j)
@@ -275,6 +275,7 @@ public class ModelManager : MonoBehaviour
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
             a[i].model.GetComponent<Rigidbody>().drag = 2000;
             a[i].center = AllCenter[i];
+            a[i].LastQuaternion = a[i].initialQuaternion;
             a[i].JointPosition = AllJointPosition[i];
             _Data.Add(a[i]);
             a[i].model.GetComponent<Highlighter>().ReinitMaterials();
@@ -360,7 +361,7 @@ public class ModelManager : MonoBehaviour
         if (rotating == true)
         {
             ++nowRotation; 
-            _Data[0].model.transform.RotateAround(CalcRealPosition(0, _Data[0].model.transform.position), rotationEuler, Time.deltaTime);
+            _Data[0].model.transform.RotateAround(CalcRealPosition(1, _Data[1].model.transform.position), rotationEuler, 50*Time.deltaTime);
             if (nowRotation >= FinalRotation)
             {
                 rotating = false;
