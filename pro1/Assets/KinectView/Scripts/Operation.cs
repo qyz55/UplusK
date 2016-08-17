@@ -40,22 +40,22 @@ public class Operation : MonoBehaviour {
     private float standardRotateRightY;
 
     private float catchThreshold = 5F;
-    private float rotateThreshold = 2F;
+//    private float rotateThreshold = 2F;
     //标准化双手参数，因人而异，可在最初设计流程校准
 
     private int startViewCountDown;
 
-    private bool rotating = false;
-    private int rotatingNum;
-    private int startRotateCountDown;
-    private int cntCancelRotate = 0;
-    private const int cancelRotateThreshold = 120;
+//    private bool rotating = false;
+//    private int rotatingNum;
+//    private int startRotateCountDown;
+//    private int cntCancelRotate = 0;
+//    private const int cancelRotateThreshold = 120;
 
-    private bool lasso = false;
-    private int cntCancelLasso = 0;
-    private const int cancelLassoThreshold = 120;
+//    private bool lasso = false;
+//    private int cntCancelLasso = 0;
+//    private const int cancelLassoThreshold = 120;
 
-    private bool teaching = false;
+//    private bool teaching = false;
     public Teaching Teaching;
 
     Kinect.HandState preLeft = Kinect.HandState.Unknown;
@@ -616,7 +616,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.Move0(operateLeftNum, new Vector3(leftX, leftY, leftZ));
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
-                            else
+                            /*else
                             {
                                 //标记开始旋转
                                 startRotateCountDown = 120;
@@ -624,7 +624,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                                 rotating = true;
                                 cntCancelRotate = 0;
-                            }
+                            }*/
                         }
                         else if (HandRightState == Kinect.HandState.Closed)
                         {
@@ -636,7 +636,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.Move0(operateLeftNum, new Vector3(rightX, rightY, rightZ));
                                 ModelManager.ChangeState(0, StateOfBlock.free);
                             }
-                            else
+                            /*else
                             {
                                 //标记开始旋转
                                 startRotateCountDown = 120;
@@ -644,7 +644,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                                 rotating = true;
                                 cntCancelRotate = 0;
-                            }
+                            }*/
                         }
                     }
                     else if (operateLeftNum == operateRightNum)
@@ -661,7 +661,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.MoveOne(operateLeftNum, new Vector3(leftX, leftY, leftZ));
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                             }
-                            else
+                            /*else
                             {
                                 //print("two hands in && two hands closed");
                                 //标记开始旋转
@@ -670,7 +670,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                                 rotating = true;
                                 cntCancelRotate = 0;
-                            }
+                            }*/
                         }
                         else if (HandRightState == Kinect.HandState.Closed)
                         {
@@ -683,7 +683,7 @@ public class Operation : MonoBehaviour {
                                 ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
                                 ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                             }
-                            else
+                            /*else
                             {
                                 //print("two hands in && two hands closed");
                                 //标记开始旋转
@@ -692,17 +692,21 @@ public class Operation : MonoBehaviour {
                                 ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                                 rotating = true;
                                 cntCancelRotate = 0;
-                            }
+                            }*/
                         }
-                        /*if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Closed)//双手闭合
+                        if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Closed)//双手闭合
                         {
-                            //print("two hands in && two hands closed");
+                            /*//print("two hands in && two hands closed");
                             //标记开始旋转
                             startRotateCountDown = 200;
                             rotatingNum = operateLeftNum;
                             ModelManager.ChangeState(rotatingNum, StateOfBlock.caught);
                             rotating = true;
-                            cntCancelRotate = 0;
+                            cntCancelRotate = 0;*/
+                            //模型随动
+                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
+                            ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
+                            ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
                         }
                         else if (HandLeftState == Kinect.HandState.Closed && HandRightState == Kinect.HandState.Open)//左手闭合，右手张开
                         {
@@ -721,7 +725,7 @@ public class Operation : MonoBehaviour {
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.caught);
                             ModelManager.MoveOne(operateLeftNum, new Vector3(rightX, rightY, rightZ));
                             ModelManager.ChangeState(operateLeftNum, StateOfBlock.free);
-                        }*/
+                        }
                     }
                     else
                     {
