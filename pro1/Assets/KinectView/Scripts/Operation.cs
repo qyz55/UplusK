@@ -68,9 +68,11 @@ public class Operation : MonoBehaviour {
         for (int i = 0; i < 5; ++i)
         {
             leftHandHist.Enqueue(HandLeftState);
-            leftHandHist.Dequeue();
+            cntLeftHandHist[HandLeftState]++;
+            cntLeftHandHist[leftHandHist.Dequeue()]--;
             rightHandHist.Enqueue(HandLeftState);
-            rightHandHist.Dequeue();
+            cntRightHandHist[HandRightState]++;
+            cntRightHandHist[rightHandHist.Dequeue()]--;
         }
     }
 
