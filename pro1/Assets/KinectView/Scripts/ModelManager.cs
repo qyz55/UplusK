@@ -448,7 +448,10 @@ public class ModelManager : MonoBehaviour
                     {
                         --_Data[0].CollisionCount;
                         if (_Data[0].CollisionCount <= 0)
+                        {
                             _Data[0].model.GetComponent<Highlighter>().ConstantOff();
+                            FlashOffForOneFrame(0);
+                        }
                     }
                 }
             if (_Data.Count >= ShouldCatch + 1)
