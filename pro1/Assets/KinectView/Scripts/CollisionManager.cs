@@ -24,6 +24,7 @@ public class CollisionManager : MonoBehaviour
         GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
         gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
+        GameObject.Find("Operation").GetComponent<Operation>().LetGo();
         if (mo.inCollision == false)
             mo.inCollision = true;
     }
@@ -32,6 +33,7 @@ public class CollisionManager : MonoBehaviour
         GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
         gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
+        GameObject.Find("Operation").GetComponent<Operation>().LetGo();
         if (mo.inCollision == false)
             mo.inCollision = true;
     }

@@ -79,7 +79,7 @@ public class ModelManager : MonoBehaviour
         SavePos(0);
         SavePos(ShouldCatch);
     }
-    private void SavePos(int num)
+    public void SavePos(int num)
     {
         if (inCollision == true)
         {
@@ -178,6 +178,7 @@ public class ModelManager : MonoBehaviour
         {
             if (CheckRotation() == true)
             {
+                GameObject.Find("Operation").GetComponent<Operation>().LetGo();
                 jointing = true;
                 _Data[ShouldCatch].state = StateOfBlock.jointing;
                 _Data[ShouldCatch].LeftStep1 = MoveFrames;
@@ -367,6 +368,7 @@ public class ModelManager : MonoBehaviour
                 rotating = false;
                 SavePos(0);
                 Creat(ShouldCatch);
+                GameObject.Find("Operation").GetComponent<Operation>().LetGo();
             }
         }
         else if (jointing == true)
@@ -392,6 +394,7 @@ public class ModelManager : MonoBehaviour
                         if (i.LeftStep2 <= 0)
                         {
                             jointing = false;
+                            GameObject.Find("Operation").GetComponent<Operation>().LetGo();
                             i.state = StateOfBlock.caught;
                             GetJointed(ShouldCatch);
                             TryRotation();
@@ -417,7 +420,10 @@ public class ModelManager : MonoBehaviour
                 }
             }
         }
-	   
+        if (_Data[0] != null)
+            SavePos(0);
+        if (_Data[ShouldCatch] != null)
+            SavePos(ShouldCatch);
 	}
 
 
