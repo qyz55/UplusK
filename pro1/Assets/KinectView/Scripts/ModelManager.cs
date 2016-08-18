@@ -183,7 +183,9 @@ public class ModelManager : MonoBehaviour
             if (CheckRotation() == true)
             {
                 GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(_Data[ShouldCatch].model.transform.position + new Vector3(0,0,-20),_Data[ShouldCatch].model.transform.position);
                 jointing = true;
+                
                 _Data[ShouldCatch].state = StateOfBlock.jointing;
                 _Data[ShouldCatch].LeftStep1 = MoveFrames;
                 _Data[ShouldCatch].LeftStep2 = MoveFrames;
@@ -448,7 +450,10 @@ public class ModelManager : MonoBehaviour
                     {
                         --_Data[0].CollisionCount;
                         if (_Data[0].CollisionCount <= 0)
+                        {
                             _Data[0].model.GetComponent<Highlighter>().ConstantOff();
+                            FlashOffForOneFrame(0);
+                        }
                     }
                 }
             if (_Data.Count >= ShouldCatch + 1)
