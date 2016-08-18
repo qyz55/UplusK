@@ -23,6 +23,7 @@ public class Model
     public Quaternion initialQuaternion { get; set; }
     public Vector3 MoveVector { get; set; }
     public int LeftStep1 { get; set; }
+    public int CollisionCount { get; set; }
     public int LeftStep2 { get; set; }
     public Model() { 
         model = null; 
@@ -36,5 +37,6 @@ public class Model
         LastQuaternion = Quaternion.identity;
         MoveVector = Vector3.zero;
         JointPosition = Vector3.zero;
+        CollisionCount = 0;
     }
 }

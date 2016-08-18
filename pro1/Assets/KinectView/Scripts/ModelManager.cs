@@ -10,6 +10,7 @@ public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 15;
     static public int TNumOfPiece = 2;
+    public int CollisionCount = 30;
     public bool jointing = false;
     private int nowRotation = 0;
     private Vector3 rotationEuler;
@@ -166,13 +167,16 @@ public class ModelManager : MonoBehaviour
         float d = (float)(Math.Sqrt((d1.x - d2.x) * (d1.x - d2.x) + (d1.y - d2.y) * (d1.y - d2.y) + (d1.z - d2.z) * (d1.z - d2.z) / 10));
         if (d > RangeOfDis * 2)
         {
+            if (_Data[ShouldCatch].CollisionCount <= 0)
             _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
+            if (_Data[0].CollisionCount <= 0)
             _Data[0].model.GetComponent<Highlighter>().ConstantOff();
 
         }
         else if (d >= RangeOfDis && CheckRotation() == true)
         {
-            _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.green);
+            if (_Data[ShouldCatch].CollisionCount <= 0)
+                _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.green);
         }
         else if (d < RangeOfDis)
         {
@@ -194,6 +198,7 @@ public class ModelManager : MonoBehaviour
         _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
         _Data[0].model.GetComponent<Highlighter>().ConstantOff();
         _Data[i].father = 0;
+        _Data[i].CollisionCount = 0;
         _Data[i].model.transform.parent = _Data[0].model.transform;
         _Data[i].model.transform.localPosition = Vector3.zero;
         _Data[i].model.transform.localRotation = Quaternion.identity;
@@ -209,21 +214,29 @@ public class ModelManager : MonoBehaviour
     {
         if (num == 0)
         {
-            for(int i = 1; i < ShouldCatch; ++i)
-                _Data[i].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
+            if (_Data[0].CollisionCount <= 0)
+                for (int i = 1; i < ShouldCatch; ++i)
+                    _Data[i].model.GetComponent<Highlighter>().On(Color.grey);
         }
         else
-           _Data[num].model.GetComponent<Highlighter>().ConstantOn(Color.grey);
+        {
+            if (_Data[num].CollisionCount <= 0)
+                _Data[num].model.GetComponent<Highlighter>().On(Color.grey);
+        }
     }
     public void FlashOffForOneFrame(int num)
     {
         if (num == 0)
         {
-            for (int i = 1; i < ShouldCatch; ++i)
-                _Data[i].model.GetComponent<Highlighter>().ConstantOff();
+            if (_Data[0].CollisionCount <= 0)
+                for (int i = 1; i < ShouldCatch; ++i)
+                    _Data[i].model.GetComponent<Highlighter>().ConstantOff();
         }
         else
-            _Data[num].model.GetComponent<Highlighter>().ConstantOff();
+        {
+            if (_Data[num].CollisionCount <= 0)
+                _Data[num].model.GetComponent<Highlighter>().ConstantOff();
+        }
     }
     void Congratulations()
     {
@@ -343,6 +356,11 @@ public class ModelManager : MonoBehaviour
                 break;
         }
     }
+    public void ChangeCollisionCount()
+    {
+        _Data[0].CollisionCount = CollisionCount;
+        _Data[ShouldCatch].CollisionCount = CollisionCount;
+    }
 	void Start () {
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
@@ -420,10 +438,31 @@ public class ModelManager : MonoBehaviour
                 }
             }
         }
-        if (_Data[0] != null)
-            SavePos(0);
-        if (_Data[ShouldCatch] != null)
-            SavePos(ShouldCatch);
+        if (inCollision == false)
+        {
+            if (_Data.Count >= 1)
+                if (_Data[0] != null)
+                {
+                    SavePos(0);
+                    if (_Data[0].CollisionCount > 0)
+                    {
+                        --_Data[0].CollisionCount;
+                        if (_Data[0].CollisionCount <= 0)
+                            _Data[0].model.GetComponent<Highlighter>().ConstantOff();
+                    }
+                }
+            if (_Data.Count >= ShouldCatch + 1)
+                if (_Data[ShouldCatch] != null)
+                {
+                    SavePos(ShouldCatch);
+                    if (_Data[ShouldCatch].CollisionCount > 0)
+                    {
+                        --_Data[ShouldCatch].CollisionCount;
+                        if (_Data[ShouldCatch].CollisionCount <= 0)
+                            _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
+                    }
+                }
+        }
 	}
 
 
