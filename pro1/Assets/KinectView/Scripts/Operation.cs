@@ -211,9 +211,14 @@ public class Operation : MonoBehaviour {
                 }
                 else
                 {
-                    GameObject.Find("TeachingState").GetComponent<Text>().text = "";
+                    GameObject.Find("TeachingState").GetComponent<Text>().text = " ";
                 }
             }
+            /*else
+            {
+                if (HandLeftState == Kinect.HandState.Closed)
+                    GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(nowLeftDisplayPos + (new Vector3(0, 0, -10)), nowLeftDisplayPos);
+            }*/
 
             if (leftOccupied && rightOccupied)
             {
@@ -353,16 +358,16 @@ public class Operation : MonoBehaviour {
                 }
 
                 //shouldCatch灰
-                if (operateLeftNum == ModelManager.ShouldCatch || operateRightNum == ModelManager.ShouldCatch)
+                if ( (operateLeftNum == ModelManager.ShouldCatch && !leftOccupied) || (operateRightNum == ModelManager.ShouldCatch && !rightOccupied) )
                     ModelManager.FlashOnGreyForOneFrame(ModelManager.ShouldCatch);
-                else
-                    ModelManager.FlashOffForOneFrame(ModelManager.ShouldCatch);
+                /*else
+                    ModelManager.FlashOffForOneFrame(ModelManager.ShouldCatch);*/
 
                 //0灰
-                if (operateLeftNum < ModelManager.ShouldCatch || operateRightNum < ModelManager.ShouldCatch)
+                if ( (operateLeftNum < ModelManager.ShouldCatch && !leftOccupied) || (operateRightNum < ModelManager.ShouldCatch && !rightOccupied) )
                     ModelManager.FlashOnGreyForOneFrame(0);
-                else
-                    ModelManager.FlashOffForOneFrame(0);
+                /*else
+                    ModelManager.FlashOffForOneFrame(0);*/
             }
             //print("Model " + 0 + " X:" + modelPos[0].x + " Y:" + modelPos[0].y + " Z:" + modelPos[0].z);
         }

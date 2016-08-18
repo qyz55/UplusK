@@ -3,11 +3,6 @@ using System.Collections;
 
 public class MainCameraManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-
     private bool moving = false;
     private int MoveCount = 0;
     private const int MoveFrames = 10;
@@ -17,7 +12,7 @@ public class MainCameraManager : MonoBehaviour {
 
     private bool rotating = false;
     private int RotateCount = 0;
-    private const int RotateFrames = 20;
+    private const int RotateFrames = 60;
 
     private bool goingBack = false;
 
@@ -25,7 +20,11 @@ public class MainCameraManager : MonoBehaviour {
     private Vector3 deltaRotation;
     private Vector3 rotateCenter;
 
-    Random ran;
+    int rotateDirection;
+
+	// Use this for initialization
+	void Start () {
+	}
 
     public void TransferTo(Vector3 toGoPos, Vector3 targetPos)
     {
@@ -36,8 +35,19 @@ public class MainCameraManager : MonoBehaviour {
         posToGo = toGoPos;
         deltaPos = posToGo - presentPos;
         rotateCenter = targetPos;
+        rotateDirection = Random.Range((int)0, (int)2);
     }
-
+    public void TransferTo(Vector3 toGoPos, Vector3 targetPos, int dir/*旋转方式*/)
+    {
+        moving = true;
+        goingBack = false;
+        MoveCount = MoveFrames;
+        presentPos = this.transform.position;
+        posToGo = toGoPos;
+        deltaPos = posToGo - presentPos;
+        rotateCenter = targetPos;
+        rotateDirection = dir;
+    }
     private void GoBack()
     {
         moving = true;
@@ -77,7 +87,15 @@ public class MainCameraManager : MonoBehaviour {
         {
             if (RotateCount > (RotateFrames >> 1))
             {
-                this.transform.RotateAround(rotateCenter, Vector3.up, 50 * Time.deltaTime);
+                switch(rotateDirection)
+                {
+                    case 0:
+                        this.transform.RotateAround(rotateCenter, Vector3.up, 50 * Time.deltaTime);
+                        break;
+                    case 1:
+                        this.transform.RotateAround(rotateCenter, Vector3.down, 50 * Time.deltaTime);
+                        break;
+                }
             }
             else
             {
@@ -87,7 +105,15 @@ public class MainCameraManager : MonoBehaviour {
                     GoBack();
                     return;
                 }
-                this.transform.RotateAround(rotateCenter, Vector3.down, 50 * Time.deltaTime);
+                switch(rotateDirection)
+                {
+                    case 0:
+                        this.transform.RotateAround(rotateCenter, Vector3.down, 50 * Time.deltaTime);
+                        break;
+                    case 1:
+                        this.transform.RotateAround(rotateCenter, Vector3.up, 50 * Time.deltaTime);
+                        break;
+                }
             }
             RotateCount--;
         }
