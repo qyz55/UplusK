@@ -31,18 +31,29 @@ public class ClickStartGame : MonoBehaviour {
         switch (sender.name)
         {
             case "GameStart":
-                if (state == 0)
-                {
-                    GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
-                    TeachingModelStart();
+                /*if (state == 0)
+                {*/
+                GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(true);
+                GameObject.Find("Main Camera").GetComponent<MainCameraManager>().DemoRotate();
+                /*
                     state = 1;
                 }
                 else if (state == 1)
                 {
+                    if (GameObject.Find("Main Camera").GetComponent<MainCameraManager>().getDemoRotating())
+                    {
+
+                    }
+                GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
+                GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
+                    state = 2;
+                }
+                else if (state == 2)
+                {
                     //GameStart();
                     GameObject.Find("ModelManager").GetComponent<ModelManager>().ChangeTeachState(2);
                     Destroy(GameObject.Find("GameStart"));
-                }
+                }*/
                 break;
             case "GameEnd":
                 SceneManager.LoadScene("MainScene");
