@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MainCameraManager : MonoBehaviour {
 
@@ -14,6 +15,12 @@ public class MainCameraManager : MonoBehaviour {
     private int RotateCount = 0;
     private const int RotateFrames = 60;
 
+    private bool demoRotating = false;
+    private int demoRotateCount = 0;
+    private const int demoRotatingFrames = 600;
+
+    public bool getDemoRotating() { return demoRotating; }
+
     private bool goingBack = false;
 
     private Vector3 presentRotation;
@@ -25,6 +32,12 @@ public class MainCameraManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
+
+    public void DemoRotate()
+    {
+        demoRotating = true;
+        demoRotateCount = demoRotatingFrames;
+    }
 
     public void TransferTo(Vector3 toGoPos, Vector3 targetPos)
     {
@@ -48,6 +61,11 @@ public class MainCameraManager : MonoBehaviour {
         rotateCenter = targetPos;
         rotateDirection = dir;
     }
+    private void startRotate()
+    {
+        rotating = true;
+        RotateCount = RotateFrames;
+    }
     private void GoBack()
     {
         moving = true;
@@ -61,7 +79,22 @@ public class MainCameraManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (moving)
+        if (demoRotating)
+        {
+            demoRotateCount--;
+            this.transform.RotateAround(new Vector3(0, 0, 40), Vector3.up, (float)360/(float)demoRotatingFrames);
+            if (demoRotateCount <= 0)
+            {
+                demoRotating = false;
+                demoRotateCount = 0;
+                GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
+                GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
+                GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
+                GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
+                GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
+            }
+        }
+        else if (moving)
         {
             MoveCount--;
             if (MoveCount > 0)
@@ -78,12 +111,14 @@ public class MainCameraManager : MonoBehaviour {
                 }
                 else
                 {
-                    rotating = true;
-                    RotateCount = RotateFrames;
+                    if (!demoRotating)
+                    {
+                        startRotate();
+                    }
                 }
             }
         }
-        if (rotating)
+        else if (rotating)
         {
             if (RotateCount > (RotateFrames >> 1))
             {
