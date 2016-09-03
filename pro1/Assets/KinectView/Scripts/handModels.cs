@@ -16,13 +16,14 @@ public class handModels : MonoBehaviour {
                 if (i + 2 == (int)handState)
                 {
                     //status[i].GetComponent<Renderer>().enabled = true;
-                    GameObject.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.SetActive(true);
+                    GameObject.Find("Root").transform.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.SetActive(true);
                     //GameObject.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.renderer.enabled = true;
                 }
                 else
                 {
                     //status[i].GetComponent<Renderer>().enabled = false;
-                    GameObject.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.SetActive(false);
+                    GameObject.Find("Root").transform.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.SetActive(false);
+                    //GameObject.Find("leftHand").transform.Find("l_" + pre[i]).gameObject.SetActive(false);
                 }
             }
         }
@@ -32,11 +33,13 @@ public class handModels : MonoBehaviour {
             {
                 if (i + 2 == (int)handState)
                 {
-                    GameObject.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(true);
+                    GameObject.Find("Root").transform.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(true);
+                    //GameObject.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(true);
                 }
                 else
                 {
-                    GameObject.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(false);
+                    GameObject.Find("Root").transform.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(false);
+                    //GameObject.Find("rightHand").transform.Find("r_" + pre[i]).gameObject.SetActive(false);
                 }
             }
         }

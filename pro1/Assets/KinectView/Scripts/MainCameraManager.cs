@@ -88,6 +88,8 @@ public class MainCameraManager : MonoBehaviour {
                 demoRotating = false;
                 demoRotateCount = 0;
                 GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
+                GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
+                GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
                 GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
                 GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
             }
