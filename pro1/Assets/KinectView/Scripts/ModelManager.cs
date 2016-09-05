@@ -14,7 +14,11 @@ public class ModelManager : MonoBehaviour
     public bool jointing = false;
     private int nowRotation = 0;
     private Vector3 rotationEuler;
+    private int nowMoving = 0;
+    private int FinalMoving = 0;
+    private bool needMoving = false;
     private int FinalRotation = 0;
+    private Vector3 MoveVector = new Vector3(0, 0, 0);
     public bool rotating = false;
     private List<Model> _Data = new List<Model>();
     public int MoveFrames = 20;
@@ -24,15 +28,17 @@ public class ModelManager : MonoBehaviour
     public GameObject[] Tb = new GameObject[TNumOfPiece + 1];
     public int ShouldCatch = 1;
     public bool isInTeachMode = false;
-    private int TeachState = 0; 
-    public Vector3  BirthPosition = new Vector3(30,15,30);
+    private int TeachState = 0;
+    private Vector3[] BirthPosition = { new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30) 
+                                      };
     public float RangeOfAngles = 80.0f;
     public float RangeOfDis = 5;
     private Vector3[] AllCenter = { Vector3.zero, new Vector3(-20, 0, 0), new Vector3(-15, 0, 0), new Vector3(-6, 0, 0), new Vector3(3,0,0),new Vector3(3,-4,0),new Vector3(3,-9,0),new Vector3(3,-13,0),
                                   new Vector3(6,4,0),new Vector3(6,4,25),new Vector3(6,4,-25),new Vector3(6,-2,30),new Vector3(6,-2,20),new Vector3(6,-2,-20),new Vector3(6,-2,-30)};
-    private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
     private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(3,0,0), new Vector3(3,0,0),new Vector3(0,-3,0),new Vector3(0,-3,0),new Vector3(0,-3,0),
                                          new Vector3(0,3,0),new Vector3(0,0,5),new Vector3(0,0,-5),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),};
+    private Vector3[] AllMoveToPosition = { };
+    private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
     private Vector3[] TAllJpintPosition = { Vector3.zero, new Vector3(0, 0, 0), new Vector3(0, 2, 0) };
     public bool inCollision = false;
     public List<Vector3> GetAllPosition() // 获得所有物体的位置,返回一个内容为Vector3的list
@@ -155,6 +161,7 @@ public class ModelManager : MonoBehaviour
             Debug.Log("CheckRotation" + q.eulerAngles.x + " " + q.eulerAngles.y + " " + q.eulerAngles.z);
             return true;
             
+            
         }
         Debug.Log("AngleFalse");
         return false;
@@ -261,9 +268,9 @@ public class ModelManager : MonoBehaviour
             Ta[i].num = i;
             Ta[i].state = StateOfBlock.free;
             Ta[i].father = i;
-            Ta[i].model.transform.position = BirthPosition;
+            Ta[i].model.transform.position = BirthPosition[0];
             Ta[i].initialQuaternion = Quaternion.identity;
-            Ta[i].LastPosition = BirthPosition;
+            Ta[i].LastPosition = BirthPosition[0];
             if (!Ta[i].model.GetComponent<Rigidbody>())
                 Ta[i].model.AddComponent<Rigidbody>();
             Ta[i].model.GetComponent<Rigidbody>().useGravity = false;
@@ -282,10 +289,10 @@ public class ModelManager : MonoBehaviour
             a[i].num = i;
             a[i].state = StateOfBlock.free;
             a[i].father = i;
-            a[i].model.transform.position = BirthPosition;
+            a[i].model.transform.position = BirthPosition[ShouldCatch];
             a[i].initialQuaternion = _Data[0].model.transform.rotation;
             a[i].model.transform.rotation = _Data[0].model.transform.rotation;
-            a[i].LastPosition = BirthPosition;
+            a[i].LastPosition = BirthPosition[ShouldCatch];
             if (!a[i].model.GetComponent<Rigidbody>())
                 a[i].model.AddComponent<Rigidbody>();
             a[i].model.GetComponent<Rigidbody>().useGravity = false;
@@ -350,11 +357,16 @@ public class ModelManager : MonoBehaviour
         {
             case 8:
                 rotating = true;
+                needMoving = true;
+                nowMoving = 0;
+                FinalMoving = 80;
+                MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position)/FinalMoving;
                 FinalRotation = 80;
                 nowRotation = 0;
                 rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
                 break;
             default:
+
                 break;
         }
     }
@@ -379,16 +391,37 @@ public class ModelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (rotating == true)
+        if (rotating || needMoving)
         {
-            ++nowRotation; 
-            _Data[0].model.transform.RotateAround(CalcRealPosition(1, _Data[1].model.transform.position), rotationEuler, 50*Time.deltaTime);
-            if (nowRotation >= FinalRotation)
+            if (rotating == true)
             {
-                rotating = false;
-                SavePos(0);
-                Creat(ShouldCatch);
-                GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                ++nowRotation;
+                _Data[0].model.transform.RotateAround(CalcRealPosition(1, _Data[1].model.transform.position), rotationEuler, 50 * Time.deltaTime);
+                if (nowRotation >= FinalRotation)
+                {
+                    rotating = false;
+                    if (needMoving == false)
+                    {
+                        SavePos(0);
+                        Creat(ShouldCatch);
+                        GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                    }
+                }
+            }
+            if (needMoving == true)
+            {
+                ++nowMoving;
+                _Data[0].model.transform.position += MoveVector;
+                if (nowMoving >= FinalMoving)
+                {
+                    needMoving = false;
+                    if (rotating == false)
+                    {
+                        SavePos(0);
+                        Creat(ShouldCatch);
+                        GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                    }
+                }
             }
         }
         else if (jointing == true)
@@ -401,7 +434,7 @@ public class ModelManager : MonoBehaviour
                     if (i.LeftStep1 > 0)
                     {
                         --i.LeftStep1;
-                        i.model.transform.position += i.MoveVector / 2 * (float)( Math.Cos(Math.PI * i.LeftStep1 / MoveFrames) -Math.Cos(Math.PI * (i.LeftStep1 + 1) / MoveFrames));
+                        i.model.transform.position += i.MoveVector / 2 * (float)(Math.Cos(Math.PI * i.LeftStep1 / MoveFrames) - Math.Cos(Math.PI * (i.LeftStep1 + 1) / MoveFrames));
                         if (i.LeftStep1 <= 0)
                         {
                             i.MoveVector = -i.JointPosition;
@@ -418,7 +451,7 @@ public class ModelManager : MonoBehaviour
                             i.state = StateOfBlock.caught;
                             GetJointed(ShouldCatch);
                             TryRotation();
-                            if (rotating == false)
+                            if (rotating == false && needMoving == false)
                                 Creat(ShouldCatch);
                         }
                     }

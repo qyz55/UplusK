@@ -10,6 +10,14 @@ public class CollisionManager : MonoBehaviour
     void Start()
     {
         empty = GameObject.Find("ModelManager");
+        Component[] comps = gameObject.GetComponentsInChildren<Component>();
+        foreach (Component c in comps)
+        {
+            if (c is Graphic)
+            {
+                (c as Graphic).CrossFadeAlpha(0, 1, true);
+            }
+        }
     }
 
     // Update is called once per frame
