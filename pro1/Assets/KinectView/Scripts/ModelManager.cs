@@ -294,9 +294,9 @@ public class ModelManager : MonoBehaviour
             a[i].state = StateOfBlock.free;
             a[i].father = i;
             a[i].model.transform.position = BirthFromPosition[ShouldCatch];
-            MoveVector = BirthPosition[ShouldCatch] - BirthFromPosition[ShouldCatch];
             nowMoving = 0;
             FinalMoving = 80;
+            MoveVector = (BirthPosition[ShouldCatch] - BirthFromPosition[ShouldCatch])/FinalMoving;
             inBirth = true;
             a[i].initialQuaternion = _Data[0].model.transform.rotation;
             a[i].model.transform.rotation = _Data[0].model.transform.rotation;
