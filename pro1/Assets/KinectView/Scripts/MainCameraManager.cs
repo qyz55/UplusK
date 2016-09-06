@@ -13,11 +13,13 @@ public class MainCameraManager : MonoBehaviour {
 
     private bool rotating = false;
     private int RotateCount = 0;
-    private const int RotateFrames = 60;
+    private const int RotateFrames = 200;
 
     private bool demoRotating = false;
     private int demoRotateCount = 0;
     private const int demoRotatingFrames = 600;
+    private bool demoView = false;
+    private int demoViewProcess = 0;
 
     public bool getDemoRotating() { return demoRotating; }
 
@@ -87,12 +89,31 @@ public class MainCameraManager : MonoBehaviour {
             {
                 demoRotating = false;
                 demoRotateCount = 0;
-                GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
+                demoView = true;
+                /*GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
                 GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
                 GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
                 GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
-                GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
+                GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();*/
             }
+        }
+        else if (demoView)
+        {
+            switch (demoViewProcess)
+            {
+                case 0:
+                    TransferTo(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 0);
+                    break;
+                case 1:
+                    TransferTo(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 0);
+                    break;
+                case 2:
+                    TransferTo(new Vector3(0, 0, 0), new Vector3(0, 0, 0), 0);
+                    break;
+                default:
+                    break;
+            }
+            demoView = false;
         }
         else if (moving)
         {
@@ -108,6 +129,20 @@ public class MainCameraManager : MonoBehaviour {
                 if (goingBack)
                 {
                     goingBack = false;
+                    if (demoViewProcess < 3)
+                    {
+                        demoViewProcess++;
+                        demoView = true;
+                        if (demoViewProcess == 3)
+                        {
+                            demoView = false;
+                            GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
+                            GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
+                            GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
+                            GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
+                            GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
+                        }
+                    }
                 }
                 else
                 {
@@ -125,10 +160,10 @@ public class MainCameraManager : MonoBehaviour {
                 switch(rotateDirection)
                 {
                     case 0:
-                        this.transform.RotateAround(rotateCenter, Vector3.up, 50 * Time.deltaTime);
+                        this.transform.RotateAround(rotateCenter, Vector3.up, (float)60 / ((float)RotateFrames / 2));
                         break;
                     case 1:
-                        this.transform.RotateAround(rotateCenter, Vector3.down, 50 * Time.deltaTime);
+                        this.transform.RotateAround(rotateCenter, Vector3.down, (float)60 / ((float)RotateFrames / 2));
                         break;
                 }
             }
@@ -143,10 +178,10 @@ public class MainCameraManager : MonoBehaviour {
                 switch(rotateDirection)
                 {
                     case 0:
-                        this.transform.RotateAround(rotateCenter, Vector3.down, 50 * Time.deltaTime);
+                        this.transform.RotateAround(rotateCenter, Vector3.down, (float)60 / ((float)RotateFrames / 2));
                         break;
                     case 1:
-                        this.transform.RotateAround(rotateCenter, Vector3.up, 50 * Time.deltaTime);
+                        this.transform.RotateAround(rotateCenter, Vector3.up, (float)60 / ((float)RotateFrames / 2));
                         break;
                 }
             }

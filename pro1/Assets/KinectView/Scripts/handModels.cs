@@ -4,14 +4,14 @@ using Kinect = Windows.Kinect;
 
 public class handModels : MonoBehaviour {
 
-    string[] pre = { "open", "closed", "lasso" };
+    string[] pre = { "open", "closed"/*, "lasso"*/ };
     //public GameObject[] status = new GameObject[3];
 
     public void setStatus(bool LorR, Kinect.HandState handState)
     {
         if (!LorR)
         {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 2; ++i)
             {
                 if (i + 2 == (int)handState)
                 {
@@ -29,7 +29,7 @@ public class handModels : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 2; ++i)
             {
                 if (i + 2 == (int)handState)
                 {
