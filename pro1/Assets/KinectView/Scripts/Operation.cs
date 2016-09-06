@@ -302,7 +302,7 @@ public class Operation : MonoBehaviour {
                             }
                         }
                     }
-                    if (operateLeftNum < ModelManager.ShouldCatch)
+                    if (operateLeftNum <= ModelManager.ShouldCatch)
                     {
                         if (HandLeftState == Kinect.HandState.Closed)//抓
                         {
