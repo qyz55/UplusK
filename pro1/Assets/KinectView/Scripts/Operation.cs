@@ -168,8 +168,8 @@ public class Operation : MonoBehaviour {
             prevLeftDisplayPos = nowLeftDisplayPos;
             prevRightDisplayPos = nowRightDisplayPos;
 
-            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 50/* + offsetLeftX*/, (leftPosSum / leftHandPos.Count).y * 45/* + offsetLeftY*/, (2 - (leftPosSum / leftHandPos.Count).z) * 30/* + offsetLeftZ*/);
-            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 50/* + offsetRightX*/, (rightPosSum / rightHandPos.Count).y * 45/* + offsetRightY*/, (2 - (rightPosSum / rightHandPos.Count).z) * 30/* + offsetRightZ*/);
+            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 70/* + offsetLeftX*/, (leftPosSum / leftHandPos.Count).y * 50/* + offsetLeftY*/, (2 - (leftPosSum / leftHandPos.Count).z) * 30/* + offsetLeftZ*/);
+            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 70/* + offsetRightX*/, (rightPosSum / rightHandPos.Count).y * 50/* + offsetRightY*/, (2 - (rightPosSum / rightHandPos.Count).z) * 30/* + offsetRightZ*/);
 
             //print("left: " + leftX + " " + nowLeftDisplayPos.y + " " + nowLeftDisplayPos.z);
             //print("right: " + nowRightDisplayPos.x + " " + nowRightDisplayPos.y + " " + nowRightDisplayPos.z);

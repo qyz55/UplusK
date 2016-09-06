@@ -30,16 +30,16 @@ public class ModelManager : MonoBehaviour
     public int ShouldCatch = 1;
     public bool isInTeachMode = false;
     private int TeachState = 0;
-    private Vector3[] FocusPosition = { new Vector3(0, 0, 0),   /*1*/    new Vector3(0, 0, 0),       new Vector3(-25, 0, 0),     new Vector3(-10, 0, 0),     new Vector3(-5, 10, 0),     new Vector3(0, 0, 0),
-                                                                /*6*/    new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
-                                                                /*11*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
+    private Vector3[] FocusPosition = { new Vector3(0, 0, 0),   /*1*/    new Vector3(0, 0, 0),       new Vector3(-25, 0, 0),     new Vector3(-10, 0, 0),     new Vector3(-5, 10, 0),     new Vector3(-5, -2, 0),
+                                                                /*6*/    new Vector3(-5, -2, 0),       new Vector3(-5, -5, 0),       new Vector3(0, 0, 0),       new Vector3(0, -10, 0),       new Vector3(0, -10, 0),
+                                                                /*11*/   new Vector3(0, -10, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
                                                                 /*16*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
                                                                 /*21*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
                                                                 /*26*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
                                                                 /*31*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
                                                                 /*36*/   new Vector3(0, 0, 0)};
     private Vector3[] BirthPosition = { new Vector3(30, 15, 30),   /*1*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 10, 30),        new Vector3(20, 0, 30),         new Vector3(30, 15, 30),
-                                                                   /*6*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
+                                                                   /*6*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 20),        new Vector3(-15, 15, 20),
                                                                    /*11*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*16*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*21*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
@@ -47,7 +47,7 @@ public class ModelManager : MonoBehaviour
                                                                    /*31*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*36*/    new Vector3(30, 15, 30)};
     private Vector3[] BirthFromPosition = { new Vector3(80, 15, 30),   /*1*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*6*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
+                                                                       /*6*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 20),        new Vector3(-80, 15, 20),
                                                                        /*11*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*16*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*21*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
@@ -55,7 +55,7 @@ public class ModelManager : MonoBehaviour
                                                                        /*31*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*36*/    new Vector3(80, 15, 30)};
     private Vector3[] AllJointPosition = { Vector3.zero,     /*1*/           new Vector3(2, 0, 0),          new Vector3(3, 0, 0),           new Vector3(0,3,0),             new Vector3(0,4,0),             new Vector3(0,-3,0),
-                                                             /*6*/           new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(0,3,0),             new Vector3(0,0,5),             new Vector3(0,0,-5),
+                                                             /*6*/           new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(3,0,0),             new Vector3(3,0,0),             new Vector3(-3,0,0),
                                                              /*11*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*16*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*21*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
@@ -63,7 +63,7 @@ public class ModelManager : MonoBehaviour
                                                              /*31*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*36*/          new Vector3(-3,0,0)};
     private Vector3[] AllMoveToPosition = { new Vector3(0, 0, 30), /*1*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*6*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
+                                                                   /*6*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(10, 0, 30), 
                                                                    /*11*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*16*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*21*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
@@ -234,6 +234,8 @@ public class ModelManager : MonoBehaviour
             if (CheckRotation() == true)
             {
                 GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(false);
+                GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(false);
                 GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(_Data[ShouldCatch].model.transform.position + new Vector3(0,0,-20)+FocusPosition[ShouldCatch],_Data[ShouldCatch].model.transform.position+FocusPosition[ShouldCatch]);
                 jointing = true;
                 
@@ -404,17 +406,27 @@ public class ModelManager : MonoBehaviour
     {
         switch (ShouldCatch)
         {
-            
-            /*case 8:
+
+            case 8:
                 rotating = true;
                 needMoving = true;
                 nowMoving = 0;
-                FinalMoving = 80;
-                MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position)/FinalMoving;
+                FinalMoving = 40;
+                MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
                 FinalRotation = 80;
-                nowRotation = 0;
+                nowRotation = 40;
                 rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
-                break;*/
+                break;
+            case 11:
+                rotating = true;
+                needMoving = true;
+                nowMoving = 0;
+                FinalMoving = 120;
+                MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
+                FinalRotation = 80;
+                nowRotation = 120;
+                rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
+                break;
 
             default:
                 needMoving = true;
@@ -484,6 +496,8 @@ public class ModelManager : MonoBehaviour
                 if (nowMoving >= FinalMoving)
                 {
                     inBirth = false;
+                    GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
+                    GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
                     _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
                 }
             }
