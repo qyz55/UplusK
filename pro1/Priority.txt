@@ -1,7 +1,7 @@
 MainShaft_1 (-20, 0, 0)
 MainShaft_2 (-15, 0, 0)
 fu2p (-11,8,0)
-solarpanels_1(-11,15,30)
+solarpanels_1(-11,15,0)
 fu2_8(-11,-2,0)
 fu2_7(-11,-7.6,0)
 fu2_1(-11,-11,0)
