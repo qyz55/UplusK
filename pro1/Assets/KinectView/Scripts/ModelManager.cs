@@ -30,7 +30,7 @@ public class ModelManager : MonoBehaviour
     public int ShouldCatch = 1;
     public bool isInTeachMode = false;
     private int TeachState = 0;
-    public Vector3[] FocusPosition = { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(-30, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+    private Vector3[] FocusPosition = { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(-25, 0, 0), new Vector3(-10, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
     private Vector3[] BirthPosition = { new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 10, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30), new Vector3(30, 15, 30) 
                                       };
     private Vector3[] BirthFromPosition = { new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30), new Vector3(80, 15, 30) 
@@ -48,7 +48,7 @@ public class ModelManager : MonoBehaviour
                                         new Vector3(-6.23f,3.72f,-22.87f), new Vector3(18.62f,4.93f,-32.55f), new Vector3(-6.28f,3.56f,-33f), new Vector3(15.71f,0.54f,0f), 
                                         new Vector3(13.21f,1.03f,5.6f), new Vector3(13.3f,0.98f,-3.8f), new Vector3(13.2f,5.4f,0f), new Vector3(3f,-4f,0f), new Vector3(3f,-9f,0f),
                                         new Vector3(3f,-13f,0f)};
-    private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(3,0,0), new Vector3(3,0,0),new Vector3(0,-3,0),new Vector3(0,-3,0),new Vector3(0,-3,0),
+    private Vector3[] AllJointPosition = { Vector3.zero, new Vector3(2, 0, 0), new Vector3(3, 0, 0), new Vector3(0,3,0), new Vector3(-3,0,0),new Vector3(0,-3,0),new Vector3(0,-3,0),new Vector3(0,-3,0),
                                          new Vector3(0,3,0),new Vector3(0,0,5),new Vector3(0,0,-5),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),new Vector3(-3,0,0),};
     private Vector3[] AllMoveToPosition = { new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30), new Vector3(0, 0, 30) };
     private Vector3[] TAllCenter = { Vector3.zero, Vector3.zero, Vector3.zero };
