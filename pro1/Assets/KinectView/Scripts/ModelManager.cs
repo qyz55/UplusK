@@ -431,7 +431,6 @@ public class ModelManager : MonoBehaviour
 
             case 8:
                 rotating = true;
-                needMoving = true;
                 nowMoving = 0;
                 FinalMoving = 40;
                 MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
@@ -441,7 +440,6 @@ public class ModelManager : MonoBehaviour
                 break;
             case 11:
                 rotating = true;
-                needMoving = true;
                 nowMoving = 0;
                 FinalMoving = 40;
                 MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
@@ -451,7 +449,6 @@ public class ModelManager : MonoBehaviour
                 break;
             case 13:
                 rotating = true;
-                needMoving = true;
                 nowMoving = 0;
                 FinalMoving = 320;
                 MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
@@ -501,9 +498,7 @@ public class ModelManager : MonoBehaviour
                     rotating = false;
                     if (needMoving == false)
                     {
-                        SavePos(0);
-                        Creat(ShouldCatch);
-                        GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                        needMoving = true;
                     }
                 }
             }
