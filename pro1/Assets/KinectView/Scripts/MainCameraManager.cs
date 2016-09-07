@@ -52,7 +52,7 @@ public class MainCameraManager : MonoBehaviour {
         rotateCenter = targetPos;
         rotateDirection = Random.Range((int)0, (int)2);
     }
-    public void TransferTo(Vector3 toGoPos, Vector3 targetPos, int dir/*旋转方式*/)
+    public void TransferTo(Vector3 toGoPos, Vector3 targetPos, int dir/*旋转方式 01左右23上下*/)
     {
         moving = true;
         goingBack = false;
@@ -129,11 +129,11 @@ public class MainCameraManager : MonoBehaviour {
                 if (goingBack)
                 {
                     goingBack = false;
-                    if (demoViewProcess < 1)//---------------------------------改次数的话改这里--------------------------------------------------
+                    if (demoViewProcess < 1)//---------------------------------改demo看的次数的话改这里--------------------------------------------------
                     {
                         demoViewProcess++;
                         demoView = true;
-                        if (demoViewProcess == 1)//---------------------------------和这里--------------------------------------------------
+                        if (demoViewProcess == 1)//------------------------------------和这里---------------------------------------------------
                         {
                             demoView = false;
                             GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
@@ -165,6 +165,14 @@ public class MainCameraManager : MonoBehaviour {
                     case 1:
                         this.transform.RotateAround(rotateCenter, Vector3.down, (float)30 / ((float)RotateFrames / 2));
                         break;
+                    case 2:
+                        this.transform.RotateAround(rotateCenter, Vector3.left, (float)30 / ((float)RotateFrames / 2));
+                        break;
+                    case 3:
+                        this.transform.RotateAround(rotateCenter, Vector3.right, (float)30 / ((float)RotateFrames / 2));
+                        break;
+                    default:
+                        break;
                 }
             }
             else
@@ -182,6 +190,14 @@ public class MainCameraManager : MonoBehaviour {
                         break;
                     case 1:
                         this.transform.RotateAround(rotateCenter, Vector3.up, (float)30 / ((float)RotateFrames / 2));
+                        break;
+                    case 2:
+                        this.transform.RotateAround(rotateCenter, Vector3.right, (float)30 / ((float)RotateFrames / 2));
+                        break;
+                    case 3:
+                        this.transform.RotateAround(rotateCenter, Vector3.left, (float)30 / ((float)RotateFrames / 2));
+                        break;
+                    default:
                         break;
                 }
             }

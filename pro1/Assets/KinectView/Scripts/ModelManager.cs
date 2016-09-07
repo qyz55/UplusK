@@ -10,6 +10,7 @@ public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 15;
     static public int TNumOfPiece = 2;
+    private int tiaoshi = 8;
     public int CollisionCount = 30;
     public bool jointing = false;
     private int nowRotation = 0;
@@ -40,23 +41,23 @@ public class ModelManager : MonoBehaviour
                                                                 /*36*/   new Vector3(0, 0, 0)};
     private Vector3[] BirthPosition = { new Vector3(30, 15, 30),   /*1*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 10, 30),        new Vector3(20, 0, 30),         new Vector3(30, 15, 30),
                                                                    /*6*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 20),        new Vector3(-15, 15, 20),
-                                                                   /*11*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
+                                                                   /*11*/    new Vector3(20, 15, 30),        new Vector3(-15, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*16*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*21*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*26*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*31*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
                                                                    /*36*/    new Vector3(30, 15, 30)};
     private Vector3[] BirthFromPosition = { new Vector3(80, 15, 30),   /*1*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*6*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 20),        new Vector3(-80, 15, 20),
-                                                                       /*11*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
+                                                                       /*6*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 20),        new Vector3(-40, 15, 20),
+                                                                       /*11*/    new Vector3(80, 15, 30),        new Vector3(-40, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*16*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*21*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*26*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*31*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*36*/    new Vector3(80, 15, 30)};
     private Vector3[] AllJointPosition = { Vector3.zero,     /*1*/           new Vector3(2, 0, 0),          new Vector3(3, 0, 0),           new Vector3(0,3,0),             new Vector3(0,4,0),             new Vector3(0,-3,0),
-                                                             /*6*/           new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(3,0,0),             new Vector3(3,0,0),             new Vector3(-3,0,0),
-                                                             /*11*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
+                                                             /*6*/           new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(3,0,0),             new Vector3(3,0,0),             new Vector3(-3,0,-3),
+                                                             /*11*/          new Vector3(3,0,3),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*16*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*21*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
                                                              /*26*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
@@ -64,7 +65,7 @@ public class ModelManager : MonoBehaviour
                                                              /*36*/          new Vector3(-3,0,0)};
     private Vector3[] AllMoveToPosition = { new Vector3(0, 0, 30), /*1*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*6*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(10, 0, 30), 
-                                                                   /*11*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
+                                                                   /*11*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(-3, -10, 10),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*16*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*21*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
                                                                    /*26*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
@@ -216,29 +217,50 @@ public class ModelManager : MonoBehaviour
         Vector3 d1 = _Data[0].model.transform.position;//CalcRealPosition(1, _Data[1].model.transform.position) - _Data[1].center;
         Vector3 d2 = _Data[ShouldCatch].model.transform.position;//CalcRealPosition(ShouldCatch, _Data[ShouldCatch].model.transform.position) - _Data[ShouldCatch].center;
         float d = (float)(Math.Sqrt((d1.x - d2.x) * (d1.x - d2.x) + (d1.y - d2.y) * (d1.y - d2.y) + (d1.z - d2.z) * (d1.z - d2.z) / 10));
-        if (d > RangeOfDis * 2)
+        if (ShouldCatch > tiaoshi)
         {
-            if (_Data[ShouldCatch].CollisionCount <= 0)
-            _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
-            if (_Data[0].CollisionCount <= 0)
-            _Data[0].model.GetComponent<Highlighter>().ConstantOff();
+            if (d > RangeOfDis * 2)
+            {
+                if (_Data[ShouldCatch].CollisionCount <= 0)
+                    _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOff();
+                if (_Data[0].CollisionCount <= 0)
+                    _Data[0].model.GetComponent<Highlighter>().ConstantOff();
 
+            }
+            else if (d >= RangeOfDis && CheckRotation() == true)
+            {
+                if (_Data[ShouldCatch].CollisionCount <= 0)
+                    _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.green);
+            }
+            else if (d < RangeOfDis)
+            {
+                if (CheckRotation() == true)
+                {
+                    GameObject.Find("Operation").GetComponent<Operation>().LetGo();
+                    GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(false);
+                    GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(false);
+                    GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(_Data[ShouldCatch].model.transform.position + new Vector3(0, 0, -20) + FocusPosition[ShouldCatch], _Data[ShouldCatch].model.transform.position + FocusPosition[ShouldCatch]);
+                    jointing = true;
+
+                    _Data[ShouldCatch].state = StateOfBlock.jointing;
+                    _Data[ShouldCatch].LeftStep1 = MoveFrames;
+                    _Data[ShouldCatch].LeftStep2 = MoveFrames;
+                    _Data[ShouldCatch].MoveVector = _Data[0].model.transform.position + _Data[ShouldCatch].JointPosition - _Data[ShouldCatch].model.transform.position;
+                }
+                else
+                    _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.yellow);
+            }
         }
-        else if (d >= RangeOfDis && CheckRotation() == true)
-        {
-            if (_Data[ShouldCatch].CollisionCount <= 0)
-                _Data[ShouldCatch].model.GetComponent<Highlighter>().ConstantOn(Color.green);
-        }
-        else if (d < RangeOfDis)
+        else
         {
             if (CheckRotation() == true)
             {
                 GameObject.Find("Operation").GetComponent<Operation>().LetGo();
                 GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(false);
                 GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(false);
-                GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(_Data[ShouldCatch].model.transform.position + new Vector3(0,0,-20)+FocusPosition[ShouldCatch],_Data[ShouldCatch].model.transform.position+FocusPosition[ShouldCatch]);
+                GameObject.Find("Main Camera").GetComponent<MainCameraManager>().TransferTo(_Data[ShouldCatch].model.transform.position + new Vector3(0, 0, -20) + FocusPosition[ShouldCatch], _Data[ShouldCatch].model.transform.position + FocusPosition[ShouldCatch]);
                 jointing = true;
-                
+
                 _Data[ShouldCatch].state = StateOfBlock.jointing;
                 _Data[ShouldCatch].LeftStep1 = MoveFrames;
                 _Data[ShouldCatch].LeftStep2 = MoveFrames;
@@ -414,18 +436,28 @@ public class ModelManager : MonoBehaviour
                 FinalMoving = 40;
                 MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
                 FinalRotation = 80;
-                nowRotation = 40;
+                nowRotation = 0;
                 rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
                 break;
             case 11:
                 rotating = true;
                 needMoving = true;
                 nowMoving = 0;
-                FinalMoving = 120;
+                FinalMoving = 40;
                 MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
                 FinalRotation = 80;
-                nowRotation = 120;
+                nowRotation = 0;
                 rotationEuler = Vector3.up;//new Vector3(1, 1, 1);
+                break;
+            case 13:
+                rotating = true;
+                needMoving = true;
+                nowMoving = 0;
+                FinalMoving = 320;
+                MoveVector = (AllMoveToPosition[ShouldCatch] - _Data[0].model.transform.position) / FinalMoving;
+                FinalRotation = 160;
+                nowRotation = 0;
+                rotationEuler = Vector3.down;//new Vector3(1, 1, 1);
                 break;
 
             default:
@@ -457,6 +489,7 @@ public class ModelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        print(ShouldCatch);
         if (rotating || needMoving || inBirth)
         {
             if (rotating == true)
