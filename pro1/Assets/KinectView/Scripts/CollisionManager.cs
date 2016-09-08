@@ -20,7 +20,6 @@ public class CollisionManager : MonoBehaviour
     public GameObject empty;
     void OnTriggerEnter(Collider col)
     {
-        GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
         gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
         GameObject.Find("Operation").GetComponent<Operation>().LetGo();
@@ -35,7 +34,6 @@ public class CollisionManager : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
         gameObject.GetComponent<Highlighter>().ConstantOn(Color.red);
         ModelManager mo = empty.GetComponent<ModelManager>();
         GameObject.Find("Operation").GetComponent<Operation>().LetGo();
@@ -50,7 +48,6 @@ public class CollisionManager : MonoBehaviour
     }
     void OnTriggerExit(Collider col)
     {
-        GameObject.Find("Crash").GetComponent<Text>().text = "撞车了";
         //gameObject.GetComponent<Highlighter>().ConstantOff();
         ModelManager mo = empty.GetComponent<ModelManager>();
         GameObject.Find("Operation").GetComponent<Operation>().LetGo();
