@@ -17,7 +17,14 @@ public class Operation : MonoBehaviour {
     private Vector3 prevRightDisplayPos;
     private Vector3 nowLeftDisplayPos;
     private Vector3 nowRightDisplayPos;
-    private float catchThreshold = 5F;
+    //private float catchThreshold = 5F;
+    private float[] catchThreshold = {0,  5F,     5F,     5F,     5F,     5F,
+                                            5F,     5F,     5F,     5F,     5F,
+                                            5F,     5F,     5F,     5F,     5F,
+                                            5F,     5F,     5F,     5F,     5F,
+                                            15F,     15F,     5F,     15F,     15F,
+                                            5F,     5F,     5F,     5F,     5F,
+                                            5F,     5F,     5F,     5F,     5F};
     private bool leftOccupied = false;
     private int leftCatching = -1;
     private bool rightOccupied = false;
@@ -296,7 +303,7 @@ public class Operation : MonoBehaviour {
                         if (leftDist < nearestLeftDist)
                         {
                             nearestLeftDist = leftDist;
-                            if (nearestLeftDist < catchThreshold)
+                            if (nearestLeftDist < catchThreshold[ModelManager.ShouldCatch])
                             {
                                 operateLeftNum = i;
                             }
@@ -341,7 +348,7 @@ public class Operation : MonoBehaviour {
                         if (rightDist < nearestRightDist)
                         {
                             nearestRightDist = rightDist;
-                            if (nearestRightDist < catchThreshold)
+                            if (nearestRightDist < catchThreshold[ModelManager.ShouldCatch])
                             {
                                 operateRightNum = i;
                             }
