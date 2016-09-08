@@ -17,13 +17,15 @@ public class MainCameraManager : MonoBehaviour {
 
     private bool demoRotating = false;
     private int demoRotateCount = 0;
-    private const int demoRotatingFrames = 6/*00*/;
+    private const int demoRotatingFrames = 600;
     private bool demoView = false;
     private int demoViewProcess = 0;
 
     public bool getDemoRotating() { return demoRotating; }
 
     private bool goingBack = false;
+
+    private bool gg = false;
 
     private Vector3 presentRotation;
     private Vector3 deltaRotation;
@@ -39,6 +41,16 @@ public class MainCameraManager : MonoBehaviour {
     {
         demoRotating = true;
         demoRotateCount = demoRotatingFrames;
+    }
+
+    public void ggRotate(Vector3 toGoPos, Vector3 targetPos)
+    {
+        moving = true;
+        MoveCount = MoveFrames;
+        presentPos = this.transform.position;
+        posToGo = posToGo - presentPos;
+        rotateCenter = targetPos;
+        rotateDirection = Random.Range((int)0, (int)2);
     }
 
     public void TransferTo(Vector3 toGoPos, Vector3 targetPos)
@@ -126,14 +138,18 @@ public class MainCameraManager : MonoBehaviour {
             {
                 moving = false;
                 this.transform.position = posToGo;
+                if (gg)
+                {
+                    rotating = true;
+                }
                 if (goingBack)
                 {
                     goingBack = false;
-                    if (demoViewProcess < 1)//---------------------------------改demo看的次数的话改这里--------------------------------------------------
+                    if (demoViewProcess < 3)//---------------------------------改demo看的次数的话改这里--------------------------------------------------
                     {
                         demoViewProcess++;
                         demoView = true;
-                        if (demoViewProcess == 1)//------------------------------------和这里---------------------------------------------------
+                        if (demoViewProcess == 3)//------------------------------------和这里---------------------------------------------------
                         {
                             demoView = false;
                             GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
@@ -179,6 +195,11 @@ public class MainCameraManager : MonoBehaviour {
             {
                 if (RotateCount <= 0)
                 {
+                    if (gg)
+                    {
+                        RotateCount = RotateFrames;
+                        return;
+                    }
                     rotating = false;
                     GoBack();
                     return;
