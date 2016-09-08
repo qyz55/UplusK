@@ -8,7 +8,7 @@ using HighlightingSystem;
 //注意一下所有的位置都是世界坐标，而非相对于父物体的坐标;所有旋转默认是围绕自己的旋转，若有父物体则围绕父物体旋转
 public class ModelManager : MonoBehaviour
 {
-    static public int NumOfPiece = 36;
+    static public int NumOfPiece = 32;
     static public int TNumOfPiece = 2;
     private int tiaoshi = 0;
     public int CollisionCount = 30;
@@ -65,7 +65,7 @@ public class ModelManager : MonoBehaviour
                                                                    /*16*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      
                                                                    /*21*/       new Vector3(10, 0, 40),          new Vector3(10, -10, 40),      new Vector3(-10, 0, 40),      new Vector3(-10, 0, 40),      new Vector3(-10, -10, 40),    
                                                                    /*26*/       new Vector3(0, -15, 30),          new Vector3(0, -15, 30),      new Vector3(0, -15, 30),      new Vector3(-10, -15, 30),      new Vector3(0, 5, 30),    
-                                                                   /*31*/       new Vector3(0, 5, 30),          new Vector3(0, 5, 30)};
+                                                                   /*31*/       new Vector3(0, 5, 30),          new Vector3(0, 5, 30),          new Vector3(0,0,30)};
     
 
     public float RangeOfAngles = 80.0f;
@@ -311,7 +311,9 @@ public class ModelManager : MonoBehaviour
     }
     void Congratulations()
     {
-        ShouldCatch--;
+        GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(false);
+        GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(false);
+        GameObject.Find("Main Camera").GetComponent<MainCameraManager>().ggRotate(AllMoveToPosition[ShouldCatch] + new Vector3(0, 0, -20), AllMoveToPosition[ShouldCatch]);
         return;
     }
     void Creat(int i)
