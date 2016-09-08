@@ -45,6 +45,7 @@ public class MainCameraManager : MonoBehaviour {
 
     public void ggRotate(Vector3 toGoPos, Vector3 targetPos)
     {
+        gg = true;
         moving = true;
         MoveCount = MoveFrames;
         presentPos = this.transform.position;
@@ -99,6 +100,11 @@ public class MainCameraManager : MonoBehaviour {
             this.transform.RotateAround(new Vector3(0, 0, 40), Vector3.up, (float)360/(float)demoRotatingFrames);
             if (demoRotateCount <= 0)
             {
+                if (gg)
+                {
+                    demoRotateCount = demoRotatingFrames;
+                    return;
+                }
                 demoRotating = false;
                 demoRotateCount = 0;
                 demoView = true;
@@ -140,7 +146,8 @@ public class MainCameraManager : MonoBehaviour {
                 this.transform.position = posToGo;
                 if (gg)
                 {
-                    rotating = true;
+                    DemoRotate();
+                    return;
                 }
                 if (goingBack)
                 {
