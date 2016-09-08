@@ -312,7 +312,6 @@ public class ModelManager : MonoBehaviour
     void Congratulations()
     {
         ShouldCatch--;
-        MainCameraManager.
         return;
     }
     void Creat(int i)
