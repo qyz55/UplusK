@@ -10,7 +10,7 @@ public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 36;
     static public int TNumOfPiece = 2;
-    private int tiaoshi = 17;
+    private int tiaoshi = 24;
     public int CollisionCount = 30;
     public bool jointing = false;
     private int nowRotation = 0;
@@ -34,38 +34,38 @@ public class ModelManager : MonoBehaviour
     private Vector3[] FocusPosition = { new Vector3(0, 0, 0),   /*1*/    new Vector3(0, 0, 0),       new Vector3(-25, 0, 0),     new Vector3(-10, 0, 0),     new Vector3(-5, 10, 0),     new Vector3(-5, -2, 0),
                                                                 /*6*/    new Vector3(-5, -2, 0),       new Vector3(-5, -5, 0),       new Vector3(0, 0, 0),       new Vector3(0, -10, 0),       new Vector3(0, -10, 0),
                                                                 /*11*/   new Vector3(0, -10, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
-                                                                /*16*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
-                                                                /*21*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
-                                                                /*26*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
+                                                                /*16*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(-3, 5, 0),
+                                                                /*21*/   new Vector3(-15, 5, 0),       new Vector3(-15, 8, 0),       new Vector3(3, 5, 0),       new Vector3(15, 5, 0),       new Vector3(18, 8, 0),
+                                                                /*26*/   new Vector3(0, 5, 0),       new Vector3(0, 8, 0),       new Vector3(0, 8, 0),       new Vector3(-5, 5, 0),       new Vector3(0, 0, 0),
                                                                 /*31*/   new Vector3(0, 0, 0),       new Vector3(0, 0, 0)};
     private Vector3[] BirthPosition = { new Vector3(30, 15, 30),   /*1*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 10, 30),        new Vector3(20, 0, 30),         new Vector3(30, 15, 30),
                                                                    /*6*/     new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 20),        new Vector3(-15, 15, 20),
                                                                    /*11*/    new Vector3(20, 15, 30),        new Vector3(-15, 15, 30),        new Vector3(30, 10, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
-                                                                   /*16*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
-                                                                   /*21*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
-                                                                   /*26*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),
-                                                                   /*31*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30)};
+                                                                   /*16*/    new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(30, 15, 30),        new Vector3(-15, -5, 30),
+                                                                   /*21*/    new Vector3(-15, -5, 40),        new Vector3(-10, 0, 40),        new Vector3(25, -5, 40),        new Vector3(20, -5, 40),        new Vector3(10, 5, 40),
+                                                                   /*26*/    new Vector3(0, 7, 30),        new Vector3(0, 7, 30),        new Vector3(0, 7, 30),        new Vector3(30, 7, 30),        new Vector3(0, -10, 30),
+                                                                   /*31*/    new Vector3(0, -10, 30),        new Vector3(0, -10, 30)};
     private Vector3[] BirthFromPosition = { new Vector3(80, 15, 30),   /*1*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
                                                                        /*6*/     new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 20),        new Vector3(-40, 15, 20),
                                                                        /*11*/    new Vector3(80, 15, 30),        new Vector3(-40, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*16*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*21*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*26*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),
-                                                                       /*31*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30)};
+                                                                       /*16*/    new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(80, 15, 30),        new Vector3(-40, -5, 30),
+                                                                       /*21*/    new Vector3(-40, -5, 40),        new Vector3(-40, 15, 30),        new Vector3(80, -5, 30),        new Vector3(80, -5, 30),        new Vector3(80, 15, 30),
+                                                                       /*26*/    new Vector3(0, 40, 30),        new Vector3(0, 40, 30),        new Vector3(0, 40, 30),        new Vector3(80, 7, 30),        new Vector3(0, -50, 30),
+                                                                       /*31*/    new Vector3(0, -50, 30),        new Vector3(0, -50, 30)};
     private Vector3[] AllJointPosition = { Vector3.zero,     /*1*/           new Vector3(2, 0, 0),          new Vector3(3, 0, 0),           new Vector3(0,3,0),             new Vector3(0,4,0),             new Vector3(0,-3,0),
                                                              /*6*/           new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(0,-3,0),             new Vector3(0,-3,0),             new Vector3(-3,0,-3),
                                                              /*11*/          new Vector3(3,0,3),           new Vector3(-3,0,0),            new Vector3(3,0,0),            new Vector3(3,0,0),            new Vector3(0,-3,0),
-                                                             /*16*/          new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(0,3,0),            new Vector3(0,3,0),            new Vector3(-3,0,0),
-                                                             /*21*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
-                                                             /*26*/          new Vector3(-3,0,0),           new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),            new Vector3(-3,0,0),
-                                                             /*31*/          new Vector3(-3,0,0),           new Vector3(-3,0,0)};
-    private Vector3[] AllMoveToPosition = { new Vector3(0, 0, 30), /*1*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*6*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(10, 0, 30), 
-                                                                   /*11*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*16*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*21*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*26*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30), 
-                                                                   /*31*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30)};
+                                                             /*16*/          new Vector3(0,-3,0),           new Vector3(0,-3,0),            new Vector3(0,3,0),            new Vector3(0,3,0),            new Vector3(0,-3,0),
+                                                             /*21*/          new Vector3(0,-3,0),           new Vector3(0,3,0),            new Vector3(0,-3,0),            new Vector3(0,-3,0),            new Vector3(0,3,0),
+                                                             /*26*/          new Vector3(0,3,0),           new Vector3(-3,0,0),            new Vector3(3,0,0),            new Vector3(0,3,0),            new Vector3(0,-3,0),
+                                                             /*31*/          new Vector3(0,-3,0),           new Vector3(0,-3,0)};
+    private Vector3[] AllMoveToPosition = { new Vector3(0, 0, 30), /*1*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),     
+                                                                   /*6*/        new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),     
+                                                                   /*11*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),     
+                                                                   /*16*/       new Vector3(0, 0, 30),          new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      new Vector3(0, 0, 30),      
+                                                                   /*21*/       new Vector3(10, 0, 40),          new Vector3(10, -10, 40),      new Vector3(-10, 0, 40),      new Vector3(-10, 0, 40),      new Vector3(-10, -10, 40),    
+                                                                   /*26*/       new Vector3(0, -15, 30),          new Vector3(0, -15, 30),      new Vector3(0, -15, 30),      new Vector3(-10, -15, 30),      new Vector3(0, 5, 30),    
+                                                                   /*31*/       new Vector3(0, 5, 30),          new Vector3(0, 5, 30)};
     
 
     public float RangeOfAngles = 80.0f;
@@ -451,11 +451,18 @@ public class ModelManager : MonoBehaviour
                 rotating = true;
                 nowMoving = 0;
                 FinalMoving = 40;
-                FinalRotation = 160;
+                FinalRotation = 150;
                 nowRotation = 0;
-                rotationEuler = Vector3.down;//new Vector3(1, 1, 1);
+                rotationEuler = new Vector3(-1,-1,1);//new Vector3(1, 1, 1);
                 break;
-
+            case 29:
+                rotating = true;
+                nowMoving = 0;
+                FinalMoving = 40;
+                FinalRotation = 150;
+                nowRotation = 0;
+                rotationEuler = new Vector3(1, 1, -1);//new Vector3(1, 1, 1);
+                break;
             default:
                 needMoving = true;
                 nowMoving = 0;
