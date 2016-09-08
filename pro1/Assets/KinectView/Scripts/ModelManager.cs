@@ -10,7 +10,7 @@ public class ModelManager : MonoBehaviour
 {
     static public int NumOfPiece = 36;
     static public int TNumOfPiece = 2;
-    private int tiaoshi = 24;
+    private int tiaoshi = 0;
     public int CollisionCount = 30;
     public bool jointing = false;
     private int nowRotation = 0;
