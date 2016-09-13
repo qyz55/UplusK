@@ -13,11 +13,11 @@ public class MainCameraManager : MonoBehaviour {
 
     private bool rotating = false;
     private int RotateCount = 0;
-    private const int RotateFrames = 100;
+    private const int RotateFrames = 60;
 
     private bool demoRotating = false;
     private int demoRotateCount = 0;
-    private const int demoRotatingFrames = 600;
+    private const int demoRotatingFrames = 6;
     private bool demoView = false;
     private int demoViewProcess = 0;
 
@@ -152,17 +152,17 @@ public class MainCameraManager : MonoBehaviour {
                 if (goingBack)
                 {
                     goingBack = false;
-                    if (demoViewProcess < 3)//---------------------------------改demo看的次数的话改这里--------------------------------------------------
+                    if (demoViewProcess < 1)//---------------------------------改demo看的次数的话改这里--------------------------------------------------
                     {
                         demoViewProcess++;
                         demoView = true;
-                        if (demoViewProcess == 3)//------------------------------------和这里---------------------------------------------------
+                        if (demoViewProcess == 1)//------------------------------------和这里---------------------------------------------------
                         {
                             demoView = false;
                             GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(false);
                             GameObject.Find("Root").transform.Find("leftHand").gameObject.SetActive(true);
                             GameObject.Find("Root").transform.Find("rightHand").gameObject.SetActive(true);
-                            GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
+                            //GameObject.Find("GameStart").GetComponent<Button>().GetComponentInChildren<Text>().text = "教学模式";
                             GameObject.Find("ModelManager").GetComponent<ModelManager>().TeachInit();
                         }
                     }

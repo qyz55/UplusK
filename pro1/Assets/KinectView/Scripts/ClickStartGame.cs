@@ -10,7 +10,7 @@ public class ClickStartGame : MonoBehaviour {
     private int state = 0;
     void Start()
     {
-        List<string> btnsName = new List<string>();
+        /*List<string> btnsName = new List<string>();
         btnsName.Add("GameStart");
         btnsName.Add("GameEnd");
 
@@ -23,7 +23,7 @@ public class ClickStartGame : MonoBehaviour {
             {
                 this.OnClick(btnObj);
             });
-        }
+        }*/
     }
 
     public void OnClick(GameObject sender)
@@ -35,6 +35,7 @@ public class ClickStartGame : MonoBehaviour {
                 {*/
                 GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(true);
                 GameObject.Find("Main Camera").GetComponent<MainCameraManager>().DemoRotate();
+
                 /*
                     state = 1;
                 }

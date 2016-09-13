@@ -63,6 +63,19 @@ public class Operation : MonoBehaviour {
 	}
 
 	// Update is called once per frame
+    
+    private Vector3 calcRealXYZ(float X, float Y, float Z)//手坐标变换
+    {
+        Z -= 1.97f;
+        Vector3 ans = new Vector3();
+        ans.x = X;
+        ans.x = (ans.x + 0f) * 80;
+        ans.y = Y * 0.72f / 0.97f - Z * 0.65f / 0.97f;
+        ans.y = (ans.y + 0.6f) * 60;
+        ans.z = Y * 0.65f / 0.97f + Z * 0.72f / 0.97f + 1.97f;
+        ans.z = (2.9f - ans.z) * 40;
+        return ans;
+    }
 
     public void LetGo()
     {
@@ -102,6 +115,25 @@ public class Operation : MonoBehaviour {
             return;
         }
         int chosenBody = -1;
+        Vector3 foot = new Vector3();
+        for (int i = 0; i < data.Length; ++i)
+        {
+            if (data[i] == null)
+                continue;
+            if (data[i].IsTracked)
+            {
+                foot.x = (data[i].Joints[Kinect.JointType.FootLeft].Position.X + data[i].Joints[Kinect.JointType.FootRight].Position.X) / 2f;
+                foot.y = (data[i].Joints[Kinect.JointType.FootLeft].Position.Y + data[i].Joints[Kinect.JointType.FootRight].Position.Y) / 2f;
+                foot.z = (data[i].Joints[Kinect.JointType.FootLeft].Position.Z + data[i].Joints[Kinect.JointType.FootRight].Position.Z) / 2f;
+                print("foot: " + foot.x + " " + foot.y + " " + foot.z);
+                if (foot.x > -0.4f && foot.x < 0.4f && foot.y > -1.5f && foot.y < -0.7f && foot.z > 2.7f && foot.z < 3.7f)
+                {
+                    chosenBody = i;
+                    break;
+                }
+            }
+        }
+        /*
         float nearestZ=1000000;
         for (int i = 0; i < data.Length; ++i)
         {
@@ -112,9 +144,15 @@ public class Operation : MonoBehaviour {
                 chosenBody = i;
                 nearestZ = data[i].Joints[Kinect.JointType.HandLeft].Position.Z + data[i].Joints[Kinect.JointType.HandRight].Position.Z;
             }
-        }
-        if (chosenBody != -1)
+        }*/
+        if (chosenBody == -1)
         {
+            print("No Person");
+        }
+        else if (chosenBody != -1)
+        {
+            print("footleft: " + data[chosenBody].Joints[Kinect.JointType.FootLeft].Position.X + " " + data[chosenBody].Joints[Kinect.JointType.FootLeft].Position.Y + " " + data[chosenBody].Joints[Kinect.JointType.FootLeft].Position.Z);
+            print("footright: " + data[chosenBody].Joints[Kinect.JointType.FootRight].Position.X + " " + data[chosenBody].Joints[Kinect.JointType.FootRight].Position.Y + " " + data[chosenBody].Joints[Kinect.JointType.FootRight].Position.Z);
             Kinect.Body body = data[chosenBody];
 
             //维护手位置队列
@@ -175,11 +213,15 @@ public class Operation : MonoBehaviour {
             prevLeftDisplayPos = nowLeftDisplayPos;
             prevRightDisplayPos = nowRightDisplayPos;
 
-            nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 70/* + offsetLeftX*/, (leftPosSum / leftHandPos.Count).y * 50/* + offsetLeftY*/, (2 - (leftPosSum / leftHandPos.Count).z) * 40/* + offsetLeftZ*/);
-            nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 70/* + offsetRightX*/, (rightPosSum / rightHandPos.Count).y * 50/* + offsetRightY*/, (2 - (rightPosSum / rightHandPos.Count).z) * 40/* + offsetRightZ*/);
+            nowLeftDisplayPos = calcRealXYZ((leftPosSum / leftHandPos.Count).x,(leftPosSum / leftHandPos.Count).y,(leftPosSum / leftHandPos.Count).z);
+            nowRightDisplayPos = calcRealXYZ((rightPosSum / rightHandPos.Count).x, (rightPosSum / rightHandPos.Count).y, (rightPosSum / rightHandPos.Count).z);
+            //nowLeftDisplayPos = new Vector3((leftPosSum / leftHandPos.Count).x * 100/* + offsetLeftX*/, ((leftPosSum / leftHandPos.Count).y+0.5f) * 70/* + offsetLeftY*/, (4 - (leftPosSum / leftHandPos.Count).z) * 40/* + offsetLeftZ*/);
+            //nowRightDisplayPos = new Vector3((rightPosSum / rightHandPos.Count).x * 100/* + offsetRightX*/, ((rightPosSum / rightHandPos.Count).y+0.5f) * 70/* + offsetRightY*/, (4 - (rightPosSum / rightHandPos.Count).z) * 40/* + offsetRightZ*/);
 
-            //print("left: " + leftX + " " + nowLeftDisplayPos.y + " " + nowLeftDisplayPos.z);
-            //print("right: " + nowRightDisplayPos.x + " " + nowRightDisplayPos.y + " " + nowRightDisplayPos.z);
+            /*print("left: " + (leftPosSum / leftHandPos.Count).x + " " + (leftPosSum / leftHandPos.Count).y + " " + (leftPosSum / leftHandPos.Count).z);
+            print("right: " + (rightPosSum / rightHandPos.Count).x + " " + (rightPosSum / rightHandPos.Count).y + " " + (rightPosSum / rightHandPos.Count).z);
+            print("realLeft: " + nowLeftDisplayPos.x + " " + nowLeftDisplayPos.y + " " + nowLeftDisplayPos.z);
+            print("realRight: " + nowRightDisplayPos.x + " " + nowRightDisplayPos.y + " " + nowRightDisplayPos.z);*/
             leftHand.transform.position = nowLeftDisplayPos;
             rightHand.transform.position = nowRightDisplayPos;
             if (HandLeftState != preLeft)

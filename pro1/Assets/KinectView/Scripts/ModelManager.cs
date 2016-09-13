@@ -323,7 +323,6 @@ public class ModelManager : MonoBehaviour
             if (i > TNumOfPiece) 
             {
                 GameObject.Find("HandsHints").GetComponent<Text>().text = "教学模式完成，现已启动主程序。";
-                Destroy(GameObject.Find("GameStart")); 
                 init(); 
                 return; 
             }
@@ -479,6 +478,8 @@ public class ModelManager : MonoBehaviour
         _Data[ShouldCatch].CollisionCount = CollisionCount;
     }
 	void Start () {
+        GameObject.Find("Root").transform.Find("SpaceTraveler").gameObject.SetActive(true);
+        GameObject.Find("Main Camera").GetComponent<MainCameraManager>().DemoRotate();
         a[0] = new Model();
         a[0].model = GameObject.Find("Sphere");
         a[0].model.SetActive(false);
@@ -494,7 +495,7 @@ public class ModelManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        print(ShouldCatch);
+        //print(ShouldCatch);
         if (rotating || needMoving || inBirth)
         {
             if (rotating == true)
