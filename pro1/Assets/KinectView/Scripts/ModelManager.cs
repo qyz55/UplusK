@@ -31,6 +31,8 @@ public class ModelManager : MonoBehaviour
     public int ShouldCatch = 1;
     public bool isInTeachMode = false;
     private int TeachState = 0;
+    private int[] JointedPiece = {0,1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31                                     
+                                 };
     private Vector3[] FocusPosition = { new Vector3(0, 0, 0),   /*1*/    new Vector3(0, 0, 0),       new Vector3(-25, 0, 0),     new Vector3(-10, 0, 0),     new Vector3(-5, 10, 0),     new Vector3(-5, -2, 0),
                                                                 /*6*/    new Vector3(-5, -2, 0),       new Vector3(-5, -5, 0),       new Vector3(0, 0, 0),       new Vector3(0, -10, 0),       new Vector3(0, -10, 0),
                                                                 /*11*/   new Vector3(0, -10, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),       new Vector3(0, 0, 0),
@@ -301,7 +303,8 @@ public class ModelManager : MonoBehaviour
         {
             if (_Data[0].CollisionCount <= 0)
                 for (int i = 1; i < ShouldCatch; ++i)
-                    _Data[i].model.GetComponent<Highlighter>().ConstantOff();
+                    if (i != JointedPiece[ShouldCatch])
+                        _Data[i].model.GetComponent<Highlighter>().ConstantOff();
         }
         else
         {
@@ -588,6 +591,11 @@ public class ModelManager : MonoBehaviour
                     }*/
                 }
             }
+        }
+        else
+        {
+            if (ShouldCatch >= 2 && ShouldCatch <= NumOfPiece)
+                _Data[JointedPiece[ShouldCatch]].model.GetComponent<Highlighter>().ConstantOn(Color.yellow);
         }
         if (inCollision == false)
         {
